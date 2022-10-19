@@ -1,0 +1,27 @@
+<%- include ('../includes/head.ejs') %> 
+  <link rel='stylesheet' href='/css/products.css' />
+  </head>
+  <body>
+    <%- include ('../includes/nav.ejs') %> 
+    <div>
+      <h1><%= pageTitle  %> </h1>
+      <form action='/admin/add-product' method='POST'>
+        <label for='title'></label>
+        <input type='text' name='title' />
+        <button type='submit'>Post</button>
+      </form>
+      <% if (products) { %>
+        <div class='products'>
+          <ul>
+            <% for( let product of products ) { %>
+              <li>
+                <%= product.title %> 
+              </li>
+            <% } %>
+          </ul>
+        </div>
+      <% } %>
+    </div>
+    <%- include ('../includes/footer.ejs')  %> 
+  </body>
+</html>
