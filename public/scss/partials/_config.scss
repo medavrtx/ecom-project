@@ -1,0 +1,41 @@
+$background: rgb(242, 244, 249);
+$background-secondary: #ffffff;
+$primary: rgb(14, 45, 76);
+$font-stack: 'Lato', sans-serif;
+
+body {
+  margin: 0;
+  background-color: $background;
+  color: set-text-color($primary);
+  font-family: $font-stack;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+}
+
+.main-context {
+  display: flex;
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+}
+
+@function set-text-color($color) {
+  @if (lightness($color) > 70) {
+    @return rgb(245, 236, 236);
+  } @else {
+    @return rgb(14, 45, 76);
+  }
+}
+
+@mixin set-background($color) {
+  background-color: $color;
+  color: set-text-color($color);
+}

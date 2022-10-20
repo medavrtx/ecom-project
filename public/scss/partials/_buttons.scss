@@ -1,0 +1,25 @@
+%btn {
+  display: inline-block;
+  border-radius: 5px;
+  padding: 5px 20px;
+  margin: 3px;
+  cursor: pointer;
+  transition: 300ms;
+  font-family: $font-stack;
+
+  &:hover {
+    opacity: 90%;
+    transform: scale(1.02);
+  }
+}
+
+.btn-primary {
+  @extend %btn;
+  background-color: lighten($primary, 10%);
+  border: none;
+}
+.btn-secondary {
+  @extend %btn;
+  background-color: $background;
+  border: 1px solid $primary;
+}
