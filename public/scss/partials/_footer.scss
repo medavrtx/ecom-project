@@ -1,0 +1,46 @@
+.main-footer {
+  background-color: $primary;
+  color: $background;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  bottom: 0;
+  padding: 3rem 0;
+}
+
+.main-footer__links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.main-footer__nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 50%;
+}
+
+.main-footer__nav-help {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-footer__nav-shop {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-footer__newsletter {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 50%;
+}
+
+.main-footer__socials {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
