@@ -10,6 +10,9 @@ router.get('/admin', adminController.getAdmin);
 router.get('/admin/products', adminController.getProducts);
 
 // /admin/add-product => GET
+router.get('/admin/edit-products', adminController.getEditProducts);
+
+// /admin/add-product => GET
 router.get('/admin/add-product', adminController.getAddProduct);
 
 // /admin/add-product => POST

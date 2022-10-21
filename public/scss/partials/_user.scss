@@ -1,0 +1,23 @@
+.user-options {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+  border-radius: 20px;
+  width: 70%;
+
+  div {
+    background-color: $background-secondary;
+    height: 50px;
+    border-radius: 5px;
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(209, 209, 209);
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(217, 220, 228);
+    }
+  }
+}

@@ -6,19 +6,18 @@
       <div class="content">
         <div class="nav-spacer" /></div>
         <div class="home-title">
-          <h1><%= pageTitle  %> </h1>
-          <h3>The web's greatest marketplace</h3>
+          <h2><%= pageTitle  %> </h2>
         </div>
         <% if (products) { %>
           <div class='products'>
               <% for( let product of products ) { %>
                 <div class="card">
-
-                  <div class="products-image" onclick="location.href='/shop/<%= product.id %>'">
-                    <img src="<%= product.image %> " alt="<%= product.title %>" >
-                  </div>
                   <div class="products-title">
                     <%= product.title %> 
+                  </div>
+
+                  <div class="products-image">
+                    <img src="<%= product.image %> " alt="<%= product.title %> ">
                   </div>
                   <div class="products-price">
                     $<%= product.price %> 
@@ -26,9 +25,12 @@
                   <div class="products-description">
                     <%= product.description %> 
                   </div>
-                  <form action="/add-to-cart" method="POST">
-                    <button class="btn-primary" type="submit">Add To Cart</button>
-                  </form>
+                  <div class="btn-row">
+                    <button class="btn-primary" onclick="location.href='/admin/edit-product'">Edit</button>
+                    <form action="/admin/delete-product" method="POST">
+                        <button class="btn-primary" type="submit">Delete</button>
+                    </form>
+                  </div>
                 </div>
               <% } %>
           </div>
