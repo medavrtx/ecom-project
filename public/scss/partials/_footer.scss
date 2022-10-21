@@ -2,10 +2,10 @@
   background-color: $primary;
   color: $background;
   width: 100%;
-  position: absolute;
+  height: 100px;
   display: flex;
   flex-direction: column;
-  bottom: 0;
+  position: absolute;
   padding: 3rem 0;
 }
 

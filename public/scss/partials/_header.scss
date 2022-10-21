@@ -1,15 +1,22 @@
 .main-header {
+  position: fixed;
+  width: 100%;
   height: 3.5rem;
   background-color: $background-secondary;
-  padding: 0 1.5rem;
+  z-index: 1;
 }
 
 .main-header__nav {
   height: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: end;
+  justify-content: space-between;
   align-items: center;
+  padding: 0 1.5rem;
+}
+
+.main-header__logo {
+  display: flex;
 }
 
 .main-header__item-list {
