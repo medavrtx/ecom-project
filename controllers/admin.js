@@ -25,7 +25,20 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-  const product = new Product(req.body.title);
+  const title = req.body.title;
+  const price = req.body.price;
+  const description = req.body.description;
+  const image = req.body.image;
+  const colorOptions = req.body.colorOptions;
+  const sizeOptions = req.body.sizeOptions;
+  const product = new Product(
+    title,
+    price,
+    description,
+    image,
+    colorOptions,
+    sizeOptions
+  );
   product.save();
   res.redirect('/');
 };
