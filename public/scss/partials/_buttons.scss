@@ -1,12 +1,14 @@
 %btn {
   display: inline-block;
   border-radius: 5px;
-  padding: 3px 20px;
+  padding: 10px 25px;
   cursor: pointer;
   font-family: $font-stack;
 
   &:hover {
     opacity: 90%;
+    transition: 300ms;
+    transform: scale(1.02);
   }
 }
 
@@ -20,4 +22,19 @@
   @extend %btn;
   background-color: $background;
   border: 1px solid $primary;
+}
+
+.btn-row {
+  display: flex;
+  flex-direction: row;
+  height: 22px;
+
+  form {
+    height: 100%;
+    margin-left: 5px;
+
+    button {
+      height: 100%;
+    }
+  }
 }

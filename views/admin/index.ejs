@@ -6,7 +6,27 @@
     <div class="page-wrap">
       <div class="content">
         <div class="nav-spacer"></div>
-        <h1><%= pageTitle  %> </h1>
+        <h1>Admin Overview</h1>
+        <div class="admin-stats">
+          <div class="admin-stats-nums">
+            <div class="sold">
+              <h2>0</h2>
+              <a>Sold</a>
+            </div>
+            <div class="listed">
+              <h2>0</h2>
+              <a>Listed</a>
+            </div>
+          </div>
+          <div class="admin-stats-profit">
+            <h2>$0.00</h2>
+            <p>Profit</p>
+          </div>
+          <div>
+            <button class="btn-primary" onclick="location.href='/admin/add-product'">Add Product</button>
+            <button class="btn-primary" onclick="location.href='/admin/edit-products'">Edit Products</button>
+          </div>
+        </div>
       </div>
     </div>
     <%- include ('../includes/footer.ejs')  %> 

@@ -10,6 +10,17 @@ exports.getHome = (req, res, next) => {
   });
 };
 
+exports.getProduct = (req, res, next) => {
+  const prodId = req.params.productId;
+  Product.findById(prodId, (product) => {
+    res.render('shop/product-detail', {
+      pageTitle: product.title,
+      path: '/shop/' + product.id,
+      product: product,
+    });
+  });
+};
+
 exports.getInfo = (req, res, next) => {
   Product.fetchAll((products) => {
     res.render('shop/info', {
@@ -35,26 +46,6 @@ exports.getCheckout = (req, res, next) => {
     res.render('shop/checkout', {
       pageTitle: 'Checkout',
       path: '/checkout',
-      products: products.reverse(),
-    });
-  });
-};
-
-exports.getUser = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render('shop/cart', {
-      pageTitle: 'Cart',
-      path: '/cart',
-      products: products.reverse(),
-    });
-  });
-};
-
-exports.getSignIn = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render('shop/signin', {
-      pageTitle: 'Sign In',
-      path: '/signin',
       products: products.reverse(),
     });
   });
