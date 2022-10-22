@@ -5,43 +5,43 @@
     <div class="page-wrap">
       <div class="content">
         <div class="nav-spacer"></div>
-        <form class="product-form" action='/admin/add-product' method='POST'>
+        <form class="product-form" action='/admin/<% if (editing) {%>edit-product<%} else {%>add-product<%} %>' method='POST'>
           <div class="title-row">
             <div class="form-control ">
               <label for='title' id="title">Title</label>
-              <input type='text' name='title' id="title" />
+              <input type='text' name='title' id="title" value="<% if (editing) {%><%=product.title%><%} else {%><%} %>" />
             </div>
             <div class="form-control ">
               <label for='price'>Price</label>
               <div class="price">
                 <span id="dollar-sign">$</span>
-                <input type='number' name='price' id="price" />
+                <input type='number' name='price' id="price" value="<% if (editing) {%><%=product.price%><%} else {%><%} %>" />
               </div>
             </div>
           </div>
           <div class="form-control ">
             <label for='Description'>Description</label>
-            <textarea rows='10' name='description' id="description" ></textarea>
+            <textarea rows='10' name='description' id="description" ><% if (editing) {%><%=product.description%><%} %> </textarea>
           </div>
           <div class="form-control ">
             <label for='image'>Image</label>
-            <input type='text' name='image' id="image" />
+            <input type='text' name='image' id="image" value="<% if (editing) {%><%=product.image%><%} else {%><%} %>"  />
           </div>
           <div class="form-control ">
             <label for='colorOptions'>Color Options</label>
             <div>
               <input type='text' name='colorOptions' id="colorOptions" />
-              <button class="btn-primary">Add</button>
+              <button class="btn-primary slim">Add</button>
             </div>
           </div>
           <div class="form-control ">
             <label for='sizeOptions'>Size Options</label>
             <div>
               <input type='text' name='colorOptions' id="colorOptions" />
-              <button class="btn-primary">Add</button>
+              <button class="btn-primary slim">Add</button>
             </div>
           </div>
-          <button class="btn-primary form-btn" type='submit'>Continue</button>
+          <button class="btn-primary form-btn" type='submit'><% if (editing) {%>Update Product<%} else {%>Add Product<%} %></button>
         </form>
       </div>
     </div>

@@ -12,12 +12,12 @@
           <div class='products'>
               <% for( let product of products ) { %>
                 <div class="card">
+  
+                  <div class="products-image" onclick="location.href='/shop/<%= product.id %>'">
+                    <img src="<%= product.image %> " alt="<%= product.title %>" >
+                  </div>
                   <div class="products-title">
                     <%= product.title %> 
-                  </div>
-
-                  <div class="products-image">
-                    <img src="<%= product.image %> " alt="<%= product.title %> ">
                   </div>
                   <div class="products-price">
                     $<%= product.price %> 
@@ -26,7 +26,7 @@
                     <%= product.description %> 
                   </div>
                   <div class="btn-row">
-                    <button class="btn-primary" onclick="location.href='/admin/edit-product'">Edit</button>
+                    <button class="btn-primary" onclick="location.href='/admin/edit-product/<%= product.id %>?edit=true'">Edit</button>
                     <form action="/admin/delete-product" method="POST">
                         <button class="btn-primary" type="submit">Delete</button>
                     </form>

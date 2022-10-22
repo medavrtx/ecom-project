@@ -47,10 +47,17 @@ h5 {
   border: 1px solid rgb(14, 45, 76);
 }
 
+.slim {
+  height: 22px;
+  padding: 0 15px;
+}
+
 .btn-row {
   display: flex;
   flex-direction: row;
-  height: 22px;
+}
+.btn-row button {
+  height: 50%;
 }
 .btn-row form {
   height: 100%;
