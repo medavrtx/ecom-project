@@ -24,10 +24,18 @@
   border: 1px solid $primary;
 }
 
+.slim {
+  height: 22px;
+  padding: 0 15px;
+}
+
 .btn-row {
   display: flex;
   flex-direction: row;
-  height: 22px;
+
+  button {
+    height: 50%;
+  }
 
   form {
     height: 100%;
