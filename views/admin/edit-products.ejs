@@ -28,7 +28,8 @@
                   <div class="btn-row">
                     <button class="btn-primary" onclick="location.href='/admin/edit-product/<%= product.id %>?edit=true'">Edit</button>
                     <form action="/admin/delete-product" method="POST">
-                        <button class="btn-primary" type="submit">Delete</button>
+                      <input type="hidden" value="<%= product.id %>" name="productId">
+                      <button class="btn-primary" type="submit">Delete</button>
                     </form>
                   </div>
                 </div>

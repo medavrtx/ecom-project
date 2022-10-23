@@ -1,3 +1,4 @@
+const Cart = require('../models/cart');
 const Product = require('../models/product');
 
 exports.getAdmin = (req, res, next) => {
@@ -71,4 +72,32 @@ exports.getEditProduct = (req, res, next) => {
       product: product,
     });
   });
+};
+
+exports.postEditProduct = (req, res, next) => {
+  const prodId = req.body.productId;
+  const updatedTitle = req.body.title;
+  const updatedPrice = req.body.price;
+  const updatedDescription = req.body.description;
+  const updatedImage = req.body.image;
+  const updatedColorOptions = req.body.colorOptions;
+  const updatedSizeOptions = req.body.sizeOptions;
+  const updatedProduct = new Product(
+    prodId,
+    updatedTitle,
+    updatedPrice,
+    updatedDescription,
+    updatedImage,
+    updatedColorOptions,
+    updatedSizeOptions
+  );
+  updatedProduct.save();
+  res.redirect('/admin/edit-products');
+};
+
+exports.postDeleteProduct = (req, res, next) => {
+  const prodId = req.body.productId;
+  console.log(prodId);
+  Product.deleteById(prodId);
+  res.redirect('/admin/edit-products');
 };
