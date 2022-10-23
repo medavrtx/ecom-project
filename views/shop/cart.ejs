@@ -6,6 +6,44 @@
       <div class="content">
         <div class="nav-spacer"></div>
         <h1><%= pageTitle  %> </h1>
+        <div class="cart-main">
+          <div class="cart-list">
+            <% if (products.length > 0) { %>
+              <% products.forEach(p => { %>
+                <div class="cart-card">
+                  <div class="cart-product-info">
+                    <div class="cart-product-image" >
+                      <img src="<%= p.productData.image %> " alt="<%= p.productData.title %>" >
+                    </div>
+                    <div class="cart-product-detail">
+                      <div class="cart-product-title"><%= p.productData.title %></div>
+                      <div>
+                        <form class="cart-product-update" action="">
+                        <label for="qty">Qty:</label>
+                          <input name="qty" type="number" class="cart-product-qty" value="<%= p.qty %>"></input>
+                          <button class="btn-primary slim">Update</button>
+                        </form>
+                        <form class="cart-product-delete" action="/cart-delete-item" method="POST">
+                          <input type="hidden" value="<%= p.productData.id %>" name="productId" >
+                          <a onclick="this.parentNode.submit()">Delete</a>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cart-product-price">$<%= p.productData.price %></div>
+                </div>
+              <% }) %>  
+              <% } else { %>
+                <div class="cart-card-no">
+                  <h2>No Products in Cart</h2>
+                </div>
+              <% } %>
+              </div>
+          <div class="cart-subtotal">
+            Subtotal (<%= totalQty %> items): $<%= totalPrice %> 
+            <button class="btn-primary">Checkout</button>
+          </div>
+        </div>
       </div>
     </div>
   </body>
