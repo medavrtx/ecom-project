@@ -1,0 +1,35 @@
+.info {
+  background-image: url(/images/info.jpeg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 500px;
+}
+
+.info-description {
+  padding: 25px;
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info-para {
+  text-align: center;
+  line-height: 35px;
+  //   height: 270px;
+}
+
+.info-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 500px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    border-radius: 10px;
+  }
+}
