@@ -2,33 +2,32 @@ const Cart = require('../models/cart');
 const Product = require('../models/product');
 
 exports.getHome = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render('shop/home', {
-      pageTitle: 'ECOM',
-      path: '/',
-      products: products.reverse(),
-    });
-  });
+  Product.fetchAll()
+    .then(([rows, fieldData]) => {
+      res.render('shop/home', {
+        products: rows,
+        pageTitle: 'ECOM',
+        path: '/',
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 exports.getProduct = (req, res, next) => {
   const prodId = req.params.productId;
-  Product.findById(prodId, (product) => {
+  Product.findById(prodId).then(([product]) => {
     res.render('shop/product-detail', {
       pageTitle: product.title,
-      path: '/shop/' + product.id,
-      product: product,
+      path: '/shop/' + prodId,
+      product: product[0],
     });
   });
 };
 
 exports.getInfo = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render('shop/info', {
-      pageTitle: 'Info',
-      path: '/info',
-      products: products.reverse(),
-    });
+  res.render('shop/info', {
+    pageTitle: 'Info',
+    path: '/info',
   });
 };
 
