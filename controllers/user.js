@@ -1,12 +1,9 @@
 const Product = require('../models/product');
 
 exports.getUser = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render('user/index', {
-      pageTitle: 'Cart',
-      path: '/user',
-      products: products.reverse(),
-    });
+  res.render('user/index', {
+    pageTitle: 'Cart',
+    path: '/user',
   });
 };
 

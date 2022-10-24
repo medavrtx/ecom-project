@@ -8,24 +8,17 @@ exports.getAdmin = (req, res, next) => {
   });
 };
 
-exports.getProducts = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render('admin/products', {
-      pageTitle: 'Products',
-      path: '/admin/products',
-      products: products.reverse(),
-    });
-  });
-};
-
 exports.getEditProducts = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render('admin/edit-products', {
-      pageTitle: 'Edit Products',
-      path: '/admin/edit-products',
-      products: products.reverse(),
-    });
-  });
+  req.user
+    .getProducts()
+    .then((products) => {
+      res.render('admin/edit-products', {
+        pageTitle: 'Edit Products',
+        path: '/admin/edit-products',
+        products: products.reverse(),
+      });
+    })
+    .catch((err) => console.log(err));
 };
 
 exports.getAddProduct = (req, res, next) => {
@@ -43,17 +36,19 @@ exports.postAddProduct = (req, res, next) => {
   const image = req.body.image;
   // const colorOptions = req.body.colorOptions;
   // const sizeOptions = req.body.sizeOptions;
-  const product = new Product(
-    null,
-    title,
-    price,
-    description,
-    image
-    // colorOptions,
-    // sizeOptions
-  );
-  product.save();
-  res.redirect('/');
+  req.user
+    .createProduct({
+      title: title,
+      price: price,
+      image: image,
+      description: description,
+    })
+    .then((result) => {
+      res.redirect('/admin/edit-products');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.getEditProduct = (req, res, next) => {
@@ -62,7 +57,8 @@ exports.getEditProduct = (req, res, next) => {
     return res.redirect('/');
   }
   const prodId = req.params.productId;
-  Product.findById(prodId, (product) => {
+  req.user.getProducts({ where: { id: prodId } }).then((products) => {
+    const product = products[0];
     if (!product) {
       return res.redirect('/');
     }
@@ -73,6 +69,11 @@ exports.getEditProduct = (req, res, next) => {
       product: product,
     });
   });
+  // Product.findByPk(prodId)
+  // .then((product) => {
+  //   if (!product) {
+  //     return res.redirect('/');
+  //   }
 };
 
 exports.postEditProduct = (req, res, next) => {
@@ -81,24 +82,43 @@ exports.postEditProduct = (req, res, next) => {
   const updatedPrice = req.body.price;
   const updatedDescription = req.body.description;
   const updatedImage = req.body.image;
-  const updatedColorOptions = req.body.colorOptions;
-  const updatedSizeOptions = req.body.sizeOptions;
+  // const updatedColorOptions = req.body.colorOptions;
+  // const updatedSizeOptions = req.body.sizeOptions;
   const updatedProduct = new Product(
     prodId,
     updatedTitle,
     updatedPrice,
     updatedDescription,
-    updatedImage,
-    updatedColorOptions,
-    updatedSizeOptions
+    updatedImage
+    // updatedColorOptions,
+    // updatedSizeOptions
   );
-  updatedProduct.save();
-  res.redirect('/admin/edit-products');
+  Product.findByPk(prodId)
+    .then((product) => {
+      product.title = updatedTitle;
+      product.price = updatedPrice;
+      product.description = updatedDescription;
+      product.image = updatedImage;
+      return product.save();
+    })
+    .then((result) => {
+      console.log('Updated Product!');
+      res.redirect('/admin/edit-products');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-  console.log(prodId);
-  Product.deleteById(prodId);
-  res.redirect('/admin/edit-products');
+  Product.findByPk(prodId)
+    .then((product) => {
+      return product.destroy();
+    })
+    .then((result) => {
+      console.log('Destroyed product');
+      res.redirect('/admin/edit-products');
+    })
+    .catch((err) => console.log(err));
 };
