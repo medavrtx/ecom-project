@@ -1,0 +1,43 @@
+<%- include ('../includes/head.ejs') %> 
+  </head>
+  <body>
+    <div class="page-wrap">
+      <%- include ('../includes/nav.ejs') %> 
+      <div class="content">
+        <div class="nav-spacer" /></div>
+        <div class="home-title">
+          <h2><%= pageTitle  %> </h2>
+        </div>
+        <% if (products) { %>
+          <div class='products'>
+              <% for( let product of products ) { %>
+                <div class="card">
+  
+                  <div class="products-image" onclick="location.href='/shop/<%= product.id %>'">
+                    <img src="<%= product.image %> " alt="<%= product.title %>" >
+                  </div>
+                  <div class="products-title">
+                    <%= product.title %> 
+                  </div>
+                  <div class="products-price">
+                    $<%= product.price %> 
+                  </div>
+                  <div class="products-description">
+                    <%= product.description %> 
+                  </div>
+                  <div class="btn-row">
+                    <button class="btn-primary" onclick="location.href='/admin/edit-product/<%= product.id %>?edit=true'">Edit</button>
+                    <form action="/admin/delete-product" method="POST">
+                      <input type="hidden" value="<%= product.id %>" name="productId">
+                      <button class="btn-primary" type="submit">Delete</button>
+                    </form>
+                  </div>
+                </div>
+              <% } %>
+          </div>
+        <% } %>
+      </div>
+    </div>
+    <%- include ('../includes/footer.ejs')  %> 
+  </body>
+</html>
