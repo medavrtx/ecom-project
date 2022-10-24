@@ -1,49 +1,46 @@
-const db = require('../util/database');
-const fs = require('fs');
-const path = require('path');
-const Cart = require('./cart');
+const Sequelize = require('sequelize');
+const sequelize = require('../util/database');
 
-const p = path.join(
-  path.dirname(process.mainModule.filename),
-  'data',
-  'products.json'
-);
+const Product = sequelize.define('product', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
+  },
+  title: Sequelize.STRING,
+  price: {
+    type: Sequelize.DOUBLE,
+    allowNull: false,
+  },
+  image: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  description: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  // colorOptions: {
+  //   type: Sequelize.STRING,
+  //   allowNull: false,
+  //   get() {
+  //     return this.getDataValue('colorOptions').split(';');
+  //   },
+  //   set(val) {
+  //     this.setDataValue('colorOptions', val.join(';'));
+  //   },
+  // },
+  // sizeOptions: {
+  //   type: Sequelize.STRING,
+  //   allowNull: false,
+  //   get() {
+  //     return this.getDataValue('sizeOptions').split(';');
+  //   },
+  //   set(val) {
+  //     this.setDataValue('sizeOptions', val.join(';'));
+  //   },
+  // },
+});
 
-const getProductsFromFile = (cb) => {
-  fs.readFile(p, (err, fileContent) => {
-    if (err) {
-      cb([]);
-    } else {
-      cb(JSON.parse(fileContent));
-    }
-  });
-};
-
-module.exports = class Product {
-  constructor(id, title, price, description, image, colorOptions, sizeOptions) {
-    this.id = id;
-    this.title = title;
-    this.price = price;
-    this.description = description;
-    this.image = image;
-    this.colorOptions = colorOptions;
-    this.sizeOptions = sizeOptions;
-  }
-
-  save() {
-    return db.execute(
-      'INSERT INTO products (title, price, description, image) VALUES (?, ?, ?, ?)',
-      [this.title, this.price, this.description, this.image]
-    );
-  }
-
-  static deleteById(id) {}
-
-  static fetchAll(cb) {
-    return db.execute('SELECT * FROM products');
-  }
-
-  static findById(id) {
-    return db.execute('SELECT * FROM products WHERE products.id = ?', [id]);
-  }
-};
+module.exports = Product;
