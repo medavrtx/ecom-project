@@ -121,13 +121,3 @@ exports.postCartDeleteProduct = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
-
-exports.getCheckout = (req, res, next) => {
-  Product.fetchAll((products) => {
-    res.render('shop/checkout', {
-      pageTitle: 'Checkout',
-      path: '/checkout',
-      products: products.reverse(),
-    });
-  });
-};

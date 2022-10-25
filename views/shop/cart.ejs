@@ -41,7 +41,9 @@
               </div>
           <div class="cart-subtotal">
             Subtotal (<%= totalQty %> items): $<%= totalPrice %> 
-            <button class="btn-primary">Checkout</button>
+            <form action="/user/create-order" method="POST">
+              <button class="btn-primary">Checkout</button>
+            </form>
           </div>
         </div>
       </div>

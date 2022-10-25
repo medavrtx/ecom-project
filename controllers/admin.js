@@ -15,7 +15,7 @@ exports.getEditProducts = (req, res, next) => {
       res.render('admin/edit-products', {
         pageTitle: 'Edit Products',
         path: '/admin/edit-products',
-        products: products.reverse(),
+        products: products,
       });
     })
     .catch((err) => console.log(err));

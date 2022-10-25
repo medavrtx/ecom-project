@@ -7,11 +7,30 @@
       <div class="content">
         <div class="nav-spacer"></div>
         <h1>Orders</h1>
-        <div class="user-options">
+        <% if (orders.length <= 0)  { %> 
+          <div class="user-options">
             Nothing Here
-        </div>
-      </div>
+          </div>
+        <% } else { %> 
+          <div class="orders-list">
+            <% orders.forEach(order => { %> 
+              <div class="order-card">
+                <h4>
+                  Order #<%= order.id  %> – <%= order.createdAt.toLocaleDateString("en-US", {month: 'short', day: 'numeric', year: 'numeric'}) %>
+                </h4>
+                  <% order.products.forEach(product => { %>
+                <div class="order-card-desc">
+                  <div class="order-product-image" >
+                    <img src="<%= product.image %> " alt="<%= product.title %>" >
+                  </div>
+                  <div class="order-card-title"><%= product.title %> (<%= product.orderItem.quantity %>)</div>
+                </div>
+                <% }) %> 
+             </div>
+           <% }) %> 
+         </div>
+        <% } %> 
     </div>
-    <%- include ('../includes/footer.ejs')  %> 
   </body>
+  <%- include ('../includes/footer.ejs')  %> 
 </html>

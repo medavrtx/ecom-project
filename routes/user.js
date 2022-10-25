@@ -9,6 +9,9 @@ router.get('/', userController.getUser);
 // /sign-in => GET
 router.get('/signin', userController.getSignIn);
 
+// /order => POST
+router.post('/create-order', userController.postOrder);
+
 // /sign-in => GET
 router.get('/orders', userController.getOrders);
 
