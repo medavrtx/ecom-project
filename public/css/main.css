@@ -198,12 +198,12 @@ h5 {
   align-items: center;
   justify-content: center;
   padding: 15px;
-  margin-bottom: 300px;
+  margin-bottom: 100px;
 }
 
 .page-wrap {
-  min-height: 100%;
-  margin-bottom: -190px;
+  min-height: 92.5%;
+  margin-bottom: -200px;
 }
 
 .nav-spacer {
@@ -262,7 +262,7 @@ h5 {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  width: 350px;
+  max-width: 400px;
   height: 400px;
   overflow: hidden;
 }
@@ -481,7 +481,6 @@ h5 {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  min-width: 200px;
 }
 
 .cart-list {
@@ -501,7 +500,7 @@ h5 {
   background-color: #ffffff;
   border-radius: 5px;
   margin-bottom: 15px;
-  min-width: 340px;
+  min-width: 300px;
 }
 
 .cart-card-no {
@@ -515,7 +514,6 @@ h5 {
   background-color: #ffffff;
   border-radius: 5px;
   margin-bottom: 15px;
-  min-width: 340px;
 }
 
 .cart-product-info {
@@ -614,10 +612,21 @@ h5 {
   border-radius: 10px;
 }
 
+.orders-main {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.orders-title {
+  display: flex;
+}
+
 .orders-list {
   display: flex;
   flex-direction: column;
-  width: 70%;
+  min-width: 50%;
 }
 
 .order-card {
@@ -628,7 +637,6 @@ h5 {
   background-color: #ffffff;
   border-radius: 5px;
   margin-bottom: 15px;
-  min-width: 340px;
 }
 
 .order-card-desc {
@@ -653,6 +661,12 @@ h5 {
 }
 
 .order-card-title {
+  display: flex;
+  margin-left: 10px;
+  font-weight: 700;
+}
+
+.order-card-qty {
   display: flex;
   margin-left: 10px;
 }

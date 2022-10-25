@@ -18,10 +18,11 @@
                     <div class="cart-product-detail">
                       <div class="cart-product-title"><%= p.title %></div>
                       <div>
-                        <form class="cart-product-update" action="">
-                        <label for="qty">Qty:</label>
+                        <form class="cart-product-update" action="/cart-update-item" method="POST">
+                          <input type="hidden" value="<%= p.id %>" name="productId" >
+                          <label for="qty">Qty:</label>
                           <input name="qty" type="number" class="cart-product-qty" value="<%= p.cartItem.quantity %>"></input>
-                          <button class="btn-primary slim">Update</button>
+                          <button type="submit" class="btn-primary slim">Update</button>
                         </form>
                         <form class="cart-product-delete" action="/cart-delete-item" method="POST">
                           <input type="hidden" value="<%= p.id %>" name="productId" >
