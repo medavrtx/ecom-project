@@ -121,3 +121,27 @@ exports.postCartDeleteProduct = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+
+exports.postCartUpdateProduct = (req, res, next) => {
+  const prodId = req.body.productId;
+  const qty = req.body.qty;
+  req.user
+    .getCart()
+    .then((cart) => {
+      return cart.getProducts({ where: { id: prodId } });
+    })
+    .then((products) => {
+      const product = products[0];
+      if (qty == 0) {
+        product.cartItem.destroy();
+      } else {
+        product.cartItem.quantity = qty;
+        product.cartItem.save();
+      }
+    })
+    .then((result) => {
+      console.log('Updated quantity!');
+      res.redirect('/cart');
+    })
+    .catch((err) => console.log(err));
+};
