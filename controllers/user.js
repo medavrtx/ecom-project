@@ -2,20 +2,17 @@ const Cart = require('../models/cart');
 const Product = require('../models/product');
 
 exports.getUser = (req, res, next) => {
+  const isLoggedIn = req.get('Cookie').split('=')[1];
   res.render('user/index', {
     pageTitle: 'Cart',
     path: '/user',
-  });
-};
-
-exports.getSignIn = (req, res, next) => {
-  res.render('user/signin', {
-    pageTitle: 'Sign In',
-    path: '/user/signin',
+    isAuthenticated: isLoggedIn,
+    isAdmin: req.isAdmin,
   });
 };
 
 exports.getOrders = (req, res, next) => {
+  const isLoggedIn = req.get('Cookie')?.split('=')[1];
   req.user
     .getOrders({ include: ['products'] })
     .then((orders) => {
@@ -23,6 +20,8 @@ exports.getOrders = (req, res, next) => {
         path: '/user/orders',
         pageTitle: 'Your Orders',
         orders: orders,
+        isAuthenticated: isLoggedIn,
+        isAdmin: req.isAdmin,
       });
     })
     .catch((err) => console.log(err));
