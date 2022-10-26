@@ -6,12 +6,22 @@
     <ul class="main-header__item-list">
       <li class="main-header__item"><a href="/">Products</a></li>
       <li class="main-header__item"><a href="/info">Info</a></li>
-      <li class="main-header__item"><a href="/user/signin">Sign In</a></li>
+      <% if (isAuthenticated) { %> 
       <li class="main-header__item"><a href="/user">Account</a></li>
+      <li class="main-header__item">
+        <form class="cart-product-delete" action="/logoutuser" method="POST">
+          <a onclick="this.parentNode.submit()">Logout</a>
+        </form>
+      </li>
+      <% } else { %>
+        <li class="main-header__item"><a href="/signin">Sign In</a></li>
+      <% } %>  
+      <% if (isAdmin) { %> 
       <li class="main-header__item">
         <a href="/admin/add-product">Add Product</a>
       </li>
       <li class="main-header__item"><a href="/admin">Admin</a></li>
+      <% } %> 
       <div class="imagebox" onclick="location.href='/cart'">
         <div class="cart" />
       </div>

@@ -2,18 +2,22 @@ const Cart = require('../models/cart');
 const Product = require('../models/product');
 
 exports.getHome = (req, res, next) => {
+  const isLoggedIn = req.get('Cookie')?.split('=')[1];
   Product.findAll()
     .then((products) => {
       res.render('shop/home', {
         products: products,
         pageTitle: 'ECOM',
         path: '/',
+        isAuthenticated: isLoggedIn,
+        isAdmin: req.isAdmin,
       });
     })
     .catch((err) => console.log(err));
 };
 
 exports.getProduct = (req, res, next) => {
+  const isLoggedIn = req.get('Cookie')?.split('=')[1];
   const prodId = req.params.productId;
   Product.findAll({ where: { id: prodId } })
     .then((products) => {
@@ -21,6 +25,8 @@ exports.getProduct = (req, res, next) => {
         product: products[0],
         pageTitle: products[0].title,
         path: '/shop/' + prodId,
+        isAuthenticated: isLoggedIn,
+        isAdmin: req.isAdmin,
       });
     })
     .catch((err) => {
@@ -29,13 +35,17 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getInfo = (req, res, next) => {
+  const isLoggedIn = req.get('Cookie')?.split('=')[1];
   res.render('shop/info', {
     pageTitle: 'Info',
     path: '/info',
+    isAuthenticated: isLoggedIn,
+    isAdmin: req.isAdmin,
   });
 };
 
 exports.getCart = (req, res, next) => {
+  const isLoggedIn = req.get('Cookie')?.split('=')[1];
   req.user
     .getCart()
     .then((cart) => {
@@ -55,6 +65,8 @@ exports.getCart = (req, res, next) => {
             products: products,
             totalPrice: totalPrice,
             totalQty: totalQty,
+            isAuthenticated: isLoggedIn,
+            isAdmin: req.isAdmin,
           });
         })
         .catch((err) => console.log(err));
@@ -96,11 +108,14 @@ exports.postCart = (req, res, next) => {
 };
 
 exports.getCheckout = (req, res, next) => {
+  const isLoggedIn = req.get('Cookie')?.split('=')[1];
   Product.fetchAll((products) => {
     res.render('shop/checkout', {
       pageTitle: 'Checkout',
       path: '/checkout',
-      products: products.reverse(),
+      products: products,
+      isAuthenticated: isLoggedIn,
+      isAdmin: req.isAdmin,
     });
   });
 };
@@ -132,7 +147,7 @@ exports.postCartUpdateProduct = (req, res, next) => {
     })
     .then((products) => {
       const product = products[0];
-      if (qty == 0) {
+      if (qty <= 0) {
         product.cartItem.destroy();
       } else {
         product.cartItem.quantity = qty;
