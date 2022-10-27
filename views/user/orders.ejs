@@ -12,7 +12,7 @@
               <% orders.forEach(order => { %> 
                 <div class="order-card">
                   <h4>
-                    Order #<%= order._id  %> - <%#= order.createdAt.toLocaleDateString("en-US", {month: 'short', day: 'numeric', year: 'numeric'}) %>
+                    <%= order.createdAt.toLocaleDateString("en-US", {month: 'short', day: 'numeric', year: 'numeric'}) %> - Order #<%= order._id  %>
                   </h4>
                     <% order.items.forEach(product => { %>
                       <div class="order-card-desc">

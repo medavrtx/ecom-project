@@ -84,6 +84,7 @@ class User {
       .then((products) => {
         const order = {
           items: products,
+          createdAt: new Date(),
           user: {
             _id: new ObjectId(this._id),
             name: this.name,
