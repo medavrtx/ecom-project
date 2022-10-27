@@ -12,9 +12,9 @@
               <% orders.forEach(order => { %> 
                 <div class="order-card">
                   <h4>
-                    Order #<%= order.id  %> – <%= order.createdAt.toLocaleDateString("en-US", {month: 'short', day: 'numeric', year: 'numeric'}) %>
+                    Order #<%= order._id  %> - <%#= order.createdAt.toLocaleDateString("en-US", {month: 'short', day: 'numeric', year: 'numeric'}) %>
                   </h4>
-                    <% order.products.forEach(product => { %>
+                    <% order.items.forEach(product => { %>
                       <div class="order-card-desc">
                         <div class="order-product-image" >
                           <img src="<%= product.image %> " alt="<%= product.title %>" >
@@ -24,7 +24,7 @@
                             <%= product.title %>
                           </div>
                           <div class="order-card-qty">
-                            Quantity: <%= product.orderItem.quantity %>
+                            Quantity: <%= product.quantity %>
                           </div>
                         </div>
                       </div>
