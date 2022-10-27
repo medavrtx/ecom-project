@@ -6,7 +6,7 @@ const adminController = require('../controllers/admin');
 // /admin => GET
 router.get('/', adminController.getAdmin);
 
-// /admin/add-product => GET
+// /admin/edit-products => GET
 router.get('/edit-products', adminController.getEditProducts);
 
 // /admin/add-product => GET
@@ -21,7 +21,7 @@ router.get('/edit-product/:productId', adminController.getEditProduct);
 // /admin/edit-product => POST
 router.post('/edit-product', adminController.postEditProduct);
 
-// /admin/edit-product => POST
+// /admin/delete-product => POST
 router.post('/delete-product', adminController.postDeleteProduct);
 
 module.exports = router;

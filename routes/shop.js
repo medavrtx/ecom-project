@@ -3,10 +3,10 @@ const router = express.Router();
 
 const shopController = require('../controllers/shop');
 
-// / => GET
+// => GET
 router.get('/', shopController.getHome);
 
-// / => GET
+// => GET
 router.get('/shop/:productId', shopController.getProduct);
 
 // /info => GET
@@ -24,7 +24,7 @@ router.post('/cart-delete-item', shopController.postCartDeleteProduct);
 // /cart => POST
 router.post('/cart-update-item', shopController.postCartUpdateProduct);
 
-// /checkout => GET
-router.get('/checkout', shopController.getCheckout);
+// // /checkout => GET
+// router.get('/checkout', shopController.getCheckout);
 
 module.exports = router;
