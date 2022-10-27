@@ -75,7 +75,7 @@ exports.postCart = (req, res, next) => {
 
 exports.getCheckout = (req, res, next) => {
   const isLoggedIn = req.get('Cookie')?.split('=')[1];
-  Product.fetchAll((products) => {
+  Product.fetchAll().then((products) => {
     res.render('shop/checkout', {
       pageTitle: 'Checkout',
       path: '/checkout',
