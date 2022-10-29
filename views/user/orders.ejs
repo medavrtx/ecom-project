@@ -14,17 +14,17 @@
                   <h4>
                     <%= order.createdAt.toLocaleDateString("en-US", {month: 'short', day: 'numeric', year: 'numeric'}) %> - Order #<%= order._id  %>
                   </h4>
-                    <% order.items.forEach(product => { %>
+                    <% order.products.forEach(p => { %>
                       <div class="order-card-desc">
                         <div class="order-product-image" >
-                          <img src="<%= product.image %> " alt="<%= product.title %>" >
+                          <img src="<%= p.product.image %> " alt="<%= p.product.title %>" >
                         </div>
                         <div>
                           <div class="order-card-title">
-                            <%= product.title %>
+                            <%= p.product.title %>
                           </div>
                           <div class="order-card-qty">
-                            Quantity: <%= product.quantity %>
+                            Quantity: <%= p.quantity %>
                           </div>
                         </div>
                       </div>

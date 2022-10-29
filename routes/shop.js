@@ -24,7 +24,10 @@ router.post('/cart-delete-item', shopController.postCartDeleteProduct);
 // /cart => POST
 router.post('/cart-update-item', shopController.postCartUpdateProduct);
 
-// /checkout => GET
-router.get('/checkout', shopController.getCheckout);
+// // /checkout => GET
+// router.get('/checkout', shopController.getCheckout);
+
+// /order => POST
+router.post('/order', shopController.postOrder);
 
 module.exports = router;

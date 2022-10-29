@@ -1,7 +1,8 @@
 const Product = require('../models/product');
+const Order = require('../models/order');
 
 exports.getHome = (req, res, next) => {
-  Product.fetchAll()
+  Product.find()
     .then((products) => {
       res.render('shop/home', {
         products: products,
@@ -41,12 +42,15 @@ exports.getInfo = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   req.user
-    .getCart()
-    .then((products) => {
+    .populate('cart.items.productId')
+    .then((user) => {
+      const products = user.cart.items;
       let totalPrice = 0;
       let totalQty = 0;
       products.forEach(
-        (p) => (totalPrice += p.price * p.quantity) && (totalQty += p.quantity)
+        (p) =>
+          (totalPrice += p.productId.price * p.quantity) &&
+          (totalQty += p.quantity)
       );
       res.render('shop/cart', {
         path: '/cart',
@@ -68,7 +72,6 @@ exports.postCart = (req, res, next) => {
       return req.user.addToCart(product);
     })
     .then((result) => {
-      console.log(result);
       res.redirect('/cart');
     });
 };
@@ -89,7 +92,7 @@ exports.getCheckout = (req, res, next) => {
 exports.postCartDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
   req.user
-    .deleteItemFromCart(prodId)
+    .removeFromCart(prodId)
     .then((result) => {
       res.redirect('/cart');
     })
@@ -101,23 +104,46 @@ exports.postCartDeleteProduct = (req, res, next) => {
 exports.postCartUpdateProduct = (req, res, next) => {
   const prodId = req.body.productId;
   const qty = req.body.qty;
+  if (qty <= 0) {
+    console.log("Qty can't be less than 1");
+    res.redirect('/cart');
+    return;
+  }
   req.user
-    .getCart()
-    .then((cart) => {
-      return cart.getProducts({ where: { id: prodId } });
-    })
-    .then((products) => {
-      const product = products[0];
-      if (qty <= 0) {
-        product.cartItem.destroy();
-      } else {
-        product.cartItem.quantity = qty;
-        product.cartItem.save();
-      }
-    })
+    .updateCart(prodId, qty)
     .then((result) => {
       console.log('Updated quantity!');
       res.redirect('/cart');
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.postOrder = (req, res, next) => {
+  req.user
+    .populate('cart.items.productId')
+    .then((user) => {
+      const products = user.cart.items.map((i) => {
+        return { quantity: i.quantity, product: { ...i.productId._doc } };
+      });
+      const order = new Order({
+        user: {
+          name: req.user.name,
+          userId: req.user,
+        },
+        products: products,
+        createdAt: new Date(),
+      });
+      return order.save();
+    })
+    .then((result) => {
+      return req.user.clearCart();
+    })
+    .then(() => {
+      res.redirect('/');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
