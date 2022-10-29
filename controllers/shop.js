@@ -8,6 +8,8 @@ exports.getHome = (req, res, next) => {
         products: products,
         pageTitle: 'ECOM',
         path: '/',
+        isAuthenticated: req.session.isLoggedIn,
+        isAdmin: req.session.isAdmin,
       });
     })
     .catch((err) => {
@@ -23,6 +25,8 @@ exports.getProduct = (req, res, next) => {
         product: product,
         pageTitle: product.title,
         path: '/shop/' + prodId,
+        isAuthenticated: req.session.isLoggedIn,
+        isAdmin: req.session.isAdmin,
       });
     })
     .catch((err) => {
@@ -35,8 +39,8 @@ exports.getInfo = (req, res, next) => {
   res.render('shop/info', {
     pageTitle: 'Info',
     path: '/info',
-    isAuthenticated: isLoggedIn,
-    isAdmin: req.isAdmin,
+    isAuthenticated: req.session.isLoggedIn,
+    isAdmin: req.session.isAdmin,
   });
 };
 
@@ -58,6 +62,8 @@ exports.getCart = (req, res, next) => {
         products: products,
         totalPrice: totalPrice,
         totalQty: totalQty,
+        isAuthenticated: req.session.isLoggedIn,
+        isAdmin: req.session.isAdmin,
       });
     })
     .catch((err) => {
@@ -77,14 +83,13 @@ exports.postCart = (req, res, next) => {
 };
 
 exports.getCheckout = (req, res, next) => {
-  const isLoggedIn = req.get('Cookie')?.split('=')[1];
   Product.fetchAll().then((products) => {
     res.render('shop/checkout', {
       pageTitle: 'Checkout',
       path: '/checkout',
       products: products,
-      isAuthenticated: isLoggedIn,
-      isAdmin: req.isAdmin,
+      isAuthenticated: req.session.isLoggedIn,
+      isAdmin: req.session.isAdmin,
     });
   });
 };
