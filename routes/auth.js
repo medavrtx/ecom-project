@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const authController = require('../controllers/auth');
+const isAuth = require('../middleware/is-auth');
 
 // /sign-in => GET
 router.get('/login', authController.getLogIn);
@@ -19,9 +20,9 @@ router.post('/registration', authController.postRegistration);
 router.post('/logoutuser', authController.postLogOut);
 
 // /user => GET
-router.get('/user/:userId', authController.getUser);
+router.get('/user/:userId', isAuth, authController.getUser);
 
-// /sign-in => GET
-router.get('/user/:userId/orders', authController.getOrders);
+// /user/orders => GET
+router.get('/user/:userId/orders', isAuth, authController.getOrders);
 
 module.exports = router;

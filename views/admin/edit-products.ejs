@@ -12,7 +12,6 @@
           <div class='products'>
               <% for( let product of products ) { %>
                 <div class="card">
-  
                   <div class="products-image" onclick="location.href='/admin/edit-product/<%= product._id %>?edit=true'">
                     <img src="<%= product.image %> " alt="<%= product.title %>" >
                   </div>
@@ -29,6 +28,7 @@
                     <button class="btn-primary" onclick="location.href='/admin/edit-product/<%= product._id %>?edit=true'">Edit</button>
                     <form action="/admin/delete-product" method="POST">
                       <input type="hidden" value="<%= product._id %>" name="productId">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                       <button class="btn-primary" type="submit">Delete</button>
                     </form>
                   </div>

@@ -6,18 +6,22 @@
       <div class="content">
         <div class="nav-spacer"></div>
         <h1><%= pageTitle  %> </h1>
+        <% if (errorMessage) {%>
+          <div class="user-message user-message--error"><%= errorMessage %> </div>
+         <% } %>
         <div class="user-sign-main">
           <form class="user-sign-in" action="/login" method="POST">
             <div class="form-control">
               <label for="email">Email</label>
-              <input type="text" name="" id="">
+              <input type="text" name="email" id="">
             </div>
             <div class="form-control">
               <label for="password">Password</label>
-              <input type="text" name="" id="">
+              <input type="text" name="password" id="">
             </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <div class="form-control">
-              <button class="btn-primary">Sign In</button>
+              <button class="btn-primary" type="submit">Sign In</button>
             </div>
           </form>
           <div class="user-register">

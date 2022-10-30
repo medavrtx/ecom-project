@@ -11,6 +11,7 @@ exports.getHome = (req, res, next) => {
         user: req.user,
         isAuthenticated: req.session.isLoggedIn,
         isAdmin: req.session.isAdmin,
+        csrfToken: req.csrfToken(),
       });
     })
     .catch((err) => {
@@ -138,7 +139,7 @@ exports.postOrder = (req, res, next) => {
       });
       const order = new Order({
         user: {
-          name: req.user.name,
+          email: req.user.email,
           userId: req.user,
         },
         products: products,

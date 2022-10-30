@@ -6,6 +6,9 @@
       <div class="content">
         <div class="nav-spacer"></div>
         <h1><%= pageTitle  %> </h1>
+        <% if (errorMessage) {%>
+          <div class="user-message user-message--error"><%= errorMessage %> </div>
+         <% } %>
         <div class="user-sign-up">
           <form action="/registration" method="POST" class="user-sign-up-form">
             <div class="form-control">
@@ -310,8 +313,9 @@
                 <option value="ZW">Zimbabwe</option>
             </select>
             </div>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <div class="form-control-btn">
-              <button class="btn-primary">Create Account</button>
+              <button class="btn-primary" type="submit">Create Account</button>
             </div>
           </form>
         </div>

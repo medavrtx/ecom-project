@@ -22,10 +22,12 @@
                           <input type="hidden" value="<%= p.productId._id %>" name="productId" >
                           <label for="qty">Qty:</label>
                           <input name="qty" type="number" class="cart-product-qty" value="<%= p.quantity %>"></input>
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                           <button type="submit" class="btn-primary slim">Update</button>
                         </form>
                         <form class="cart-product-delete" action="/cart-delete-item" method="POST">
                           <input type="hidden" value="<%= p.productId._id %>" name="productId" >
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                           <a onclick="this.parentNode.submit()">Delete</a>
                         </form>
                       </div>
@@ -43,6 +45,7 @@
           <div class="cart-subtotal">
             Subtotal (<%= totalQty %> items): $<%= totalPrice %> 
             <form action="/order" method="POST">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
               <button class="btn-primary">Checkout</button>
             </form>
           </div>
