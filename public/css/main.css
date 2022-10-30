@@ -395,6 +395,12 @@ h5 {
   color: red;
 }
 
+.user-message--success {
+  border-color: green;
+  background-color: #c2ffcc;
+  color: green;
+}
+
 .admin-stats {
   margin-top: 15px;
   background-color: #ffffff;
@@ -510,6 +516,27 @@ h5 {
 }
 .user-sign-up-form .form-control-btn button {
   width: 100%;
+}
+
+.reset-link {
+  margin-top: 10px;
+  text-decoration: none;
+  color: rgb(14, 45, 76);
+  font-weight: 500;
+}
+.reset-link:hover {
+  opacity: 70%;
+}
+
+.user-reset-main {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  justify-content: space-between;
+}
+.user-reset-main button {
+  margin-top: 15px;
+  width: 50%;
 }
 
 .cart-main {
@@ -715,4 +742,10 @@ h5 {
 .order-card-qty {
   display: flex;
   margin-left: 10px;
+}
+
+.order-nothing {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
 }

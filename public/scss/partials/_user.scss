@@ -83,3 +83,26 @@
     }
   }
 }
+
+.reset-link {
+  margin-top: 10px;
+  text-decoration: none;
+  color: $primary;
+  font-weight: 500;
+
+  &:hover {
+    opacity: 70%;
+  }
+}
+
+.user-reset-main {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  justify-content: space-between;
+
+  button {
+    margin-top: 15px;
+    width: 50%;
+  }
+}

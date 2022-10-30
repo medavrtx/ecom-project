@@ -5,27 +5,30 @@
     <div class="page-wrap">
       <div class="content">
         <div class="nav-spacer"></div>
+        <% if (errorMessage) {%>
+          <div class="user-message user-message--error"><%= errorMessage %> </div>
+         <% } %>
         <form class="product-form" action='/admin/<% if (editing) {%>edit-product<%} else {%>add-product<%} %>' method='POST'>
           <div class="title-row">
             <div class="form-control ">
               <label for='title' id="title">Title</label>
-              <input type='text' name='title' id="title" value="<% if (editing) {%><%=product.title%><%} else {%><%} %>" />
+              <input type='text' name='title' id="title" value="<% if (editing || hasError) {%><%=product.title%><%} else {%><%} %>" />
             </div>
             <div class="form-control ">
               <label for='price'>Price</label>
               <div class="price">
                 <span id="dollar-sign">$</span>
-                <input type='number' name='price' id="price" value="<% if (editing) {%><%=product.price%><%} else {%><%} %>" />
+                <input type='number' name='price' id="price" value="<% if (editing || hasError) {%><%=product.price%><%} else {%><%} %>" />
               </div>
             </div>
           </div>
           <div class="form-control ">
             <label for='Description'>Description</label>
-            <textarea rows='10' name='description' id="description" ><% if (editing) {%><%=product.description%><%} %> </textarea>
+            <textarea rows='10' name='description' id="description" ><% if (editing || hasError) {%><%=product.description%><%} %> </textarea>
           </div>
           <div class="form-control ">
             <label for='image'>Image</label>
-            <input type='text' name='image' id="image" value="<% if (editing) {%><%=product.image%><%} else {%><%} %>"  />
+            <input type='text' name='image' id="image" value="<% if (editing || hasError) {%><%=product.image%><%} else {%><%} %>"  />
           </div>
           <div class="form-control ">
             <label for='colorOptions'>Color Options</label>

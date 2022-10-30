@@ -13,51 +13,51 @@
           <form action="/registration" method="POST" class="user-sign-up-form">
             <div class="form-control">
               <label for="email">Email</label>
-              <input type="text" name="email" id="">
+              <input type="email" name="email" id="" value="<%=oldInput.email%>">
             </div> 
             <div class="form-control">
               <label for="phoneNumber">Phone Number</label>
-              <input type="text" name="phoneNumber" id="">
+              <input type="tel" name="phoneNumber" id="" value="<%= oldInput.phoneNumber%>">
             </div>
             <div class="form-control">
               <label for="password">Password</label>
-              <input type="text" name="password" id="">
+              <input type="password" name="password" id="" value="<%= oldInput.password%>">
             </div>
             <div class="form-control">
               <label for="confirmPassword">Confirm Password</label>
-              <input type="text" name="confirmPassword" id="">
+              <input type="password" name="confirmPassword" id="">
             </div>
             <div class="form-control">
               <label for="firstName">First Name</label>
-              <input type="text" name="firstName" id="">
+              <input type="text" name="firstName" id="" value="<%= oldInput.firstName%>">
             </div>
             <div class="form-control">
               <label for="lastName">Last Name</label>
-              <input type="text" name="lastName" id="">
+              <input type="text" name="lastName" id="" value="<%= oldInput.lastName%>">
             </div>
             <div class="form-control">
               <label for="address1">Adress Line 1</label>
-              <input type="text" name="address1" id="">
+              <input type="text" name="address1" id="" value="<%= oldInput.address1%>">
             </div>
             <div class="form-control">
               <label for="address2">Adress Line 2</label>
-              <input type="text" name="address2" id="">
+              <input type="text" name="address2" id="" value="<%= oldInput.address2%>">
             </div>
             <div class="form-control">
               <label for="city">City</label>
-              <input type="text" name="city" id="">
+              <input type="text" name="city" id="" value="<%= oldInput.city%>">
             </div>
             <div class="form-control">
               <label for="state">State</label>
-              <input type="text" name="state" id="">
+              <input type="text" name="state" id="" value="<%= oldInput.state%>">
             </div>
             <div class="form-control">
               <label for="zipCode">Zip Code</label>
-              <input type="text" name="zipCode" id="">
+              <input type="text" pattern="[0-9]{5}" name="zipCode" id="" value="<%= oldInput.zipCode%>">
             </div>
             <div class="form-control">
               <label for="country">Country</label>
-              <select id="country" name="country">
+              <select id="country" name="country" >
                 <option>Select Country</option>
                 <option value="AF">Afghanistan</option>
                 <option value="AX">Aland Islands</option>

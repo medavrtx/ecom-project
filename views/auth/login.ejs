@@ -13,7 +13,7 @@
           <form class="user-sign-in" action="/login" method="POST">
             <div class="form-control">
               <label for="email">Email</label>
-              <input type="text" name="email" id="">
+              <input type="text" name="email" id="" value="<%=oldInput.email%>">
             </div>
             <div class="form-control">
               <label for="password">Password</label>
@@ -23,6 +23,7 @@
             <div class="form-control">
               <button class="btn-primary" type="submit">Sign In</button>
             </div>
+            <a class="reset-link" href="/reset">Reset Password</a>
           </form>
           <div class="user-register">
             <h3>Register</h3>

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const { body } = require('express-validator');
+
 const adminController = require('../controllers/admin');
 const isAdmin = require('../middleware/is-admin');
 
@@ -11,7 +13,16 @@ router.get('/', isAdmin, adminController.getAdmin);
 router.get('/add-product', isAdmin, adminController.getAddProduct);
 
 // /admin/add-product => POST
-router.post('/add-product', isAdmin, adminController.postAddProduct);
+router.post(
+  '/add-product',
+  [
+    body('title').isAlphanumeric().isLength({ min: 3 }).trim(),
+    body('price').isFloat(),
+    body('description').isLength({ min: 5, max: 400 }).trim(),
+  ],
+  isAdmin,
+  adminController.postAddProduct
+);
 
 // /admin/edit-products => GET
 router.get('/edit-products', isAdmin, adminController.getEditProducts);
@@ -20,7 +31,16 @@ router.get('/edit-products', isAdmin, adminController.getEditProducts);
 router.get('/edit-product/:productId', isAdmin, adminController.getEditProduct);
 
 // /admin/edit-product => POST
-router.post('/edit-product', isAdmin, adminController.postEditProduct);
+router.post(
+  '/edit-product',
+  [
+    body('title').isAlphanumeric().isLength({ min: 3 }).trim(),
+    body('price').isFloat(),
+    body('description').isLength({ min: 5, max: 400 }).trim(),
+  ],
+  isAdmin,
+  adminController.postEditProduct
+);
 
 // /admin/delete-product => POST
 router.post('/delete-product', isAdmin, adminController.postDeleteProduct);
