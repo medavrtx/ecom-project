@@ -8,6 +8,7 @@ exports.getHome = (req, res, next) => {
         products: products,
         pageTitle: 'ECOM',
         path: '/',
+        user: req.user,
         isAuthenticated: req.session.isLoggedIn,
         isAdmin: req.session.isAdmin,
       });
@@ -25,6 +26,7 @@ exports.getProduct = (req, res, next) => {
         product: product,
         pageTitle: product.title,
         path: '/shop/' + prodId,
+        user: req.user,
         isAuthenticated: req.session.isLoggedIn,
         isAdmin: req.session.isAdmin,
       });
@@ -35,10 +37,10 @@ exports.getProduct = (req, res, next) => {
 };
 
 exports.getInfo = (req, res, next) => {
-  const isLoggedIn = req.get('Cookie')?.split('=')[1];
   res.render('shop/info', {
     pageTitle: 'Info',
     path: '/info',
+    user: req.user,
     isAuthenticated: req.session.isLoggedIn,
     isAdmin: req.session.isAdmin,
   });
@@ -62,6 +64,7 @@ exports.getCart = (req, res, next) => {
         products: products,
         totalPrice: totalPrice,
         totalQty: totalQty,
+        user: req.user,
         isAuthenticated: req.session.isLoggedIn,
         isAdmin: req.session.isAdmin,
       });
@@ -88,6 +91,7 @@ exports.getCheckout = (req, res, next) => {
       pageTitle: 'Checkout',
       path: '/checkout',
       products: products,
+      user: req.user,
       isAuthenticated: req.session.isLoggedIn,
       isAdmin: req.session.isAdmin,
     });

@@ -4,6 +4,7 @@ exports.getUser = (req, res, next) => {
   res.render('user/index', {
     pageTitle: 'Cart',
     path: '/user',
+    user: req.user,
     isAuthenticated: req.session.isLoggedIn,
     isAdmin: req.session.isAdmin,
   });
@@ -16,6 +17,7 @@ exports.getOrders = (req, res, next) => {
         path: '/user/orders',
         pageTitle: 'Your Orders',
         orders: orders,
+        user: req.user,
         isAuthenticated: req.session.isLoggedIn,
         isAdmin: req.session.isAdmin,
       });
