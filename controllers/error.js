@@ -7,3 +7,13 @@ exports.get404 = (req, res, next) => {
     isAdmin: req.session.isAdmin,
   });
 };
+
+exports.get500 = (req, res, next) => {
+  res.status(500).render('500', {
+    pageTitle: 'Error!',
+    path: '/500',
+    user: req.user,
+    isAuthenticated: req.session.isLoggedIn,
+    isAdmin: req.session.isAdmin,
+  });
+};

@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const mongoose = require('mongoose');
 const { validationResult } = require('express-validator/check');
 
 exports.getAdmin = (req, res, next) => {
@@ -23,7 +24,11 @@ exports.getEditProducts = (req, res, next) => {
         isAdmin: req.session.isAdmin,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.getAddProduct = (req, res, next) => {
@@ -64,6 +69,7 @@ exports.postAddProduct = (req, res, next) => {
       errorMessage: errors.array()[0].msg,
     });
   }
+
   const product = new Product({
     title: title,
     price: price,
@@ -78,7 +84,9 @@ exports.postAddProduct = (req, res, next) => {
       res.redirect('/');
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
@@ -149,7 +157,9 @@ exports.postEditProduct = (req, res, next) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
@@ -160,5 +170,9 @@ exports.postDeleteProduct = (req, res, next) => {
       console.log('Destroyed product');
       res.redirect('/admin/edit-products');
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };

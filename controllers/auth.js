@@ -100,7 +100,9 @@ exports.postReset = (req, res, next) => {
         return res.redirect('/login');
       })
       .catch((err) => {
-        console.log(err);
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
       });
   });
 };
@@ -163,7 +165,11 @@ exports.postLogIn = (req, res, next) => {
           res.redirect('/login');
         });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.postRegistration = (req, res, next) => {
@@ -220,7 +226,9 @@ exports.postRegistration = (req, res, next) => {
       res.redirect('/login');
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
@@ -251,5 +259,9 @@ exports.getOrders = (req, res, next) => {
         isAdmin: req.session.isAdmin,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
