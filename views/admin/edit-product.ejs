@@ -8,7 +8,7 @@
         <% if (errorMessage) {%>
           <div class="user-message user-message--error"><%= errorMessage %> </div>
          <% } %>
-        <form class="product-form" action='/admin/<% if (editing) {%>edit-product<%} else {%>add-product<%} %>' method='POST'>
+        <form class="product-form" action='/admin/<% if (editing) {%>edit-product<%} else {%>add-product<%} %>' method='POST' enctype="multipart/form-data">
           <div class="title-row">
             <div class="form-control ">
               <label for='title' id="title">Title</label>
@@ -18,7 +18,7 @@
               <label for='price'>Price</label>
               <div class="price">
                 <span id="dollar-sign">$</span>
-                <input type='number' name='price' id="price" value="<% if (editing || hasError) {%><%=product.price%><%} else {%><%} %>" />
+                <input type='number' step="0.01" name='price' id="price" value="<% if (editing || hasError) {%><%=product.price%><%} else {%><%} %>" />
               </div>
             </div>
           </div>
@@ -28,7 +28,7 @@
           </div>
           <div class="form-control ">
             <label for='image'>Image</label>
-            <input type='text' name='image' id="image" value="<% if (editing || hasError) {%><%=product.image%><%} else {%><%} %>"  />
+            <input type='file' name='image' id="image"  />
           </div>
           <div class="form-control ">
             <label for='colorOptions'>Color Options</label>

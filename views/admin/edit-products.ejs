@@ -13,7 +13,7 @@
               <% for( let product of products ) { %>
                 <div class="card">
                   <div class="products-image" onclick="location.href='/admin/edit-product/<%= product._id %>?edit=true'">
-                    <img src="<%= product.image %> " alt="<%= product.title %>" >
+                    <img src="/<%= product.image %>" alt="<%= product.title %>" >
                   </div>
                   <div class="products-title">
                     <%= product.title %> 

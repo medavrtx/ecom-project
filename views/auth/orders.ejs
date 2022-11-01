@@ -12,12 +12,12 @@
               <% orders.forEach(order => { %> 
                 <div class="order-card">
                   <h4>
-                    <%= order.createdAt.toLocaleDateString("en-US", {month: 'short', day: 'numeric', year: 'numeric'}) %> - Order #<%= order._id  %>
+                    <%= order.createdAt.toLocaleDateString("en-US", {month: 'short', day: 'numeric', year: 'numeric'}) %> - Order #<%= order._id  %> - <a href="/user/<%=user._id %> /orders/<%=order._id %> ">Invoice</a>
                   </h4>
                     <% order.products.forEach(p => { %>
                       <div class="order-card-desc">
                         <div class="order-product-image" >
-                          <img src="<%= p.product.image %> " alt="<%= p.product.title %>" >
+                          <img src="/<%= p.product.image %> " alt="<%= p.product.title %>" >
                         </div>
                         <div>
                           <div class="order-card-title">

@@ -1,7 +1,11 @@
-const User = require('../models/user');
-const Order = require('../models/order');
+const fs = require('fs');
+const path = require('path');
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator/check');
+const PDFDocument = require('pdfkit');
+
+const User = require('../models/user');
+const Order = require('../models/order');
 
 exports.getLogIn = (req, res, next) => {
   let message = req.flash('error');
@@ -24,93 +28,11 @@ exports.getLogIn = (req, res, next) => {
   });
 };
 
-exports.getRegistration = (req, res, next) => {
-  let message = req.flash('error');
-  if (message.length > 0) {
-    message = message[0];
-  } else {
-    message = null;
-  }
-  res.render('auth/registration', {
-    pageTitle: 'Create Account',
-    path: '/registration',
-    isAuthenticated: req.session.isLoggedIn,
-    isAdmin: req.session.isAdmin,
-    errorMessage: message,
-    oldInput: {
-      email: req.body.email,
-      phoneNumber: req.body.phoneNumber,
-      password: req.body.password,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      address1: req.body.address1,
-      address2: req.body.address2,
-      city: req.body.city,
-      state: req.body.state,
-      zipCode: req.body.zipCode,
-      country: req.body.country,
-    },
-  });
-};
-
-exports.getReset = (req, res, next) => {
-  let message = req.flash('error');
-  if (message.length > 0) {
-    message = message[0];
-  } else {
-    message = null;
-  }
-  res.render('auth/reset', {
-    pageTitle: 'Reset Password',
-    path: '/reset',
-    publicKey: process.env.EMAILPUBKEY,
-    isAuthenticated: req.session.isLoggedIn,
-    isAdmin: req.session.isAdmin,
-    errorMessage: message,
-  });
-};
-
-exports.postReset = (req, res, next) => {
-  const email = req.body.email;
-  const currentPw = req.body.currentPassword;
-  const newPw = req.body.newPassword;
-  const confirmPw = req.body.confirmPassword;
-  let resetUser;
-  User.findOne({ email: email }).then((user) => {
-    if (!user) {
-      req.flash('error', 'Invalid email or password');
-      return res.redirect('/login');
-    }
-    bcrypt.compare(currentPw, user.password).then((doMatch) => {
-      if (doMatch && newPw === confirmPw) {
-        resetUser = user;
-      } else {
-        req.flash('error', 'Invalid email or password');
-        return res.redirect('/login');
-      }
-    });
-    bcrypt
-      .hash(newPw, 12)
-      .then((hashedPassword) => {
-        resetUser.password = hashedPassword;
-        return resetUser.save();
-      })
-      .then((result) => {
-        req.flash('success', 'Successfully reset password!');
-        return res.redirect('/login');
-      })
-      .catch((err) => {
-        const error = new Error(err);
-        error.httpStatusCode = 500;
-        return next(error);
-      });
-  });
-};
-
 exports.postLogIn = (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   const errors = validationResult(req);
+
   if (!errors.isEmpty()) {
     return res.status(422).render('auth/login', {
       path: '/login',
@@ -172,11 +94,39 @@ exports.postLogIn = (req, res, next) => {
     });
 };
 
+exports.getRegistration = (req, res, next) => {
+  let message = req.flash('error');
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
+  res.render('auth/registration', {
+    pageTitle: 'Create Account',
+    path: '/registration',
+    isAuthenticated: req.session.isLoggedIn,
+    isAdmin: req.session.isAdmin,
+    errorMessage: message,
+    oldInput: {
+      email: '',
+      phoneNumber: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      address1: '',
+      address2: '',
+      city: '',
+      state: '',
+      zipCode: '',
+      country: '',
+    },
+  });
+};
+
 exports.postRegistration = (req, res, next) => {
   const email = req.body.email;
   const phoneNumber = req.body.phoneNumber;
   const password = req.body.password;
-  const confirmPassword = req.body.confirmPassword;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const address1 = req.body.address1;
@@ -232,6 +182,59 @@ exports.postRegistration = (req, res, next) => {
     });
 };
 
+exports.getReset = (req, res, next) => {
+  let message = req.flash('error');
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
+  res.render('auth/reset', {
+    pageTitle: 'Reset Password',
+    path: '/reset',
+    isAuthenticated: req.session.isLoggedIn,
+    isAdmin: req.session.isAdmin,
+    errorMessage: message,
+  });
+};
+
+exports.postReset = (req, res, next) => {
+  const email = req.body.email;
+  const currentPw = req.body.currentPassword;
+  const newPw = req.body.newPassword;
+  const confirmPw = req.body.confirmPassword;
+  let resetUser;
+  User.findOne({ email: email }).then((user) => {
+    if (!user) {
+      req.flash('error', 'Invalid email or password');
+      return res.redirect('/login');
+    }
+    bcrypt.compare(currentPw, user.password).then((doMatch) => {
+      if (doMatch && newPw === confirmPw) {
+        resetUser = user;
+      } else {
+        req.flash('error', 'Invalid email or password');
+        return res.redirect('/login');
+      }
+    });
+    bcrypt
+      .hash(newPw, 12)
+      .then((hashedPassword) => {
+        resetUser.password = hashedPassword;
+        return resetUser.save();
+      })
+      .then((result) => {
+        req.flash('success', 'Successfully reset password!');
+        return res.redirect('/login');
+      })
+      .catch((err) => {
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error);
+      });
+  });
+};
+
 exports.postLogOut = (req, res, next) => {
   req.session.destroy((err) => console.log(err));
   res.redirect('/');
@@ -264,4 +267,53 @@ exports.getOrders = (req, res, next) => {
       error.httpStatusCode = 500;
       return next(error);
     });
+};
+
+exports.getInvoice = (req, res, next) => {
+  const orderId = req.params.orderId;
+  Order.findById(orderId)
+    .then((order) => {
+      if (!order) {
+        return next(new Error('No order found.'));
+      }
+      if (order.user.userId.toString() !== req.user._id.toString()) {
+        return next(new Error('Unauthorized'));
+      }
+      const invoiceName = 'invoice-' + orderId + '.pdf';
+      const invoicePath = path.join('data', 'invoices', invoiceName);
+
+      const pdfDoc = new PDFDocument();
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader(
+        'Content-Disposition',
+        'inline; filename="' + invoiceName + '"'
+      );
+      pdfDoc.pipe(fs.createWriteStream(invoicePath));
+      pdfDoc.pipe(res);
+
+      pdfDoc.fontSize(26).text('ECOM');
+      pdfDoc.moveUp();
+      pdfDoc.text('_______________________________');
+      pdfDoc.fontSize(20).text('Invoice', { underline: true });
+      let totalPrice = 0;
+      order.products.forEach((prod) => {
+        totalPrice = totalPrice + prod.quantity * prod.product.price;
+        pdfDoc
+          .fontSize(14)
+          .text(
+            prod.product.title +
+              ' - ' +
+              prod.quantity +
+              ' x ' +
+              '$' +
+              prod.product.price
+          );
+      });
+      pdfDoc.moveDown();
+      pdfDoc.text('_________________');
+      pdfDoc.fontSize(20).text('Total Price: $' + totalPrice);
+
+      pdfDoc.end();
+    })
+    .catch((err) => next(err));
 };

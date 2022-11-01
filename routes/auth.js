@@ -60,7 +60,7 @@ router.post(
       .trim()
       .custom((value, { req }) => {
         if (value !== req.body.password) {
-          throw new Error('Password have to match');
+          throw new Error('Passwords have to match');
         }
         return true;
       }),
@@ -79,5 +79,8 @@ router.get('/user/:userId', isAuth, authController.getUser);
 
 // /user/orders => GET
 router.get('/user/:userId/orders', isAuth, authController.getOrders);
+
+// /user/orders/invoice => GET
+router.get('/user/:userId/orders/:orderId', isAuth, authController.getInvoice);
 
 module.exports = router;
