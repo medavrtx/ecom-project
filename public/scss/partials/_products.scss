@@ -55,7 +55,10 @@
 .products-description {
   margin: 15px 0px;
   font-size: 14px;
-  height: 50px;
+  // height: 50px;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
   text-overflow: ellipsis;
 }
 

@@ -111,3 +111,14 @@
   font-weight: 700;
   margin: 15px 15px 0 0;
 }
+
+.cart-order {
+  width: 25%;
+  background-color: $background-secondary;
+  border-radius: 5px;
+  padding: 15px;
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  justify-content: space-around;
+}

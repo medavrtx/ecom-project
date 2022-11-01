@@ -15,6 +15,9 @@ exports.getHome = (req, res, next) => {
         .limit(ITEMS_PER_PAGE);
     })
     .then((products) => {
+      if (ITEMS_PER_PAGE * page - 1 > totalItems) {
+        res.redirect('/');
+      }
       res.render('shop/home', {
         products: products,
         pageTitle: 'ECOM',
@@ -111,16 +114,123 @@ exports.postCart = (req, res, next) => {
 };
 
 exports.getCheckout = (req, res, next) => {
-  Product.fetchAll().then((products) => {
-    res.render('shop/checkout', {
-      pageTitle: 'Checkout',
-      path: '/checkout',
-      products: products,
-      user: req.user,
-      isAuthenticated: req.session.isLoggedIn,
-      isAdmin: req.session.isAdmin,
+  const stripe = require('stripe')(req.stripeSk);
+  let products;
+  let total = 0;
+  let totalQty = 0;
+  req.user
+    .populate('cart.items.productId')
+    .then((user) => {
+      products = user.cart.items;
+      products.forEach(
+        (p) =>
+          (total += p.productId.price * p.quantity) && (totalQty += p.quantity)
+      );
+
+      return stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        shipping_address_collection: {
+          allowed_countries: ['US', 'CA'],
+        },
+        shipping_options: [
+          {
+            shipping_rate_data: {
+              tax_behavior: 'exclusive',
+              type: 'fixed_amount',
+              fixed_amount: {
+                amount: 1000,
+                currency: 'usd',
+              },
+              display_name: '$10',
+              delivery_estimate: {
+                minimum: {
+                  unit: 'business_day',
+                  value: 5,
+                },
+                maximum: {
+                  unit: 'business_day',
+                  value: 7,
+                },
+              },
+            },
+          },
+        ],
+        line_items: products.map((p) => {
+          return {
+            price_data: {
+              tax_behavior: 'exclusive',
+              currency: 'usd',
+              unit_amount: parseInt(p.productId.price).toFixed(2) * 100,
+              product_data: {
+                name: p.productId.title,
+                description: p.productId.description,
+              },
+            },
+            quantity: p.quantity,
+          };
+        }),
+        automatic_tax: {
+          enabled: true,
+        },
+        mode: 'payment',
+        success_url:
+          req.protocol + '://' + req.get('host') + '/checkout/success',
+        cancel_url: req.protocol + '://' + req.get('host') + '/checkout/cancel',
+      });
+    })
+    .then((session) => {
+      res.render('shop/checkout', {
+        path: '/checkout',
+        pageTitle: 'Checkout',
+        products: products,
+        totalPrice: total,
+        totalQty: totalQty,
+        user: req.user,
+        isAuthenticated: req.session.isLoggedIn,
+        isAdmin: req.session.isAdmin,
+        stripe: req.stripePk,
+        sessionId: session.id,
+      });
+    })
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
-  });
+};
+
+exports.getCheckoutSuccess = (req, res, next) => {
+  req.user
+    .populate('cart.items.productId')
+    .then((user) => {
+      const products = user.cart.items.map((i) => {
+        return { quantity: i.quantity, product: { ...i.productId._doc } };
+      });
+      if (!products.length) {
+        return res.redirect('/cart');
+      }
+      console.log(products);
+      const order = new Order({
+        user: {
+          email: req.user.email,
+          userId: req.user,
+        },
+        products: products,
+        createdAt: new Date(),
+      });
+      return order.save();
+    })
+    .then((result) => {
+      return req.user.clearCart();
+    })
+    .then(() => {
+      res.redirect(`/user/${req.user._id}/orders`);
+    })
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.postCartDeleteProduct = (req, res, next) => {
@@ -165,6 +275,10 @@ exports.postOrder = (req, res, next) => {
       const products = user.cart.items.map((i) => {
         return { quantity: i.quantity, product: { ...i.productId._doc } };
       });
+      if (!products.length) {
+        return res.redirect('/cart');
+      }
+      console.log(products);
       const order = new Order({
         user: {
           email: req.user.email,

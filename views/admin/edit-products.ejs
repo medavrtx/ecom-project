@@ -11,7 +11,7 @@
         <% if (products) { %>
           <div class='products'>
               <% for( let product of products ) { %>
-                <div class="card">
+                <article class="card">
                   <div class="products-image" onclick="location.href='/admin/edit-product/<%= product._id %>?edit=true'">
                     <img src="/<%= product.image %>" alt="<%= product.title %>" >
                   </div>
@@ -26,13 +26,13 @@
                   </div>
                   <div class="btn-row">
                     <button class="btn-primary" onclick="location.href='/admin/edit-product/<%= product._id %>?edit=true'">Edit</button>
-                    <form action="/admin/delete-product" method="POST">
+                    <!-- <form action="/admin/delete-product" method="POST"> -->
                       <input type="hidden" value="<%= product._id %>" name="productId">
                       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                      <button class="btn-primary" type="submit">Delete</button>
-                    </form>
+                      <button class="btn-primary" type="submit" onclick="deleteProduct(this)">Delete</button>
+                    <!-- </form> -->
                   </div>
-                </div>
+                </article>
               <% } %>
           </div>
           <%- include('../includes/pagination.ejs', {
@@ -48,5 +48,6 @@
       </div>
     </div>
     <%- include ('../includes/footer.ejs')  %> 
+    <script src="/js/admin.js"></script>
   </body>
 </html>

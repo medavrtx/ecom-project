@@ -6,6 +6,42 @@
       <div class="content">
         <div class="nav-spacer"></div>
         <h1><%= pageTitle  %> </h1>
+          <div class="cart-list">
+              <% products.forEach(p => { %>
+                <div class="cart-card">
+                  <div class="cart-product-info">
+                    <div class="cart-product-image" >
+                      <img src="<%= p.productId.image %> " alt="<%= p.productId.title %>" >
+                    </div>
+                    <div class="cart-product-detail">
+                      <div class="cart-product-title"><%= p.productId.title %></div>
+                    </div>
+                  </div>
+                  <div class="cart-product-price">$<%= p.productId.price %></div>
+                </div>
+              <% }) %> 
+              <div class="cart-card">
+                <div class="cart-product-detail">
+                  <div>Subtotal (<%= totalQty %> items): $<%= totalPrice %></div>
+                  <div>Estimated Tax: $<%= (totalPrice * .09375).toFixed(2) %></div>
+                  <div>Shipping: $10</div>
+                  <div>Total: $<%= (totalPrice + 10 + (totalPrice * .1)).toFixed(2) %></div>
+                </div>
+              </div>
+              <div class="cart-order">
+                <button class="btn-primary" id="order-btn">Order</button>
+                <script src="https://js.stripe.com/v3/"></script>
+                <script>
+                  var stripe = Stripe('<%= stripe %>');
+                  var orderBtn = document.getElementById('order-btn')
+                  orderBtn.addEventListener('click', function() {
+                    stripe.redirectToCheckout({ 
+                      sessionId: '<%= sessionId %>' 
+                    })
+                  })
+                </script>
+              </div>
+            </div>
       </div>
     </div>
   </body>

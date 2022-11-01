@@ -44,10 +44,7 @@
               </div>
           <div class="cart-subtotal">
             Subtotal (<%= totalQty %> items): $<%= totalPrice %> 
-            <form action="/order" method="POST">
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-              <button class="btn-primary">Checkout</button>
-            </form>
+              <button onclick="location.href='/checkout'" class="btn-primary">Checkout</button>
           </div>
         </div>
       </div>

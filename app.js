@@ -72,6 +72,12 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
+  req.stripePk = process.env.STRIPEPK;
+  req.stripeSk = process.env.STRIPESK;
+  return next();
+});
+
+app.use((req, res, next) => {
   if (!req.session.user) {
     return next();
   }
