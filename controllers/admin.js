@@ -3,6 +3,8 @@ const { validationResult } = require('express-validator/check');
 
 const fileHelper = require('../util/file');
 
+const ITEMS_PER_PAGE = 2;
+
 exports.getAdmin = (req, res, next) => {
   res.render('admin/index', {
     pageTitle: 'Admin',
@@ -14,7 +16,16 @@ exports.getAdmin = (req, res, next) => {
 };
 
 exports.getEditProducts = (req, res, next) => {
+  const page = +req.query.page || 1;
+  let totalItems;
   Product.find({ userId: req.user._id })
+    .countDocuments()
+    .then((numProducts) => {
+      totalItems = numProducts;
+      return Product.find()
+        .skip((page - 1) * ITEMS_PER_PAGE)
+        .limit(ITEMS_PER_PAGE);
+    })
     .then((products) => {
       res.render('admin/edit-products', {
         pageTitle: 'Edit Products',
@@ -23,6 +34,14 @@ exports.getEditProducts = (req, res, next) => {
         user: req.user,
         isAuthenticated: req.session.isLoggedIn,
         isAdmin: req.session.isAdmin,
+        csrfToken: req.csrfToken(),
+        totalProducts: totalItems,
+        currentPage: page,
+        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+        hasPreviousPage: page > 1,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE),
       });
     })
     .catch((err) => {

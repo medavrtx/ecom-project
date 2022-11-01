@@ -35,6 +35,15 @@
                 </div>
               <% } %>
           </div>
+          <%- include('../includes/pagination.ejs', {
+            currentPage: currentPage,
+            hasNextPage: hasNextPage,
+            hasPreviousPage: hasPreviousPage,
+            nextPage: nextPage,
+            previousPage: previousPage,
+            lastPage: lastPage,
+            path: path,
+        })  %> 
         <% } %>
       </div>
     </div>

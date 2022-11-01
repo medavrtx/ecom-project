@@ -4,10 +4,16 @@ const Order = require('../models/order');
 const ITEMS_PER_PAGE = 2;
 
 exports.getHome = (req, res, next) => {
-  const page = req.query.page;
+  const page = +req.query.page || 1;
+  let totalItems;
   Product.find()
-    .skip((page - 1) * ITEMS_PER_PAGE)
-    .limit(ITEMS_PER_PAGE)
+    .countDocuments()
+    .then((numProducts) => {
+      totalItems = numProducts;
+      return Product.find()
+        .skip((page - 1) * ITEMS_PER_PAGE)
+        .limit(ITEMS_PER_PAGE);
+    })
     .then((products) => {
       res.render('shop/home', {
         products: products,
@@ -17,6 +23,13 @@ exports.getHome = (req, res, next) => {
         isAuthenticated: req.session.isLoggedIn,
         isAdmin: req.session.isAdmin,
         csrfToken: req.csrfToken(),
+        totalProducts: totalItems,
+        currentPage: page,
+        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+        hasPreviousPage: page > 1,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE),
       });
     })
     .catch((err) => {
