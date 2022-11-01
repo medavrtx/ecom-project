@@ -90,3 +90,23 @@
     font-size: 36px;
   }
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  a {
+    text-decoration: none;
+    background-color: $background;
+    border: 1px solid $primary;
+    color: $primary;
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin: 0 1rem;
+  }
+}
+
+.pagination a:hover,
+.pagination a:active {
+  background-color: lighten($primary, 10%);
+  color: $background;
+}

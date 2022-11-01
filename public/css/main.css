@@ -315,6 +315,26 @@ h5 {
   font-size: 36px;
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+.pagination a {
+  text-decoration: none;
+  background-color: rgb(242, 244, 249);
+  border: 1px solid rgb(14, 45, 76);
+  color: rgb(14, 45, 76);
+  padding: 0.5rem;
+  border-radius: 5px;
+  margin: 0 1rem;
+}
+
+.pagination a:hover,
+.pagination a:active {
+  background-color: #164777;
+  color: rgb(242, 244, 249);
+}
+
 .product-form {
   display: flex;
   flex-direction: column;
