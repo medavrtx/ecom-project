@@ -56,15 +56,24 @@ h5 {
   display: flex;
   flex-direction: row;
 }
+.btn-row a button {
+  height: 100%;
+}
 .btn-row button {
-  height: 50%;
-}
-.btn-row form {
-  height: 100%;
   margin-left: 5px;
-}
-.btn-row form button {
   height: 100%;
+}
+
+.btn-nonbutton {
+  border: none;
+  background-color: transparent;
+  font-family: "Lato", sans-serif;
+  font-size: 15px;
+  color: rgb(14, 45, 76);
+  padding: 0;
+}
+.btn-nonbutton:hover {
+  cursor: pointer;
 }
 
 .main-header {

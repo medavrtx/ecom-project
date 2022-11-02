@@ -242,6 +242,10 @@ exports.postLogOut = (req, res, next) => {
   req.session.destroy((err) => console.log(err));
   res.redirect('/');
 };
+exports.postLogOut = (req, res, next) => {
+  req.session.destroy((err) => console.log(err));
+  res.redirect('/');
+};
 
 exports.getUser = (req, res, next) => {
   res.render('auth/index', {

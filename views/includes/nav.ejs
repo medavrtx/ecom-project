@@ -17,15 +17,19 @@
       <li class="main-header__item">
         <form class="cart-product-delete" action="/logoutuser" method="POST">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <a onclick="this.parentNode.submit()">Logout</a>
+          <button class="btn-nonbutton" type="submit">
+            Logout
+          </button>
         </form>
       </li>
       <% } else { %>
         <li class="main-header__item"><a href="/login">Sign In</a></li>
       <% } %>  
-      <div class="imagebox" onclick="location.href='/cart'">
-        <div class="cart" />
+      <a href="/cart">
+        <div class="imagebox" >
+          <div class="cart" />
       </div>
+    </a>
     </ul>
   </nav>
 </header>

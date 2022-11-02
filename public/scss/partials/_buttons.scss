@@ -32,17 +32,27 @@
 .btn-row {
   display: flex;
   flex-direction: row;
-
-  button {
-    height: 50%;
-  }
-
-  form {
-    height: 100%;
-    margin-left: 5px;
-
+  a {
     button {
       height: 100%;
     }
+  }
+
+  button {
+    margin-left: 5px;
+    height: 100%;
+  }
+}
+
+.btn-nonbutton {
+  border: none;
+  background-color: transparent;
+  font-family: $font-stack;
+  font-size: 15px;
+  color: $primary;
+  padding: 0;
+
+  &:hover {
+    cursor: pointer;
   }
 }
