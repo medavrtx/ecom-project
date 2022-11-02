@@ -63,6 +63,9 @@ exports.postLogIn = (req, res, next) => {
         .compare(password, user.password)
         .then((doMatch) => {
           if (doMatch) {
+            User.deleteOne({ _id: req.session.tempId }).then(() =>
+              console.log('Deleted Temp')
+            );
             req.session.isLoggedIn = true;
             req.session.isAdmin = user.isAdmin;
             req.session.user = user;
