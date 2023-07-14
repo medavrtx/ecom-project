@@ -1,7 +1,7 @@
 const Product = require('../models/product');
 const Order = require('../models/order');
 
-const ITEMS_PER_PAGE = 2;
+const ITEMS_PER_PAGE = 4;
 
 exports.getHome = (req, res, next) => {
   const page = +req.query.page || 1;
@@ -21,6 +21,45 @@ exports.getHome = (req, res, next) => {
       res.render('shop/home', {
         products: products,
         pageTitle: 'ECOM',
+        path: '/',
+        user: req.user,
+        isAuthenticated: req.session.isLoggedIn,
+        isAdmin: req.session.isAdmin,
+        csrfToken: req.csrfToken(),
+        totalProducts: totalItems,
+        currentPage: page,
+        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+        hasPreviousPage: page > 1,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE),
+      });
+    })
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
+};
+
+exports.getProducts = (req, res, next) => {
+  const page = +req.query.page || 1;
+  let totalItems;
+  Product.find()
+    .countDocuments()
+    .then((numProducts) => {
+      totalItems = numProducts;
+      return Product.find()
+        .skip((page - 1) * ITEMS_PER_PAGE)
+        .limit(ITEMS_PER_PAGE);
+    })
+    .then((products) => {
+      if (ITEMS_PER_PAGE * page - 1 > totalItems) {
+        res.redirect('/');
+      }
+      res.render('shop/products', {
+        products: products,
+        pageTitle: 'Luminae Skincare | Shop All Products',
         path: '/',
         user: req.user,
         isAuthenticated: req.session.isLoggedIn,

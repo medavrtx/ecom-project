@@ -1,0 +1,44 @@
+<nav>
+  <div class="navbar stick-top navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand px-3" href="/">LUMINAE</a>
+    <button
+      class="navbar-toggler px-3"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse px-3" id="navbarSupportedContent">
+      <div class="navbar-nav">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/shop-all">Shop</a>
+        <a class="nav-link" href="/campgrounds">Success</a>
+      </div>
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="/info">Info</a>
+        <% if (isAuthenticated) { %> <% if (isAdmin) { %>
+        <a class="nav-link" href="/admin/add-product">Add Product</a>
+        <a class="nav-link" href="/admin">Admin</a>
+        <% } %>
+        <a class="nav-link" href="/user/<%= user._id %>">Account</a>
+        <form class="cart-product-delete" action="/logoutuser" method="POST">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <button class="btn-nonbutton" type="submit">Logout</button>
+        </form>
+        <% } else { %>
+        <a class="nav-link" href="/login">Sign In</a>
+        <% } %>
+        <a href="/cart">
+          <div class="imagebox">
+            <div class="cart"></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="navbar-space"></div>
+</nav>

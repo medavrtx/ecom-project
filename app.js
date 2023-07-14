@@ -10,6 +10,7 @@ const csrf = require('csurf');
 const flash = require('connect-flash');
 const multer = require('multer');
 const compression = require('compression');
+const ejsMate = require('ejs-mate');
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
@@ -42,6 +43,7 @@ const fileStorage = multer.diskStorage({
   },
 });
 
+app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
