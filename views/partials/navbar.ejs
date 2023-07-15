@@ -1,6 +1,6 @@
 <nav>
   <div class="navbar stick-top navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand px-3" href="/">LUMINAE</a>
+    <div class="brand px-3" href="/">LUMINAE</div>
     <button
       class="navbar-toggler px-3"
       type="button"
@@ -16,10 +16,9 @@
       <div class="navbar-nav">
         <a class="nav-link" href="/">Home</a>
         <a class="nav-link" href="/shop-all">Shop</a>
-        <a class="nav-link" href="/campgrounds">Success</a>
+        <a class="nav-link" href="/about">About</a>
       </div>
       <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/info">Info</a>
         <% if (isAuthenticated) { %> <% if (isAdmin) { %>
         <a class="nav-link" href="/admin/add-product">Add Product</a>
         <a class="nav-link" href="/admin">Admin</a>

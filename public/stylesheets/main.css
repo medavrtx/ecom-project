@@ -31,7 +31,7 @@ h5 {
   height: 3.5rem;
 }
 
-.navbar-brand {
+.brand {
   font-family: 'Crimson Text';
   font-size: 1.5rem;
 }
@@ -109,10 +109,6 @@ h5 {
   opacity: 0.6;
 }
 
-.cool-font {
-  color: #eaff2d;
-}
-
 .product-item {
   padding: 2px;
 }
@@ -120,6 +116,140 @@ h5 {
 .product-img {
   position: relative;
   overflow: hidden;
+}
+
+.footer {
+  width: 100%;
+  border-top: 1px solid rgb(236, 236, 236);
+}
+
+.newsletter-form {
+  align-items: end;
+}
+
+.newsletter-form input {
+  align-self: baseline;
+  border: none;
+  border-bottom: 1px solid #1e1e1e;
+  margin: 0;
+}
+
+.newsletter-form button {
+  margin-left: 15px;
+  border-radius: 20px;
+  border: 1px solid #1e1e1e;
+}
+
+.footer-notes {
+  background-image: linear-gradient(
+    90deg,
+    rgb(223, 242, 241),
+    rgb(197, 197, 197)
+  );
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.footer-socials {
+  display: flex;
+}
+
+.facebook {
+  -webkit-mask-image: url(/icons/facebook.png);
+  mask-image: url(/icons/facebook.png);
+  align-self: center;
+  width: 100%;
+  height: 100%;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background-color: rgb(0, 0, 0);
+}
+.facebook:hover {
+  transition: 300ms;
+  opacity: 60%;
+}
+
+.instagram {
+  -webkit-mask-image: url(/icons/instagram.png);
+  mask-image: url(/icons/instagram.png);
+  align-self: center;
+  width: 100%;
+  height: 100%;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background-color: rgb(0, 0, 0);
+}
+.instagram:hover {
+  transition: 300ms;
+  opacity: 60%;
+}
+
+.twitter {
+  -webkit-mask-image: url(/icons/twitter.png);
+  mask-image: url(/icons/twitter.png);
+  align-self: center;
+  width: 100%;
+  height: 100%;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background-color: rgb(0, 0, 0);
+}
+.twitter:hover {
+  transition: 300ms;
+  opacity: 60%;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+}
+
+.footer-links a {
+  color: #164777;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.footer-links a:hover {
+  opacity: 0.6;
+  text-decoration: underline;
+}
+
+.copyright-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.privacy-terms {
+  margin-right: 5px;
+}
+
+.privacy-terms a {
+  color: #164777;
+}
+
+.privacy-terms a:hover {
+  opacity: 0.6;
 }
 
 .main-context {
@@ -186,45 +316,6 @@ h5 {
   cursor: pointer;
 }
 
-.main-header__nav {
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 1.5rem;
-}
-
-.main-header__logo {
-  display: flex;
-}
-
-.main-header__item-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.main-header__item {
-  margin: 0 1rem;
-  padding: 0;
-}
-
-.main-header__item a {
-  text-decoration: none;
-  color: rgb(14, 45, 76);
-  font-weight: 500;
-}
-
-.main-header__item a:hover,
-.main-header__item a:active,
-.main-header__item a.active {
-  opacity: 70%;
-}
-
 .imagebox {
   width: 22px;
   height: 20px;
@@ -256,81 +347,6 @@ h5 {
   opacity: 60%;
 }
 
-.main-footer {
-  background-color: rgb(14, 45, 76);
-  color: rgb(242, 244, 249);
-  width: 100%;
-  height: 100px;
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  padding: 3rem 0;
-}
-
-.main-footer__links {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-}
-
-.main-footer__link {
-  text-decoration: none;
-  color: rgb(242, 244, 249);
-}
-.main-footer__link:hover {
-  opacity: 80%;
-}
-
-.main-footer__nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  width: 50%;
-}
-
-.main-footer__nav-shop {
-  display: flex;
-  flex-direction: column;
-}
-.main-footer__nav-shop div {
-  margin-bottom: 5px;
-}
-
-.main-footer__newsletter {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  width: 50%;
-}
-
-.footer-spacer {
-  height: 180px;
-}
-
-.main-footer__bottom {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.main-footer__copyright {
-  display: flex;
-  flex-direction: row;
-}
-
-.main-footer__terms {
-  display: flex;
-  flex-direction: row;
-}
-
-.main-footer__socials {
-  display: flex;
-  flex-direction: row;
-}
-
 .icon-imagebox {
   width: 25px;
   height: 25px;
@@ -339,63 +355,6 @@ h5 {
 }
 .icon-imagebox:hover {
   cursor: pointer;
-}
-
-.facebook {
-  -webkit-mask-image: url(/icons/facebook.png);
-  mask-image: url(/icons/facebook.png);
-  align-self: center;
-  width: 100%;
-  height: 100%;
-  -webkit-mask-size: cover;
-  mask-size: cover;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  background-color: rgb(242, 244, 249);
-}
-.facebook:hover {
-  transition: 300ms;
-  opacity: 60%;
-}
-
-.instagram {
-  -webkit-mask-image: url(/icons/instagram.png);
-  mask-image: url(/icons/instagram.png);
-  align-self: center;
-  width: 100%;
-  height: 100%;
-  -webkit-mask-size: cover;
-  mask-size: cover;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  background-color: rgb(242, 244, 249);
-}
-.instagram:hover {
-  transition: 300ms;
-  opacity: 60%;
-}
-
-.twitter {
-  -webkit-mask-image: url(/icons/twitter.png);
-  mask-image: url(/icons/twitter.png);
-  align-self: center;
-  width: 100%;
-  height: 100%;
-  -webkit-mask-size: cover;
-  mask-size: cover;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-  background-color: rgb(242, 244, 249);
-}
-.twitter:hover {
-  transition: 300ms;
-  opacity: 60%;
 }
 
 .footer-title {
