@@ -91,19 +91,6 @@ h5 {
   cursor: pointer;
 }
 
-@media (min-width: 992px) {
-  .navbar-nav .dropdown-menu {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    right: 0;
-  }
-}
-
-.navbar-collapse.collapse.show {
-  display: block !important;
-}
-
 /* FOOTER */
 
 .footer {
@@ -351,6 +338,27 @@ h5 {
   border-top: 1px solid rgb(199, 199, 199);
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.product-types li {
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .sm-display {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .lg-display {
+    display: none;
+  }
+
+  .col-10 {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
 }
 
 /* OTHER */
