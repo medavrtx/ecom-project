@@ -61,34 +61,58 @@
           </ul>
         </li>
       </ul>
+
+      <!-- RIGHT -->
       <ul class="navbar-nav ms-auto">
-        <% if (isAuthenticated) { %> <% if (isAdmin) { %>
-        <li>
-          <a class="nav-link" href="/admin/add-product">Add Product</a>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDarkDropdownMenuLink"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Account
+          </a>
+
+          <ul
+            class="dropdown-menu dropdown-menu-light"
+            aria-labelledby="navbarDarkDropdownMenuLink"
+          >
+            <% if (isAuthenticated) { %> <% if (isAdmin) { %>
+            <li>
+              <a class="dropdown-item" href="/admin/add-product">Add Product</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="/admin">Admin</a>
+            </li>
+            <% } %>
+            <li>
+              <a class="dropdown-item" href="/user/<%= user._id %>">Account</a>
+            </li>
+            <li>
+              <form action="/logoutuser" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <button class="dropdown-item nav-logout" type="submit">
+                  Logout
+                </button>
+              </form>
+            </li>
+            <% } else { %>
+            <li>
+              <a class="dropdown-item" href="/login">Sign In</a>
+            </li>
+            <% } %>
+          </ul>
         </li>
+
         <li>
-          <a class="nav-link" href="/admin">Admin</a>
-        </li>
-        <% } %>
-        <li>
-          <a class="nav-link" href="/user/<%= user._id %>">Account</a>
-        </li>
-        <li>
-          <form class="cart-product-delete" action="/logoutuser" method="POST">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-            <button class="btn-nonbutton" type="submit">Logout</button>
-          </form>
-        </li>
-        <% } else { %>
-        <li>
-          <a class="nav-link" href="/login">Sign In</a>
-        </li>
-        <% } %>
-        <li>
-          <a href="/cart">
-            <div class="imagebox">
-              <div class="cart"></div>
+          <a class="nav-link" href="/cart">
+            <div class="d-none d-lg-inline">
+              <i class="fa-solid fa-cart-shopping"></i>
             </div>
+            <div class="navbar-text d-lg-none">Cart</div>
           </a>
         </li>
       </ul>
