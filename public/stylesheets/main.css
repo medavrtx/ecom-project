@@ -22,6 +22,9 @@ h5 {
 
 .brand {
   font-family: 'Crimson Text';
+}
+
+.brand-mark {
   font-size: 1.5rem;
 }
 
@@ -42,6 +45,34 @@ h5 {
 .link-list a:hover {
   opacity: 0.6;
   text-decoration: underline;
+}
+
+.larger-font {
+  font-size: 1.4rem;
+}
+
+.custom-banner {
+  background-image: url('/images/brand/brand2.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 100px 0;
+  text-align: center;
+  position: relative;
+  height: 300px;
+}
+
+.custom-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* NAVBAR */
