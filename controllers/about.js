@@ -28,8 +28,18 @@ exports.getResearch = (req, res, next) => {
   });
 };
 
-exports.getIngredients = (req, res, next) => {
-  res.render('about/ingredients', {
+exports.getUv = (req, res, next) => {
+  res.render('about/uv', {
+    pageTitle: 'Info',
+    path: '/',
+    user: req.user,
+    isAuthenticated: req.session.isLoggedIn,
+    isAdmin: req.session.isAdmin,
+  });
+};
+
+exports.getOrganic = (req, res, next) => {
+  res.render('about/organic', {
     pageTitle: 'Info',
     path: '/',
     user: req.user,

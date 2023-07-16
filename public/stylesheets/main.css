@@ -48,7 +48,7 @@ h5 {
 }
 
 .larger-font {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
 }
 
 .custom-banner {
@@ -401,6 +401,12 @@ h5 {
   background-image: url('/images/brand/brand2.jpg');
 }
 
+.brand-section-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
 /* ROUTINE */
 
 .routine-banner {
@@ -429,6 +435,7 @@ h5 {
 
 .intro-section {
   padding-top: 50px;
+  font-size: 1.2rem;
 }
 
 .intro-text {
@@ -472,8 +479,14 @@ h5 {
   padding: 15px;
   padding-top: 0;
   max-height: 240px;
+  font-size: 1.2rem;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.article-img {
+  max-height: 360px;
+  align-items: center;
 }
 
 /* SUCCESS */

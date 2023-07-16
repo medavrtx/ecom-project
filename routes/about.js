@@ -10,9 +10,11 @@ router.get('/routine', aboutController.getRoutine);
 
 router.get('/research', aboutController.getResearch);
 
-router.get('/routine', aboutController.getRoutine);
+router.get('/research/organic', aboutController.getOrganic);
 
-router.get('/research/ingredients', aboutController.getIngredients);
+router.get('/research/uv', aboutController.getUv);
+
+router.get('/routine', aboutController.getRoutine);
 
 router.get('/success', aboutController.getSuccess);
 
