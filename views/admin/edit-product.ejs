@@ -1,36 +1,50 @@
-<%- include ('../includes/head.ejs') %> 
-  </head>
-  <body>
-    <%- include ('../includes/nav.ejs') %> 
-    <div class="page-wrap">
-      <div class="content">
-        <div class="nav-spacer"></div>
-        <% if (errorMessage) {%>
-          <div class="user-message user-message--error"><%= errorMessage %> </div>
-         <% } %>
-        <form class="product-form" action='/admin/<% if (editing) {%>edit-product<%} else {%>add-product<%} %>' method='POST' enctype="multipart/form-data">
-          <div class="title-row">
-            <div class="form-control ">
-              <label for='title' id="title">Title</label>
-              <input type='text' name='title' id="title" value="<% if (editing || hasError) {%><%=product.title%><%} else {%><%} %>" />
-            </div>
-            <div class="form-control ">
-              <label for='price'>Price</label>
-              <div class="price">
-                <span id="dollar-sign">$</span>
-                <input type='number' step="0.01" name='price' id="price" value="<% if (editing || hasError) {%><%=product.price%><%} else {%><%} %>" />
-              </div>
-            </div>
-          </div>
-          <div class="form-control ">
-            <label for='Description'>Description</label>
-            <textarea rows='10' name='description' id="description" ><% if (editing || hasError) {%><%=product.description%><%} %> </textarea>
-          </div>
-          <div class="form-control ">
-            <label for='image'>Image</label>
-            <input type='file' name='image' id="image"  />
-          </div>
-          <!-- <div class="form-control ">
+<% layout('layouts/boilerplate')%>
+<div class="content">
+  <div class="nav-spacer"></div>
+  <% if (errorMessage) {%>
+  <div class="user-message user-message--error"><%= errorMessage %></div>
+  <% } %>
+  <form
+    class="product-form"
+    action="/admin/<% if (editing) {%>edit-product<%} else {%>add-product<%} %>"
+    method="POST"
+    enctype="multipart/form-data"
+  >
+    <div class="title-row">
+      <div class="form-control">
+        <label for="title" id="title">Title</label>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          value="<% if (editing || hasError) {%><%=product.title%><%} else {%><%} %>"
+        />
+      </div>
+      <div class="form-control">
+        <label for="price">Price</label>
+        <div class="price">
+          <span id="dollar-sign">$</span>
+          <input
+            type="number"
+            step="0.01"
+            name="price"
+            id="price"
+            value="<% if (editing || hasError) {%><%=product.price%><%} else {%><%} %>"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="form-control">
+      <label for="Description">Description</label>
+      <textarea rows="10" name="description" id="description">
+<% if (editing || hasError) {%><%=product.description%><%} %> </textarea
+      >
+    </div>
+    <div class="form-control">
+      <label for="image">Image</label>
+      <input type="file" name="image" id="image" />
+    </div>
+    <!-- <div class="form-control ">
             <label for='colorOptions'>Color Options</label>
             <div>
               <input type='text' name='colorOptions' id="colorOptions" />
@@ -44,14 +58,12 @@
               <button class="btn-primary slim">Add</button>
             </div>
           </div> -->
-          <% if (editing) {%>
-            <input type="hidden" value="<%= product._id %>" name="productId">
-          <% } %>
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <button class="btn-primary form-btn" type='submit'><% if (editing) {%>Update Product<%} else {%>Add Product<%} %></button>
-        </form>
-      </div>
-    </div>
-    <%- include ('../includes/footer.ejs')  %> 
-  </body>
-</html>
+    <% if (editing) {%>
+    <input type="hidden" value="<%= product._id %>" name="productId" />
+    <% } %>
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <button class="btn-primary form-btn" type="submit">
+      <% if (editing) {%>Update Product<%} else {%>Add Product<%} %>
+    </button>
+  </form>
+</div>

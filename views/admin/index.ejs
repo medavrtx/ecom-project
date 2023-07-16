@@ -1,38 +1,29 @@
-<%- include ('../includes/head.ejs') %> 
-  <link rel='stylesheet' href='/css/products.css' />
-  </head>
-  <body>
-    <%- include ('../includes/nav.ejs') %> 
-    <div class="page-wrap">
-      <div class="content">
-        <div class="nav-spacer"></div>
-        <h1>Admin Overview</h1>
-        <div class="admin-stats">
-          <div class="admin-stats-nums">
-            <div class="sold">
-              <h2>0</h2>
-              <a>Sold</a>
-            </div>
-            <div class="listed">
-              <h2>0</h2>
-              <a>Listed</a>
-            </div>
-          </div>
-          <div class="admin-stats-profit">
-            <h2>$0.00</h2>
-            <p>Profit</p>
-          </div>
-          <div>
-            <a href="/admin/add-product">
-              <button class="btn-primary">Add Product</button>
-            </a>
-            <a href="/admin/edit-products">
-              <button class="btn-primary">Edit Products</button>
-            </a>
-          </div>
-        </div>
+<% layout('layouts/boilerplate')%>
+<div class="content">
+  <div class="nav-spacer"></div>
+  <h1>Admin Overview</h1>
+  <div class="admin-stats">
+    <div class="admin-stats-nums">
+      <div class="sold">
+        <h2>0</h2>
+        <a>Sold</a>
+      </div>
+      <div class="listed">
+        <h2>0</h2>
+        <a>Listed</a>
       </div>
     </div>
-    <%- include ('../includes/footer.ejs')  %> 
-  </body>
-</html>
+    <div class="admin-stats-profit">
+      <h2>$0.00</h2>
+      <p>Profit</p>
+    </div>
+    <div>
+      <a href="/admin/add-product">
+        <button class="btn-primary">Add Product</button>
+      </a>
+      <a href="/admin/edit-products">
+        <button class="btn-primary">Edit Products</button>
+      </a>
+    </div>
+  </div>
+</div>

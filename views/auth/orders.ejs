@@ -1,45 +1,31 @@
-<%- include ('../includes/head.ejs') %> 
-  </head>
-  <body>
-    <%- include ('../includes/nav.ejs') %> 
-    <div class="page-wrap">
-      <div class="content">
-        <div class="nav-spacer"></div>
-        <h1 class="orders-title"><%= pageTitle  %> </h1>
-        <div class="orders-main">
-          <div class="orders-list">
-            <% if (orders.length > 0)  { %> 
-              <% orders.forEach(order => { %> 
-                <div class="order-card">
-                  <h4>
-                    <%= order.createdAt.toLocaleDateString("en-US", {month: 'short', day: 'numeric', year: 'numeric'}) %> - Order #<%= order._id  %> - <a href="/user/<%=user._id %> /orders/<%=order._id %> ">Invoice</a>
-                  </h4>
-                    <% order.products.forEach(p => { %>
-                      <div class="order-card-desc">
-                        <div class="order-product-image" >
-                          <img src="/<%= p.product.image %> " alt="<%= p.product.title %>" >
-                        </div>
-                        <div>
-                          <div class="order-card-title">
-                            <%= p.product.title %>
-                          </div>
-                          <div class="order-card-qty">
-                            Quantity: <%= p.quantity %>
-                          </div>
-                        </div>
-                      </div>
-                    <% }) %> 
-                </div>
-              <% }) %> 
-            <% } else { %> 
-              <div class="order-nothing">
-              Nothing Here
-              </div>
-            <% } %> 
+<% layout('layouts/boilerplate')%>
+<div class="content">
+  <div class="nav-spacer"></div>
+  <h1 class="orders-title"><%= pageTitle %></h1>
+  <div class="orders-main">
+    <div class="orders-list">
+      <% if (orders.length > 0) { %> <% orders.forEach(order => { %>
+      <div class="order-card">
+        <h4>
+          <%= order.createdAt.toLocaleDateString("en-US", {month: 'short', day:
+          'numeric', year: 'numeric'}) %> - Order #<%= order._id %> -
+          <a href="/user/<%=user._id %> /orders/<%=order._id %> ">Invoice</a>
+        </h4>
+        <% order.products.forEach(p => { %>
+        <div class="order-card-desc">
+          <div class="order-product-image">
+            <img src="/<%= p.product.image %> " alt="<%= p.product.title %>" />
+          </div>
+          <div>
+            <div class="order-card-title"><%= p.product.title %></div>
+            <div class="order-card-qty">Quantity: <%= p.quantity %></div>
           </div>
         </div>
+        <% }) %>
       </div>
+      <% }) %> <% } else { %>
+      <div class="order-nothing">Nothing Here</div>
+      <% } %>
     </div>
-  </body>
-  <%- include ('../includes/footer.ejs')  %> 
-</html>
+  </div>
+</div>
