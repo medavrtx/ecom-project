@@ -1,16 +1,31 @@
 <% layout('layouts/boilerplate')%>
-<div class="content">
-  <div class="nav-spacer"></div>
-  <h1>Your Account</h1>
-  <div class="user-options">
-    <a href="/user/<%= user._id %>/orders">
-      <div>Orders</div>
-    </a>
-    <!-- <div>
-               Messages
-            </div>
-            <div>
-                Account Setting
-            </div> -->
+<div class="container py-5">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="mb-4">My Account</h1>
+    </div>
+  </div>
+  <div class="row py-5">
+    <div class="col-12 d-flex justify-content-center">
+      <div class="btn-group account-btns">
+        <a
+          href="/user/<%= user._id %>/profile"
+          class="btn btn-outline-dark account-btn"
+          >Profile</a
+        >
+        <a
+          href="/user/<%= user._id %>/orders"
+          class="btn btn-outline-dark account-btn"
+        >
+          Orders
+        </a>
+        <a
+          href="/user/<%= user._id %>/settings"
+          class="btn btn-outline-dark account-btn"
+        >
+          Settings
+        </a>
+      </div>
+    </div>
   </div>
 </div>

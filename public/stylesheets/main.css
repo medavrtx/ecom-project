@@ -487,9 +487,8 @@ h5 {
 
 .research-card p {
   margin-top: 15px;
-  padding: 15px;
-  padding-top: 0;
-  max-height: 240px;
+  padding: 0 15px;
+  max-height: 320px;
   font-size: 1.2rem;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -573,6 +572,27 @@ h5 {
   .col-lg-2 {
     order: 1;
   }
+}
+
+/* ACCOUNT */
+
+.account-btns {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+  border-radius: 20px;
+  width: 70%;
+}
+
+.account-btn {
+  background-color: #ffffff;
+  height: 50px;
+  border-radius: 5px;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(209, 209, 209);
 }
 
 /* ORDERS */
@@ -881,28 +901,6 @@ h5 {
 }
 .admin-stats-profit p {
   margin: 0;
-}
-
-.user-options {
-  margin-top: 15px;
-  display: flex;
-  justify-content: space-around;
-  border-radius: 20px;
-  width: 70%;
-}
-.user-options div {
-  background-color: #ffffff;
-  height: 50px;
-  border-radius: 5px;
-  width: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgb(209, 209, 209);
-}
-.user-options div:hover {
-  cursor: pointer;
-  background-color: rgb(217, 220, 228);
 }
 
 .user-sign-main {
