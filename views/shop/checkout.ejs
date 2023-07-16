@@ -1,49 +1,88 @@
-<%- include ('../includes/head.ejs') %> 
-  </head>
-  <body>
-    <%- include ('../includes/nav.ejs') %> 
-    <div class="page-wrap">
-      <div class="content">
-        <div class="nav-spacer"></div>
-        <h1><%= pageTitle  %> </h1>
-          <div class="cart-list">
-              <% products.forEach(p => { %>
-                <div class="cart-card">
-                  <div class="cart-product-info">
-                    <div class="cart-product-image" >
-                      <img src="<%= p.productId.image %> " alt="<%= p.productId.title %>" >
-                    </div>
-                    <div class="cart-product-detail">
-                      <div class="cart-product-title"><%= p.productId.title %></div>
-                    </div>
-                  </div>
-                  <div class="cart-product-price">$<%= p.productId.price %></div>
-                </div>
-              <% }) %> 
-              <div class="cart-card">
-                <div class="cart-product-detail">
-                  <div>Subtotal (<%= totalQty %> items): $<%= totalPrice %></div>
-                  <div>Estimated Tax: $<%= (totalPrice * .09375).toFixed(2) %></div>
-                  <div>Shipping: $10</div>
-                  <div>Total: $<%= (totalPrice + 10 + (totalPrice * .1)).toFixed(2) %></div>
-                </div>
-              </div>
-              <div class="cart-order">
-                <button class="btn-primary" id="order-btn">Order</button>
-                <script src="https://js.stripe.com/v3/"></script>
-                <script>
-                  var stripe = Stripe('<%= stripe %>');
-                  var orderBtn = document.getElementById('order-btn')
-                  orderBtn.addEventListener('click', function() {
-                    stripe.redirectToCheckout({ 
-                      sessionId: '<%= sessionId %>' 
-                    })
-                  })
-                </script>
-              </div>
+<% layout('layouts/boilerplate')%>
+<div class="content py-5">
+  <div class="container mt-5">
+    <h2><%= pageTitle %></h2>
+    <table class="table mt-3">
+      <thead>
+        <tr>
+          <th scope="col-1">Product</th>
+          <th scope="col" class="d-none d-md-table-cell"></th>
+          <th scope="col">Quantity</th>
+          <th scope="col" class="text-end">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% products.forEach(p => { %>
+        <tr>
+          <!-- IMAGE -->
+          <td class="col-1 d-none d-md-table-cell">
+            <div class="cart-product-image">
+              <img
+                src="<%= p.productId.image %>"
+                alt="<%= p.productId.title %>"
+              />
             </div>
+          </td>
+
+          <!-- DETAILS -->
+          <td>
+            <p><%= p.productId.title %></p>
+            <p class="cart-product-price">$<%= p.productId.price %></p>
+          </td>
+
+          <!-- QUANTITY -->
+          <td><%= p.quantity %></td>
+
+          <!-- TOTAL -->
+          <td class="text-end">$<%= p.quantity * p.productId.price %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <div class="row py-5">
+      <div class="col-lg-3 order-lg-2">
+        <div class="subtotal">
+          <span class="me-5">Subtotal</span>
+          <span class="float-end"> $<%= totalPrice %> </span>
+        </div>
+        <div class="subtotal">
+          <span class="me-5">Estimated Tax</span>
+          <span class="float-end">
+            $<%= (totalPrice * .09375).toFixed(2) %>
+          </span>
+        </div>
+        <div class="subtotal">
+          <span class="me-5">Shipping</span>
+          <span class="float-end">$10</span>
+        </div>
+        <div class="subtotal">
+          <span class="larger-font me-5">Total</span>
+          <span class="larger-font float-end">
+            $<%= (totalPrice + 10 + (totalPrice * .09375)).toFixed(2) %>
+          </span>
+        </div>
+        <button
+          class="btn btn-outline-dark float-end w-100 my-3"
+          id="order-btn"
+        >
+          Order (<%= (totalQty) > 1 ? totalQty + ' items' : totalQty + ' item'
+          %>)
+        </button>
+        <script src="https://js.stripe.com/v3/"></script>
+        <script>
+          var stripe = Stripe('<%= stripe %>');
+          var orderBtn = document.getElementById('order-btn');
+          orderBtn.addEventListener('click', function () {
+            stripe.redirectToCheckout({
+              sessionId: '<%= sessionId %>',
+            });
+          });
+        </script>
+      </div>
+      <div class="col-lg-9 my-3 order-lg-1">
+        <a class="link" href="/cart">Return to Cart</a>
       </div>
     </div>
-  </body>
-  <%- include ('../includes/footer.ejs')  %> 
-</html>
+  </div>
+</div>

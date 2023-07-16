@@ -95,16 +95,24 @@
     </table>
 
     <!-- SUBTOTAL -->
-    <div class="cart-subtotal py-5 float-end">
-      <div class="subtotal">
-        <span class="larger-font me-5">Subtotal</span>
-        <span class="larger-font"> $<%= totalPrice %> </span>
+  
+
+    <div class="row py-5">
+      <div class="col-lg-3 order-lg-2">
+        <div class="subtotal">
+          <span class="larger-font me-5">Subtotal</span>
+          <span class="larger-font float-end"> $<%= totalPrice %> </span>
+        </div>
+        <a href="/checkout" class="btn btn-outline-dark float-end w-100 my-3"
+          >Checkout (<%= (totalQty) > 1 ? totalQty + ' items' : totalQty + ' item'
+          %>)</a
+        >
       </div>
-      <a href="/checkout" class="btn btn-outline-dark float-end w-100 my-3"
-        >Checkout (<%= (totalQty) > 1 ? totalQty + ' items' : totalQty + ' item'
-        %>)</a
-      >
+      <div class="col-lg-9 my-3 order-lg-1">
+        <a class="link" href="/shop-all">Coontinue shopping</a>
+      </div>
     </div>
+  </div>
   </div>
   <% } else { %>
   <!-- EMPTY CART -->

@@ -562,20 +562,6 @@ h5 {
   cursor: pointer;
 }
 
-.cart-subtotal {
-}
-
-.cart-order {
-  width: 25%;
-  background-color: #ffffff;
-  border-radius: 5px;
-  padding: 15px;
-  display: flex;
-  align-self: center;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
 .quantity-btn {
   font-family: 'Verdana';
 }
