@@ -1,27 +1,59 @@
 <% layout('layouts/boilerplate')%>
-<div class="content">
-  <div class="nav-spacer"></div>
-  <h1 class="orders-title"><%= pageTitle %></h1>
-  <div class="orders-main">
-    <div class="orders-list">
-      <% if (orders.length > 0) { %> <% orders.forEach(order => { %>
-      <div class="order-card">
-        <h4>
-          <%= order.createdAt.toLocaleDateString("en-US", {month: 'short', day:
-          'numeric', year: 'numeric'}) %> - Order #<%= order._id %> -
-          <a href="/user/<%=user._id %> /orders/<%=order._id %> ">Invoice</a>
-        </h4>
-        <% order.products.forEach(p => { %>
-        <div class="order-card-desc">
-          <div class="order-product-image">
-            <img src="/<%= p.product.image %> " alt="<%= p.product.title %>" />
-          </div>
-          <div>
-            <div class="order-card-title"><%= p.product.title %></div>
-            <div class="order-card-qty">Quantity: <%= p.quantity %></div>
+<div class="content my-5">
+  <div class="container mt-5">
+    <h1 class="orders-title"><%= pageTitle %></h1>
+    <div class="accordion my-5" id="ordersAccordion">
+      <% if (orders.length > 0) { %> <% orders.forEach((order, key) => { %>
+      <div class="accordion-item">
+        <button
+          class="accordion-button collapsed"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#order1Collapse<%= key %>"
+          aria-expanded="false"
+          aria-controls="order1Collapse<%= key %>"
+        >
+          <h5
+            class="accordion-header overflow-hidden"
+            id="order1Heading<%= key %>"
+          >
+            <%= order.createdAt.toLocaleDateString("en-US", {month: 'short',
+            day: 'numeric', year: 'numeric'}) %> - Order #<%= order._id %>
+          </h5>
+        </button>
+        <div
+          id="order1Collapse<%= key %>"
+          class="accordion-collapse collapse"
+          aria-labelledby="order1Heading"
+          data-bs-parent="#ordersAccordion"
+        >
+          <div class="accordion-body">
+            <!-- Replace with individual products information -->
+            <ul class="link-list">
+              <% order.products.forEach(p => { %>
+              <li>
+                <div class="order-card">
+                  <div class="order-product-image">
+                    <img
+                      src="/<%= p.product.image %> "
+                      alt="<%= p.product.title %>"
+                    />
+                  </div>
+                  <div>
+                    <div class="order-card-title"><%= p.product.title %></div>
+                    <div>Quantity: <%= p.quantity %></div>
+                  </div>
+                </div>
+              </li>
+              <% }) %>
+            </ul>
+            <a
+              href="/user/<%=user._id %> /orders/<%=order._id %> "
+              class="btn btn-outline-dark"
+              >Invoice</a
+            >
           </div>
         </div>
-        <% }) %>
       </div>
       <% }) %> <% } else { %>
       <div class="order-nothing">Nothing Here</div>

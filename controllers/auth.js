@@ -259,6 +259,7 @@ exports.getUser = (req, res, next) => {
 
 exports.getOrders = (req, res, next) => {
   Order.find({ 'user.userId': req.user._id })
+    .sort({ createdAt: -1 })
     .then((orders) => {
       res.render('auth/orders', {
         path: '/user/orders',
