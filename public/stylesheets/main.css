@@ -403,6 +403,20 @@ h5 {
   background-image: url('/images/routine/routine1.jpg');
 }
 
+.routine-card {
+  border: 1px solid rgb(199, 199, 199);
+  border-radius: 20px;
+  margin-bottom: 30px;
+}
+
+.routine-card p {
+  font-size: 1.2rem;
+}
+
+.routine-img {
+  max-height: 400px;
+}
+
 /* RESEARCH */
 
 .research-banner {
@@ -470,6 +484,7 @@ h5 {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 30px;
   background-color: #fff;
+  margin-bottom: 15px;
 }
 
 .testimonial-card img {
