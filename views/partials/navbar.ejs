@@ -75,11 +75,14 @@
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            Account
+            <span class="navbar-text d-lg-none">Account</span>
+            <span class="d-none d-lg-inline">
+              <i class="fa-solid fa-user"></i>
+            </span>
           </a>
 
           <ul
-            class="dropdown-menu dropdown-menu-light"
+            class="dropdown-menu dropdown-menu-end dropdown-menu-light"
             aria-labelledby="navbarDarkDropdownMenuLink"
           >
             <% if (isAuthenticated) { %> <% if (isAdmin) { %>
@@ -103,7 +106,7 @@
             </li>
             <% } else { %>
             <li>
-              <a class="nav-link" href="/login">Sign In</a>
+              <a class="dropdown-item" href="/login">Sign In</a>
             </li>
             <% } %>
           </ul>
