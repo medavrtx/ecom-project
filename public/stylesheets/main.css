@@ -20,6 +20,12 @@ h5 {
   overflow: hidden;
 }
 
+@media (min-width: 1500px) {
+  .main-container {
+    padding: 0 10%;
+  }
+}
+
 .brand {
   font-family: 'Crimson Text';
 }
@@ -273,9 +279,7 @@ h5 {
   height: 2rem;
   z-index: 4;
   background-color: #c2ffcc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
 }
 
 .carousel-item > img {

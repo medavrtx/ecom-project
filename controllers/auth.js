@@ -249,7 +249,7 @@ exports.postLogOut = (req, res, next) => {
 
 exports.getUser = (req, res, next) => {
   res.render('auth/index', {
-    pageTitle: 'Cart',
+    pageTitle: 'Your Cart',
     path: '/user',
     user: req.user,
     isAuthenticated: req.session.isLoggedIn,
@@ -263,7 +263,7 @@ exports.getOrders = (req, res, next) => {
     .then((orders) => {
       res.render('auth/orders', {
         path: '/user/orders',
-        pageTitle: 'Your Orders',
+        pageTitle: 'My Orders',
         orders: orders,
         user: req.user,
         isAuthenticated: req.session.isLoggedIn,
