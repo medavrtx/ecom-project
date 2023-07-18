@@ -1,18 +1,40 @@
-const Product = require('../models/product');
 const { validationResult } = require('express-validator');
+
+const Product = require('../models/product');
+const Order = require('../models/order');
 
 const fileHelper = require('../util/file');
 
 const ITEMS_PER_PAGE = 2;
 
 exports.getAdmin = (req, res, next) => {
-  res.render('admin/index', {
-    pageTitle: 'Admin',
-    path: '/admin',
-    user: req.user,
-    isAuthenticated: req.session.isLoggedIn,
-    isAdmin: req.session.isAdmin,
-  });
+  Product.find()
+    .countDocuments()
+    .then((numProducts) => {
+      Order.find()
+        .countDocuments()
+        .then((numOrders) => {
+          res.render('admin/index', {
+            pageTitle: 'Admin',
+            path: '/admin',
+            user: req.user,
+            numListed: numProducts,
+            numOrders: numOrders,
+            isAuthenticated: req.session.isLoggedIn,
+            isAdmin: req.session.isAdmin,
+          });
+        })
+        .catch((err) => {
+          const error = new Error(err);
+          error.httpStatusCode = 500;
+          return next(error);
+        });
+    })
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
 
 exports.getEditProducts = (req, res, next) => {

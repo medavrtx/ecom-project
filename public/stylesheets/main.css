@@ -147,6 +147,11 @@ h5 {
   border: 1px solid var(--dark-border);
 }
 
+.btn-container {
+  display: flex;
+  align-items: center;
+}
+
 /* NAVBAR */
 
 .navbar {
@@ -705,6 +710,44 @@ h5 {
   text-align: center;
 }
 
+/* ADMIN */
+.admin-card {
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid var(--light-border);
+  background-color: var(--light-color);
+}
+
+.admin-items {
+  display: flex;
+  flex-direction: row;
+  width: 150px;
+  justify-content: space-evenly;
+  flex: 2;
+  text-align: left;
+}
+
+.admin-profit {
+  flex: 2;
+}
+
+.admin-buttons {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.admin-number {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.admin-label {
+  font-size: 18px;
+  color: #999;
+}
+
 /* OTHER */
 .main-context {
   display: flex;
@@ -919,44 +962,6 @@ h5 {
 #colorOptions,
 #sizeOptions {
   width: 150px;
-}
-
-.admin-stats {
-  margin-top: 15px;
-  background-color: #ffffff;
-  height: 100px;
-  display: flex;
-  width: 70%;
-  justify-content: space-around;
-  align-items: center;
-  border-radius: 20px;
-}
-
-.admin-stats-nums {
-  display: flex;
-  flex-direction: row;
-  width: 150px;
-  justify-content: space-around;
-}
-.admin-stats-nums div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.admin-stats-nums div h2 {
-  align-items: center;
-}
-
-.admin-stats-profit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.admin-stats-profit h2 {
-  margin: 0;
-}
-.admin-stats-profit p {
-  margin: 0;
 }
 
 .user-sign-main {

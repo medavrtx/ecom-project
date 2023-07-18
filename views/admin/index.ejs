@@ -1,29 +1,42 @@
 <% layout('layouts/boilerplate')%>
+
+<div class="my-5">
+  <h1 class="center-title"><%= pageTitle %></h1>
+</div>
+
 <div class="content">
-  <div class="nav-spacer"></div>
-  <h1>Admin Overview</h1>
-  <div class="admin-stats">
-    <div class="admin-stats-nums">
-      <div class="sold">
-        <h2>0</h2>
-        <a>Sold</a>
+  <div class="row w-100">
+    <div class="admin-card d-flex flex-wrap w-100">
+      <div class="admin-items">
+        <div class="text-center me-5">
+          <div class="admin-number"><%= numOrders %></div>
+          <div class="admin-label">Orders</div>
+        </div>
+        <div class="text-center">
+          <div class="admin-number"><%= numListed %></div>
+          <div class="admin-label">Listed</div>
+        </div>
       </div>
-      <div class="listed">
-        <h2>0</h2>
-        <a>Listed</a>
+      <div class="admin-profit text-center">
+        <div class="admin-number">$0.00</div>
+        <div class="admin-label">Profit</div>
       </div>
-    </div>
-    <div class="admin-stats-profit">
-      <h2>$0.00</h2>
-      <p>Profit</p>
-    </div>
-    <div>
-      <a href="/admin/add-product">
-        <button class="btn-primary">Add Product</button>
-      </a>
-      <a href="/admin/edit-products">
-        <button class="btn-primary">Edit Products</button>
-      </a>
+      <div class="admin-buttons">
+        <div class="btn-container">
+          <a
+            href="/admin/add-product"
+            class="btn btn-outline-dark me-2 text-nowrap"
+          >
+            Add Product
+          </a>
+          <a
+            href="/admin/edit-products"
+            class="btn btn-outline-dark text-nowrap"
+          >
+            Edit Products
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
