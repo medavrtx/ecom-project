@@ -82,22 +82,9 @@ app.use((req, res, next) => {
   req.stripeSk = process.env.STRIPESK;
   next();
 });
-const tempUser = new User({
-  email: 'temp',
-  password: 'temp',
-  name: 'temp',
-  address: 'temp',
-  country: 'temp',
-  phoneNumber: 'temp',
-  isAdmin: false,
-  cart: { items: [] },
-});
 
 app.use((req, res, next) => {
   if (!req.session.user) {
-    tempUser.save();
-    req.session.user = tempUser;
-    req.session.tempId = req.session.user._id;
     return next();
   }
   User.findById(req.session.user._id)
