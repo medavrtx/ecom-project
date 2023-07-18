@@ -117,6 +117,32 @@ h5 {
   font-size: 36px;
 }
 
+.custom-form {
+  align-items: end;
+}
+
+.custom-form input {
+  align-self: baseline;
+  border: none;
+  border-bottom: 1px solid var(--light-border);
+  margin: 0;
+  border-radius: 0;
+  background-color: transparent;
+}
+
+.custom-form input:focus {
+  outline: none;
+  box-shadow: none;
+  background-color: transparent;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+.custom-form button {
+  margin-left: 15px;
+  border-radius: 20px;
+  border: 1px solid var(--dark-border);
+}
+
 /* NAVBAR */
 
 .navbar {
@@ -169,23 +195,6 @@ h5 {
 .footer {
   width: 100%;
   border-top: 1px solid var(--light-border);
-}
-
-.newsletter-form {
-  align-items: end;
-}
-
-.newsletter-form input {
-  align-self: baseline;
-  border: none;
-  border-bottom: 1px solid var(--dark-border);
-  margin: 0;
-}
-
-.newsletter-form button {
-  margin-left: 15px;
-  border-radius: 20px;
-  border: 1px solid var(--dark-border);
 }
 
 .footer-notes {
@@ -680,6 +689,12 @@ h5 {
   margin-top: 15px;
 }
 
+/* LOGIN */
+
+.user-message {
+  text-align: center;
+}
+
 /* OTHER */
 .main-context {
   display: flex;
@@ -896,28 +911,6 @@ h5 {
   width: 150px;
 }
 
-.user-message {
-  margin: 20px;
-  width: 30%;
-  border: 1px solid #4771fa;
-  padding: 0.5rem;
-  border-radius: 3px;
-  background: #b9c9ff;
-  text-align: center;
-}
-
-.user-message--error {
-  border-color: red;
-  background-color: #ffa1a1;
-  color: red;
-}
-
-.user-message--success {
-  border-color: green;
-  background-color: #c2ffcc;
-  color: green;
-}
-
 .admin-stats {
   margin-top: 15px;
   background-color: #ffffff;
@@ -961,12 +954,6 @@ h5 {
   flex-direction: row;
   width: 70%;
   justify-content: space-around;
-}
-
-.user-sign-in {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
 }
 
 .user-register {
