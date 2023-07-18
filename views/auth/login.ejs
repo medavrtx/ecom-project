@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate')%>
-<div class="row my-5">
+<div class="my-5">
   <h1 class="center-title">Sign In</h1>
 </div>
 
@@ -37,7 +37,9 @@
         <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
 
         <!-- BUTTON -->
-        <button type="submit" class="btn btn-outline-dark my-3">Sign In</button>
+        <button type="submit" class="btn btn-outline-dark my-3 w-100">
+          Sign In
+        </button>
 
         <!-- RESET -->
         <p class="mt-3">

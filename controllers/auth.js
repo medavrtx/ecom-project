@@ -60,7 +60,7 @@ exports.postLogIn = (req, res, next) => {
         });
       }
       bcrypt
-        .compare(password, user.password)
+        .compare(password, user.toObject().password)
         .then((doMatch) => {
           if (doMatch) {
             req.session.isLoggedIn = true;
@@ -109,32 +109,19 @@ exports.getRegistration = (req, res, next) => {
     errorMessage: message,
     oldInput: {
       email: '',
-      phoneNumber: '',
       password: '',
       firstName: '',
       lastName: '',
-      address1: '',
-      address2: '',
-      city: '',
-      state: '',
-      zipCode: '',
-      country: '',
     },
   });
 };
 
 exports.postRegistration = (req, res, next) => {
   const email = req.body.email;
-  const phoneNumber = req.body.phoneNumber;
   const password = req.body.password;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
-  const address1 = req.body.address1;
-  const address2 = req.body.address2;
-  const city = req.body.city;
-  const state = req.body.state;
-  const zipCode = req.body.zipCode;
-  const country = req.body.country;
+  const agreement = req.body.agreement;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).render('auth/registration', {
@@ -143,16 +130,23 @@ exports.postRegistration = (req, res, next) => {
       errorMessage: errors.array()[0].msg,
       oldInput: {
         email: email,
-        phoneNumber: phoneNumber,
         password: password,
         firstName: firstName,
         lastName: lastName,
-        address1: address1,
-        address2: address2,
-        city: city,
-        state: state,
-        zipCode: zipCode,
-        country: country,
+      },
+    });
+  }
+  if (!agreement) {
+    return res.status(422).render('auth/registration', {
+      path: '/registration',
+      pageTitle: 'Registration',
+      errorMessage:
+        'Please agree to the terms by checking the agreement checkbox before submitting the form',
+      oldInput: {
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
       },
     });
   }
@@ -162,10 +156,8 @@ exports.postRegistration = (req, res, next) => {
       const user = new User({
         email: email,
         password: hashedPassword,
-        name: `${firstName} ${lastName}`,
-        address: `${address1}, ${address2}, ${city}, ${state} ${zipCode}`,
-        country: country,
-        phoneNumber: phoneNumber,
+        firstName: firstName,
+        lastName: lastName,
         isAdmin: false,
         cart: { items: [] },
       });

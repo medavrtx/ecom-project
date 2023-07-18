@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const Order = require('../models/order');
+const User = require('../models/user');
 
 const ITEMS_PER_PAGE = 2;
 
@@ -101,6 +102,9 @@ exports.getInfo = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
+  if (!req.user) {
+    req.user = new User();
+  }
   req.user
     .populate('cart.items.productId')
     .then((user) => {
@@ -124,6 +128,7 @@ exports.getCart = (req, res, next) => {
       });
     })
     .catch((err) => {
+      console.log('ajslfsja');
       const error = new Error(err);
       error.httpStatusCode = 500;
       return next(error);
@@ -134,6 +139,18 @@ exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
   Product.findById(prodId)
     .then((product) => {
+      if (!req.user) {
+        console.log('no user');
+        const user = new User({
+          email: 'temporaryuser@example.com',
+          password: 'temporarypassword',
+          firstName: 'Temporary',
+          lastName: 'User',
+          isTemp: true,
+          cart: { items: [] },
+        });
+        req.user = user;
+      }
       return req.user.addToCart(product);
     })
     .then((result) => {

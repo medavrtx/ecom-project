@@ -112,6 +112,10 @@ h5 {
   text-decoration: underline;
 }
 
+.no-wrap {
+  white-space: nowrap;
+}
+
 .center-title {
   text-align: center;
   font-size: 36px;
@@ -288,6 +292,12 @@ h5 {
   justify-content: center;
   align-items: center;
   font-size: 0.9rem;
+}
+
+@media (max-width: 576px) {
+  .copyright-links {
+    font-size: 0.7rem;
+  }
 }
 
 .privacy-terms {

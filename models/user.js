@@ -7,29 +7,21 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  password: {
+  firstName: {
     type: String,
     required: true,
   },
-  name: {
-    type: String,
-    required: true,
-  },
-  address: {
-    type: String,
-    required: true,
-  },
-  country: {
-    type: String,
-    required: true,
-  },
-  phoneNumber: {
+  lastName: {
     type: String,
     required: true,
   },
   isAdmin: {
     type: Boolean,
-    required: true,
+    required: false,
+  },
+  isTemp: {
+    type: Boolean,
+    required: false,
   },
   cart: {
     items: [
