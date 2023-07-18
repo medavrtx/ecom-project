@@ -3,12 +3,13 @@
 <div class="my-5">
   <h1 class="center-title">Register</h1>
 </div>
+
 <div class="content">
   <% if (errorMessage) {%>
   <div class="user-message text-danger"><%= errorMessage %></div>
   <% } %>
 
-  <div class="row">
+  <div class="row w-75">
     <div class="col-md-6 offset-md-3">
       <form action="/registration" method="POST">
         <div class="form-group custom-form">
