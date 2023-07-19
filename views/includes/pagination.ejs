@@ -1,15 +1,23 @@
-<section class="pagination">
+<section class="d-flex justify-content-center my-5">
   <% if (currentPage !== 1 && previousPage !== 1) { %>
-  <a href="<%= path %>/?page=1">1</a>
+  <a class="btn btn-outline-dark" href="<%= path %>/?page=1">1</a>
   <% } %> <% if (hasPreviousPage) { %>
-  <a href="<%= path %>/?page=<%= previousPage %>"><%= previousPage %> </a>
+  <a class="btn btn-outline-dark" href="<%= path %>/?page=<%= previousPage %>"
+    ><%= previousPage %>
+  </a>
   <% } %>
-  <a class="active" href="<%= path %>/?page=<%= currentPage %>"
+  <a
+    class="active btn btn-outline-dark mx-1"
+    href="<%= path %>/?page=<%= currentPage %>"
     ><%= currentPage %>
   </a>
   <% if (hasNextPage) { %>
-  <a href="<%= path %>/?page=<%= nextPage %>"><%= nextPage %> </a>
+  <a class="btn btn-outline-dark" href="<%= path %>/?page=<%= nextPage %>"
+    ><%= nextPage %>
+  </a>
   <% } %> <% if (lastPage !== currentPage && nextPage !== lastPage) { %>
-  <a href="<%= path %>/?page=<%= lastPage %>"><%= lastPage %></a>
+  <a class="btn btn-outline-dark" href="<%= path %>/?page=<%= lastPage %>"
+    ><%= lastPage %></a
+  >
   <% } %>
 </section>

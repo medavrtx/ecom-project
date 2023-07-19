@@ -118,11 +118,23 @@ app.use((error, req, res, next) => {
   });
 });
 
+let dbConnection;
+
 mongoose.set('strictQuery', false);
 mongoose
   .connect(process.env.MONGO_URI, { maxPoolSize: 5 })
-  .then((result) => {
+  .then(() => {
+    console.log('Connected to MongoDB');
+
     app.listen(process.env.PORT || 3000);
+
+    // Add Nodemon event listener for 'exit' event
+    process.once('SIGUSR2', () => {
+      mongoose.connection.close(() => {
+        console.log('Disconnected from MongoDB');
+        process.kill(process.pid, 'SIGUSR2'); // Forward the restart signal to Nodemon
+      });
+    });
   })
   .catch((err) => {
     console.log(err);
