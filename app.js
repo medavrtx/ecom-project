@@ -120,7 +120,7 @@ app.use((error, req, res, next) => {
 
 mongoose.set('strictQuery', false);
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI, { maxPoolSize: 5 })
   .then((result) => {
     app.listen(process.env.PORT || 3000);
   })

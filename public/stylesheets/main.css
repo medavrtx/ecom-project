@@ -748,6 +748,114 @@ h5 {
   color: #999;
 }
 
+/* ADD PRODUCT */
+
+.image-upload {
+  width: 100%;
+  padding-top: 100%;
+  border: 2px dashed #ccc;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.drop-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.drop-area input[type='file'] {
+  display: none;
+}
+
+.upload-icon {
+  font-size: 40px;
+}
+
+.upload-text {
+  margin-top: 10px;
+}
+
+.image-upload.drag-over {
+  border-color: #000;
+}
+
+.preview-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  z-index: 3;
+}
+
+.product-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-form-input:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.product-form-textarea {
+  resize: none;
+}
+
+.product-form-textarea:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.product-form-select:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.input-group-text {
+  background-color: var(--bg-light-color);
+  border-right: none;
+  padding-right: 5px;
+}
+
+.price-input {
+  border-left: none;
+
+  padding-left: 0;
+}
+
+.upload-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.upload-buttons button {
+  margin: 0 5px;
+}
+
 /* OTHER */
 .main-context {
   display: flex;
@@ -898,70 +1006,6 @@ h5 {
 .pagination a.active {
   background-color: #164777;
   color: rgb(242, 244, 249);
-}
-
-.product-form {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-}
-
-.form-control {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  width: 100%;
-  margin-top: 15px;
-}
-.form-control input {
-  font-family: 'Lato', sans-serif;
-  width: 100%;
-}
-.form-control textarea {
-  font-family: 'Lato', sans-serif;
-  width: 100%;
-}
-
-.form-btn {
-  margin-top: 15px;
-}
-
-.title-row {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-.title-row .form-control:last-child {
-  width: 30%;
-  margin-left: 15px;
-}
-
-#dollar-sign {
-  position: absolute;
-  margin-left: 5px;
-  line-height: 20px;
-  align-self: center;
-}
-
-.price {
-  background-color: #ffffff;
-  border: 1px solid rgb(82, 81, 81);
-  border-radius: 5px;
-  height: 20px;
-  line-height: 15px;
-}
-
-#price {
-  border: none;
-  background-color: transparent;
-  padding-left: 15px;
-  font-size: 16px;
-  line-height: 18px;
-}
-
-#colorOptions,
-#sizeOptions {
-  width: 150px;
 }
 
 .user-sign-main {

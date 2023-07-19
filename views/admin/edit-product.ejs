@@ -1,69 +1,150 @@
 <% layout('layouts/boilerplate')%>
+
+<div class="my-5">
+  <h1 class="center-title"><%= pageTitle %></h1>
+</div>
+
 <div class="content">
-  <div class="nav-spacer"></div>
   <% if (errorMessage) {%>
-  <div class="user-message user-message--error"><%= errorMessage %></div>
+  <div class="user-message text-danger"><%= errorMessage %></div>
   <% } %>
+
   <form
-    class="product-form"
     action="/admin/<% if (editing) {%>edit-product<%} else {%>add-product<%} %>"
     method="POST"
     enctype="multipart/form-data"
+    class="w-100"
   >
-    <div class="title-row">
-      <div class="form-control">
-        <label for="title" id="title">Title</label>
-        <input
-          type="text"
-          name="title"
-          id="title"
-          value="<% if (editing || hasError) {%><%=product.title%><%} else {%><%} %>"
-        />
+    <div class="row border m-5 rounded-3">
+      <!-- IMAGE -->
+      <div
+        class="col-lg-6 d-flex flex-column align-items-center justify-content-center p-5"
+      >
+        <!-- IMAGE UPLOAD -->
+        <div id="image-upload" class="image-upload bg-light">
+          <label class="drop-area img-hover" for="file-input">
+            <div class="upload-icon">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <p class="upload-text">Drag and drop or click to upload</p>
+            <input type="file" id="file-input" accept="image/*" />
+          </label>
+
+          <!-- IMAGE PREVIEW -->
+          <% if (editing) {%>
+          <div id="preview-container" class="preview-container d-block">
+            <img
+              src="/<%= product.image %>"
+              alt="Product Image Preview"
+              class="preview-image"
+              id="preview-image"
+            />
+          </div>
+          <% } else { %>
+          <div id="preview-container" class="preview-container"></div>
+          <% } %>
+        </div>
+
+        <!-- IMAGE BUTTONS -->
+        <div class="upload-buttons">
+          <button
+            type="button"
+            id="crop-button"
+            class="btn btn-outline-primary btn-sm"
+          >
+            Crop Image
+          </button>
+          <button
+            type="button"
+            id="choose-another-button"
+            class="btn btn-outline-secondary btn-sm"
+          >
+            Upload from Device
+          </button>
+        </div>
       </div>
-      <div class="form-control">
-        <label for="price">Price</label>
-        <div class="price">
-          <span id="dollar-sign">$</span>
-          <input
-            type="number"
-            step="0.01"
-            name="price"
-            id="price"
-            value="<% if (editing || hasError) {%><%=product.price%><%} else {%><%} %>"
-          />
+
+      <!-- DETAILS -->
+      <div class="col-lg-6 p-5 d-flex flex-column justify-content-between">
+        <!-- PRODUCT NAME -->
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <label for="title">Product name</label>
+            <input
+              class="form-control product-form-input"
+              type="text"
+              name="title"
+              id="title"
+              placeholder="Enter product name"
+              value="<% if (editing || hasError) {%><%=product.title%><%} else {%><%} %>"
+            />
+          </div>
+        </div>
+
+        <!-- PRICE -->
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <label for="price">Price</label>
+            <div class="input-group">
+              <span class="input-group-text" id="dollar-sign">$</span>
+              <input
+                type="text"
+                class="form-control product-form-input price-input"
+                name="price"
+                id="price"
+                oninput="formatPriceInput(this)"
+                placeholder="Price"
+                value="<% if (editing || hasError) {%><%=product.price%><%} else {%><%} %>"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="row mb-3">
+          <div class="col-md-12 custom-form">
+            <label for="description">Description</label>
+            <textarea
+              class="form-control product-form-textarea"
+              rows="5"
+              name="description"
+              id="description"
+              placeholder="Enter description"
+            >
+<% if (editing || hasError) {%><%=product.description%><%} %></textarea
+            >
+          </div>
+        </div>
+
+        <!-- CATEGORIES -->
+        <div class="row mb-3">
+          <div class="col-md-12">
+            <label for="category">Category</label>
+            <select
+              class="form-select product-form-select"
+              name="category"
+              id="category"
+            >
+              <option value="">Select a category</option>
+              <option value="kits">Kits</option>
+              <option value="skincare">Skincare</option>
+              <option value="sun-protection">Sun Protection</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- BUTTON -->
+        <div>
+          <button class="btn btn-outline-dark" type="submit">
+            <% if (editing) {%>Update Product<%} else {%>Add Product<%} %>
+          </button>
         </div>
       </div>
     </div>
-    <div class="form-control">
-      <label for="Description">Description</label>
-      <textarea rows="10" name="description" id="description">
-<% if (editing || hasError) {%><%=product.description%><%} %> </textarea
-      >
-    </div>
-    <div class="form-control">
-      <label for="image">Image</label>
-      <input type="file" name="image" id="image" />
-    </div>
-    <!-- <div class="form-control ">
-            <label for='colorOptions'>Color Options</label>
-            <div>
-              <input type='text' name='colorOptions' id="colorOptions" />
-              <button class="btn-primary slim">Add</button>
-            </div>
-          </div>
-          <div class="form-control ">
-            <label for='sizeOptions'>Size Options</label>
-            <div>
-              <input type='text' name='colorOptions' id="colorOptions" />
-              <button class="btn-primary slim">Add</button>
-            </div>
-          </div> -->
+
     <% if (editing) {%>
     <input type="hidden" value="<%= product._id %>" name="productId" />
     <% } %>
     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-    <button class="btn-primary form-btn" type="submit">
-      <% if (editing) {%>Update Product<%} else {%>Add Product<%} %>
-    </button>
   </form>
 </div>
