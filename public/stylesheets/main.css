@@ -367,7 +367,7 @@ h5 {
 }
 
 .img-hover:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
   cursor: pointer;
 }
 
@@ -753,7 +753,7 @@ h5 {
 .image-upload {
   width: 100%;
   padding-top: 100%;
-  border: 2px dashed #ccc;
+  border: 1px solid var(--light-border);
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -761,7 +761,11 @@ h5 {
   position: relative;
 }
 
-.drop-area {
+.image-upload.drag-over {
+  border-color: #bababa;
+}
+
+.image-area {
   position: absolute;
   top: 0;
   left: 0;
@@ -772,10 +776,15 @@ h5 {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.drop-area input[type='file'] {
+.image-area input[type='file'] {
   display: none;
+}
+
+.image-area:hover {
+  background-color: var(--light-border);
 }
 
 .upload-icon {
@@ -786,10 +795,6 @@ h5 {
   margin-top: 10px;
 }
 
-.image-upload.drag-over {
-  border-color: #000;
-}
-
 .preview-container {
   position: absolute;
   top: 0;
@@ -797,16 +802,6 @@ h5 {
   width: 100%;
   height: 100%;
   display: none;
-  z-index: 3;
-}
-
-.product-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 3;
 }
 
 .preview-image {
@@ -814,6 +809,8 @@ h5 {
   height: 100%;
   object-fit: cover;
 }
+
+/* FORM DETAILS */
 
 .product-form-input:focus {
   outline: none;
@@ -842,7 +839,6 @@ h5 {
 
 .price-input {
   border-left: none;
-
   padding-left: 0;
 }
 
@@ -854,6 +850,47 @@ h5 {
 
 .upload-buttons button {
   margin: 0 5px;
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 6;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btn-row {
+  display: flex;
+  flex-direction: row;
 }
 
 /* OTHER */
@@ -871,10 +908,6 @@ h5 {
   padding: 0 15px;
 }
 
-.btn-row {
-  display: flex;
-  flex-direction: row;
-}
 .btn-row a button {
   height: 100%;
 }
@@ -1058,38 +1091,4 @@ h5 {
 .user-reset-main button {
   margin-top: 15px;
   width: 50%;
-}
-
-.info {
-  background-image: url(/images/info.jpeg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 500px;
-}
-
-.info-description {
-  padding: 25px;
-  width: 600px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.info-para {
-  text-align: center;
-  line-height: 35px;
-}
-
-.info-img {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 500px;
-  height: 500px;
-  overflow: hidden;
-}
-.info-img img {
-  width: 100%;
-  border-radius: 10px;
 }

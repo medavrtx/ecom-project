@@ -132,7 +132,7 @@ mongoose
     process.once('SIGUSR2', () => {
       mongoose.connection.close(() => {
         console.log('Disconnected from MongoDB');
-        process.kill(process.pid, 'SIGUSR2'); // Forward the restart signal to Nodemon
+        process.kill(process.pid, 'SIGUSR2');
       });
     });
   })

@@ -4,7 +4,7 @@
   <h1 class="center-title"><%= pageTitle %></h1>
 </div>
 
-<div class="content">
+<div class="content py-0">
   <% if (errorMessage) {%>
   <div class="user-message text-danger"><%= errorMessage %></div>
   <% } %>
@@ -15,52 +15,37 @@
     enctype="multipart/form-data"
     class="w-100"
   >
-    <div class="row border m-5 rounded-3">
+    <div class="row border mx-sm-5 rounded-3">
       <!-- IMAGE -->
       <div
         class="col-lg-6 d-flex flex-column align-items-center justify-content-center p-5"
       >
         <!-- IMAGE UPLOAD -->
-        <div id="image-upload" class="image-upload bg-light">
-          <label class="drop-area img-hover" for="file-input">
+        <div class="image-upload bg-light">
+          <div id="form-image-area" class="image-area">
             <div class="upload-icon">
-              <i class="fas fa-cloud-upload-alt"></i>
+              <i class="fas fa-image"></i>
             </div>
-            <p class="upload-text">Drag and drop or click to upload</p>
-            <input type="file" id="file-input" accept="image/*" />
-          </label>
+            <p class="upload-text">
+              Click here to
+              <b>Add Image</b>
+            </p>
+          </div>
 
           <!-- IMAGE PREVIEW -->
           <% if (editing) {%>
-          <div id="preview-container" class="preview-container d-block">
+          <div id="form-preview-container" class="preview-container d-block">
             <img
               src="/<%= product.image %>"
               alt="Product Image Preview"
               class="preview-image"
-              id="preview-image"
+              id="form-preview-image"
             />
           </div>
           <% } else { %>
-          <div id="preview-container" class="preview-container"></div>
-          <% } %>
-        </div>
+          <div id="form-preview-container" class="preview-container"></div>
 
-        <!-- IMAGE BUTTONS -->
-        <div class="upload-buttons">
-          <button
-            type="button"
-            id="crop-button"
-            class="btn btn-outline-primary btn-sm"
-          >
-            Crop Image
-          </button>
-          <button
-            type="button"
-            id="choose-another-button"
-            class="btn btn-outline-secondary btn-sm"
-          >
-            Upload from Device
-          </button>
+          <% } %>
         </div>
       </div>
 
@@ -136,7 +121,7 @@
         <!-- BUTTON -->
         <div>
           <button class="btn btn-outline-dark" type="submit">
-            <% if (editing) {%>Update Product<%} else {%>Add Product<%} %>
+            <% if (editing) {%>Update product<%} else {%>Add product<%} %>
           </button>
         </div>
       </div>
@@ -146,5 +131,42 @@
     <input type="hidden" value="<%= product._id %>" name="productId" />
     <% } %>
     <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+
+    <!-- The modal -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+
+        <!-- IMAGE UPLOAD -->
+        <div id="modal-image-upload" class="image-upload bg-light">
+          <label class="image-area" for="modal-file-input">
+            <div class="upload-icon">
+              <i class="fas fa-image"></i>
+            </div>
+            <p class="upload-text">Drop your image here</p>
+            <p class="upload-text">or <b>click to browse</b></p>
+
+            <input type="file" id="modal-file-input" accept="image/*" />
+          </label>
+          <% if (editing) { %>
+          <div id="modal-preview-container" class="preview-container d-block">
+            <img
+              src="/<%= product.image %>"
+              alt="Product Image Preview"
+              class="preview-image"
+              id="modal-preview-image"
+            />
+          </div>
+          <% } else { %>
+          <div id="modal-preview-container" class="preview-container"></div>
+          <% } %>
+        </div>
+
+        <div class="d-flex justify-content-end my-3">
+          <a class="btn btn-outline-dark me-3" id="cancelButton">Cancel</a>
+          <a class="btn btn-outline-dark" id="saveButton">Save</a>
+        </div>
+      </div>
+    </div>
   </form>
 </div>
