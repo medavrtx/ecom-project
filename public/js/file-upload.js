@@ -1,7 +1,6 @@
 // Form elements
 const formImageArea = document.getElementById('form-image-area');
 const formPreviewContainer = document.getElementById('form-preview-container');
-const formPreviewImage = document.getElementById('form-preview-image');
 const formDeleteButton = document.getElementById('form-delete-button');
 const formEditButton = document.getElementById('form-edit-button');
 
@@ -97,10 +96,12 @@ modalImageUpload.addEventListener('drop', (event) => {
 });
 
 modalFileInput.addEventListener('change', (event) => {
+  console.log(event.target.files[0]);
   handleFileUpload(event.target.files[0]);
 });
 
 let cropper;
+let croppedImageDataURL;
 
 // Handle file upload
 function handleFileUpload(file) {
@@ -135,7 +136,7 @@ function cropImage() {
       height: 800,
     });
     const formPreviewImage = document.getElementById('form-preview-image');
-    const croppedImageDataURL = croppedCanvas.toDataURL('image/jpeg');
+    croppedImageDataURL = croppedCanvas.toDataURL('image/jpeg');
 
     if (formPreviewImage) {
       formPreviewImage.src = croppedImageDataURL;
@@ -151,19 +152,25 @@ function cropImage() {
   }
 }
 
-// Function to handle submit crop button click
+// Function to handle save button click
 modalSaveButton.addEventListener('click', () => {
   cropImage();
+  const blob = dataURLToBlob(croppedImageDataURL);
+  const file = new File([blob], 'product.jpg', { type: 'image/jpeg' });
+  const dataTransfer = new DataTransfer();
+  dataTransfer.items.add(file);
+  modalFileInput.files = dataTransfer.files;
   closeModal();
 });
 
-// Delete form preview image
+// Delete form form preview image
 formDeleteButton.addEventListener('click', () => {
   if (cropper) {
     cropper.destroy(); // Destroy the previous Cropper instance if it exists
   }
   const formPreviewImage = document.getElementById('form-preview-image');
   formPreviewContainer.removeChild(formPreviewImage);
+  formPreviewContainer.classList.remove('d-block');
   formPreviewContainer.style.display = 'none';
 
   const modalPreviewImage = document.getElementById('modal-preview-image');
@@ -174,4 +181,31 @@ formDeleteButton.addEventListener('click', () => {
 // Edit the preview image
 formEditButton.addEventListener('click', () => {
   modal.style.display = 'block';
+  const modalPreviewImage = document.getElementById('modal-preview-image');
+
+  if (!modalPreviewImage) {
+    const modalPreviewImage = document.createElement('img');
+    modalPreviewImage.classList.add('preview-image');
+    modalPreviewImage.id = 'modal-preview-image';
+    modalPreviewImage.src = modalFileInput.dataset.access;
+    modalPreviewContainer.appendChild(modalPreviewImage);
+    modalPreviewContainer.style.display = 'block';
+
+    // Initialize Cropper.js with the previewImage element
+    cropper = new Cropper(modalPreviewImage, cropperConfig);
+  }
 });
+
+// Function to convert data URL to Blob
+function dataURLToBlob(dataURL) {
+  const byteString = atob(dataURL.split(',')[1]);
+  const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+
+  return new Blob([ab], { type: mimeString });
+}

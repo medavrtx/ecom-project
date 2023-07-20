@@ -171,12 +171,19 @@
             <p class="upload-text">Drop your image here</p>
             <p class="upload-text">or <b>click to browse</b></p>
 
-            <input type="file" id="modal-file-input" accept="image/*" />
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              id="modal-file-input"
+              data-access="<% if (editing) {%>/<%= product.image %><%} %>"
+            />
           </label>
 
           <div id="modal-preview-container" class="preview-container"></div>
         </div>
 
+        <!-- Buttons -->
         <div class="d-flex justify-content-end my-3">
           <a class="btn btn-outline-dark me-3" id="modal-cancel-button"
             >Cancel</a

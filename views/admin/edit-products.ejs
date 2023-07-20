@@ -15,7 +15,7 @@
       <% if (products) { %>
       <div class="row align-items-start">
         <% for( let product of products ) { %>
-        <div class="col-lg-4 mb-4">
+        <article class="col-lg-4 mb-4">
           <div class="card">
             <a href="/shop/<%= product._id %>">
               <div class="product-img">
@@ -53,7 +53,7 @@
               </button>
             </div>
           </div>
-        </div>
+        </article>
         <% } %>
       </div>
       <%- include('../includes/pagination.ejs', { currentPage: currentPage,
