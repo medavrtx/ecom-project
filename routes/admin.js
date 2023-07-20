@@ -62,12 +62,12 @@ router.delete(
   adminController.deleteCategory
 );
 
-// // /admin/edit-category => GET
-// router.get(
-//   '/edit-category/:categoryId',
-//   isAdmin,
-//   adminController.getEditCategory
-// );
+// /admin/edit-category => GET
+router.get(
+  '/edit-categories/:categoryId',
+  isAdmin,
+  adminController.getEditCategory
+);
 
 // // /admin/edit-category => POST
 // router.post(

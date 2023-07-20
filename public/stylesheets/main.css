@@ -718,26 +718,6 @@ h5 {
   background-color: var(--light-color);
 }
 
-.admin-items {
-  display: flex;
-  flex-direction: row;
-  width: 150px;
-  justify-content: space-evenly;
-  flex: 2;
-  text-align: left;
-}
-
-.admin-profit {
-  flex: 2;
-}
-
-.admin-buttons {
-  flex: 2;
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
 .admin-number {
   font-size: 36px;
   font-weight: bold;

@@ -198,7 +198,6 @@ exports.getEditProduct = (req, res, next) => {
   }
   const prodId = req.params.productId;
   Product.findById(prodId).then((product) => {
-    console.log(product);
     if (!product) {
       return res.redirect('/');
     }
@@ -361,14 +360,34 @@ exports.deleteCategory = (req, res, next) => {
 };
 
 exports.getEditCategory = (req, res, next) => {
-  res.render('admin/edit-categories', {
-    pageTitle: 'Edit Categories',
-    path: '/admin/categories',
-    categories: categoryOptions,
-    user: req.user,
-    isAuthenticated: req.session.isLoggedIn,
-    isAdmin: req.session.isAdmin
-  });
+  const catId = req.params.categoryId;
+
+  ProductCategory.findById(catId)
+    .then((category) => {
+      if (!category) {
+        return next(new Error('Category Not Found'));
+      }
+
+      Product.find()
+        .then((products) => {
+          return res.render('admin/edit-category', {
+            pageTitle: 'Edit Category',
+            path: '/admin/edit-categories/',
+            category: category,
+            products: products,
+            user: req.user,
+            isAuthenticated: req.session.isLoggedIn,
+            isAdmin: req.session.isAdmin,
+            csrfToken: req.csrfToken()
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: 'Failed!' });
+    });
 };
 
 exports.postEditCategory = (req, res, next) => {};

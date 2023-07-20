@@ -1,40 +1,27 @@
 <% layout('layouts/boilerplate')%>
 
-<div class="my-5">
-  <h1 class="center-title"><%= pageTitle %></h1>
-</div>
+<div class="container-fluid">
+  <div class="row">
+    <%- include('../partials/sidebar')%>
+    <div class="col-lg-10 content">
+      <div class="my-5">
+        <h1 class="center-title"><%= pageTitle %></h1>
+      </div>
 
-<div class="content">
-  <div class="row w-100">
-    <div class="admin-card d-flex flex-wrap w-100">
-      <div class="admin-items">
-        <div class="text-center me-5">
-          <div class="admin-number"><%= numOrders %></div>
-          <div class="admin-label">Orders</div>
-        </div>
-        <div class="text-center">
-          <div class="admin-number"><%= numListed %></div>
-          <div class="admin-label">Listed</div>
-        </div>
-      </div>
-      <div class="admin-profit text-center">
-        <div class="admin-number">$0.00</div>
-        <div class="admin-label">Profit</div>
-      </div>
-      <div class="admin-buttons">
-        <div class="btn-container">
-          <a
-            href="/admin/add-product"
-            class="btn btn-outline-dark me-2 text-nowrap"
-          >
-            Add Product
-          </a>
-          <a
-            href="/admin/edit-products"
-            class="btn btn-outline-dark text-nowrap"
-          >
-            Edit Products
-          </a>
+      <div class="container d-flex justify-content-center">
+        <div class="row admin-card w-75">
+          <div class="text-center col-lg-4 my-3">
+            <div class="admin-number"><%= numOrders %></div>
+            <div class="admin-label">Orders</div>
+          </div>
+          <div class="text-center col-lg-4 my-3">
+            <div class="admin-number"><%= numListed %></div>
+            <div class="admin-label">Listed</div>
+          </div>
+          <div class="text-center col-lg-4 my-3">
+            <div class="admin-number d-flex justify-content-center">$0.00</div>
+            <div class="admin-label">Profit</div>
+          </div>
         </div>
       </div>
     </div>

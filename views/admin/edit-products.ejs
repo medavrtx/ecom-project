@@ -2,30 +2,12 @@
 
 <div class="container-fluid">
   <div class="row">
-    <!-- Sidebar Navigation -->
-    <div class="col-lg-2 bg-light sidebar py-4">
-      <ul class="nav flex-column pt-4">
-        <li class="nav-item">
-          <a class="nav-link link" href="/admin/edit-products">Edit Products</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link link" href="/admin/categories">Categories</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link link" href="/admin/best-sellers">Best Sellers</a>
-        </li>
-      </ul>
-    </div>
+    <%- include('../partials/sidebar') %>
 
     <div class="col-lg-10 content">
       <div class="my-5">
         <h1 class="center-title"><%= pageTitle %></h1>
       </div>
-      <!-- <div class="category-links">
-        <a href="#">Kits</a>
-        <a href="#">Skincare</a>
-        <a href="#">Sun Protection</a>
-      </div> -->
       <div class="container-lg">
         <div class="row mx-5">
           <div class="col-12">

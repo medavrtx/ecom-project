@@ -2,22 +2,7 @@
 
 <div class="container-fluid">
   <div class="row">
-    <!-- Sidebar Navigation -->
-    <div class="col-lg-2 bg-light sidebar py-4">
-      <ul class="nav flex-column pt-4">
-        <li class="nav-item">
-          <a class="nav-link link" href="/admin/edit-products">Edit Products</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link link active" href="/admin/edit-categories">
-            Edit Categories
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link link" href="/admin/best-sellers">Best Sellers</a>
-        </li>
-      </ul>
-    </div>
+    <%- include('../partials/sidebar')%>
 
     <div class="col-lg-10 content">
       <div class="my-5">
@@ -27,7 +12,7 @@
       <!-- Add New Category Section -->
       <div class="container-lg mt-4">
         <div class="row mx-5">
-          <div class="col-lg-6">
+          <div class="col-lg-4">
             <h2>Add New Category</h2>
             <form action="/admin/add-category" method="POST">
               <div class="form-group">
@@ -42,7 +27,7 @@
                 />
               </div>
               <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="btn btn-outline-dark mt-3">
                 Add Category
               </button>
             </form>
@@ -73,7 +58,7 @@
                     <% } %>
                   </ul>
                   <div class="btn-row my-2">
-                    <a href="/admin/categories/<%= category._id %>/edit">
+                    <a href="/admin/edit-categories/<%= category._id %>/">
                       <button type="button" class="btn btn-outline-dark">
                         Edit Category
                       </button>

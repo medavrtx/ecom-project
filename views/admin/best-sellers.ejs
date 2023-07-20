@@ -3,25 +3,45 @@
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar Navigation -->
-    <div class="col-lg-2 bg-light border-end sidebar py-4">
-      <ul class="nav flex-column pt-4">
-        <li class="nav-item">
-          <a class="nav-link link" href="/admin/edit-products">Edit Products</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link link" href="/admin/categories">Categories</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link link active" href="/admin/best-sellers">
-            Best Sellers
-          </a>
-        </li>
-      </ul>
-    </div>
+    <%- include('../partials/sidebar')%>
 
     <div class="col-lg-10 content">
       <div class="my-5">
         <h1 class="center-title"><%= pageTitle %></h1>
+      </div>
+
+      <!-- Best Sellers List Section -->
+      <div class="container-lg mb-5">
+        <div class="row mx-5">
+          <div class="col-lg-12">
+            <h2>Best Sellers List</h2>
+            <% if (bestSellers && bestSellers.length > 0) { %>
+            <ol id="sortable-list" class="list-group">
+              <% for (let i = 0; i < bestSellers.length; i++) { %>
+              <li class="list-group-item" data-id="<%= bestSellers[i]._id %>">
+                <%= bestSellers[i].title %> - $<%= bestSellers[i].price %>
+                <div class="btn-group" role="group">
+                  <a href="/admin/best-sellers/edit/<%= bestSellers[i]._id %>">
+                    <button type="button" class="btn btn-outline-primary">
+                      Edit
+                    </button>
+                  </a>
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger"
+                    onclick="removeBestSeller('<%= bestSellers[i]._id %>')"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </li>
+              <% } %>
+            </ol>
+            <% } else { %>
+            <p>No products in the Best Sellers list.</p>
+            <% } %>
+          </div>
+        </div>
       </div>
 
       <!-- Available Products Section -->
@@ -62,40 +82,6 @@
             </div>
             <% } else { %>
             <p>No available products found.</p>
-            <% } %>
-          </div>
-        </div>
-      </div>
-
-      <!-- Best Sellers List Section -->
-      <div class="container-lg mt-4">
-        <div class="row mx-5">
-          <div class="col-lg-12">
-            <h2>Best Sellers List</h2>
-            <% if (bestSellers && bestSellers.length > 0) { %>
-            <ol id="sortable-list" class="list-group">
-              <% for (let i = 0; i < bestSellers.length; i++) { %>
-              <li class="list-group-item" data-id="<%= bestSellers[i]._id %>">
-                <%= bestSellers[i].title %> - $<%= bestSellers[i].price %>
-                <div class="btn-group" role="group">
-                  <a href="/admin/best-sellers/edit/<%= bestSellers[i]._id %>">
-                    <button type="button" class="btn btn-outline-primary">
-                      Edit
-                    </button>
-                  </a>
-                  <button
-                    type="button"
-                    class="btn btn-outline-danger"
-                    onclick="removeBestSeller('<%= bestSellers[i]._id %>')"
-                  >
-                    Remove
-                  </button>
-                </div>
-              </li>
-              <% } %>
-            </ol>
-            <% } else { %>
-            <p>No products in the Best Sellers list.</p>
             <% } %>
           </div>
         </div>
