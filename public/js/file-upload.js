@@ -3,6 +3,7 @@ const formImageArea = document.getElementById('form-image-area');
 const formPreviewContainer = document.getElementById('form-preview-container');
 const formDeleteButton = document.getElementById('form-delete-button');
 const formEditButton = document.getElementById('form-edit-button');
+const formTitleInput = document.getElementById('title');
 
 // Modal elements
 const modal = document.getElementById('modal');
@@ -173,7 +174,9 @@ function cropImage() {
 modalSaveButton.addEventListener('click', () => {
   cropImage();
   const blob = dataURLToBlob(croppedImageDataURL);
-  const file = new File([blob], 'product.jpg', { type: 'image/jpeg' });
+  const file = new File([blob], formTitleInput.value + '.jpg', {
+    type: 'image/jpeg',
+  });
   const dataTransfer = new DataTransfer();
   dataTransfer.items.add(file);
   modalFileInput.files = dataTransfer.files;
