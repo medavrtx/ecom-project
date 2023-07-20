@@ -62,7 +62,17 @@ const closeModal = () => {
 };
 
 // Close the modal when clicking on the close button
-modalCloseButton.addEventListener('click', closeModal);
+modalCloseButton.addEventListener('click', () => {
+  if (cropper) {
+    cropper.destroy();
+  }
+  const modalPreviewImage = document.getElementById('modal-preview-image');
+  if (modalPreviewImage) {
+    modalPreviewContainer.removeChild(modalPreviewImage);
+    modalPreviewContainer.style.display = 'none';
+  }
+  closeModal();
+});
 
 // Close the modal when clicking outside the modal
 window.addEventListener('click', (event) => {
@@ -73,6 +83,14 @@ window.addEventListener('click', (event) => {
 
 // Function to handle cancel button click
 modalCancelButton.addEventListener('click', () => {
+  if (cropper) {
+    cropper.destroy();
+  }
+  const modalPreviewImage = document.getElementById('modal-preview-image');
+  if (modalPreviewImage) {
+    modalPreviewContainer.removeChild(modalPreviewImage);
+    modalPreviewContainer.style.display = 'none';
+  }
   closeModal();
 });
 
@@ -96,7 +114,6 @@ modalImageUpload.addEventListener('drop', (event) => {
 });
 
 modalFileInput.addEventListener('change', (event) => {
-  console.log(event.target.files[0]);
   handleFileUpload(event.target.files[0]);
 });
 
@@ -163,7 +180,7 @@ modalSaveButton.addEventListener('click', () => {
   closeModal();
 });
 
-// Delete form form preview image
+// Delete form  preview image
 formDeleteButton.addEventListener('click', () => {
   if (cropper) {
     cropper.destroy(); // Destroy the previous Cropper instance if it exists
