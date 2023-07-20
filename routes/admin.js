@@ -59,27 +59,40 @@ router.get('/edit-categories', isAdmin, adminController.getEditCategories);
 // /admin/add-category => POST
 router.post('/add-category', isAdmin, adminController.postAddCategory);
 
-// /admin/edit-category => DELETE
+// /admin/edit-categories => DELETE
 router.delete(
   '/edit-categories/:categoryId',
   isAdmin,
   adminController.deleteCategory
 );
 
-// /admin/edit-category => GET
+// /admin/edit-categories => GET
 router.get(
   '/edit-categories/:categoryId',
   isAdmin,
   adminController.getEditCategory
 );
 
-// // /admin/edit-category => POST
-// router.post(
-//   '/edit-category',
-//   body('title').isString().isLength({ min: 1 }).trim(),
-//   isAdmin,
-//   adminController.postEditCategory
-// );
+// /admin/edit-categories => POST
+router.post(
+  '/edit-categories/:categoryId',
+  isAdmin,
+  adminController.postEditCategory
+);
+
+// /admin/edit-categories/categoryId/add-product => POST
+router.post(
+  '/edit-categories/:categoryId/add-product',
+  isAdmin,
+  adminController.postProductToCategory
+);
+
+// /admin/edit-categories/categoryId/add-product => DELETE
+router.delete(
+  '/edit-categories/:categoryId/:productId',
+  isAdmin,
+  adminController.deleteProductFromCategory
+);
 
 router.get('/best-sellers', isAdmin, adminController.getBestSellers);
 

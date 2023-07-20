@@ -367,10 +367,47 @@ exports.getEditCategory = (req, res, next) => {
       if (!category) {
         return next(new Error('Category Not Found'));
       }
+      category.populate('products.productId').then((category) => {
+        Product.find()
+          .then((products) => {
+            return res.render('admin/edit-category', {
+              pageTitle: 'Edit Category',
+              path: '/admin/edit-categories/',
+              category: category,
+              products: products,
+              user: req.user,
+              isAuthenticated: req.session.isLoggedIn,
+              isAdmin: req.session.isAdmin,
+              csrfToken: req.csrfToken(),
+              successMessage: null
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: 'Failed!' });
+    });
+};
 
-      Product.find()
-        .then((products) => {
-          return res.render('admin/edit-category', {
+exports.postEditCategory = (req, res, next) => {
+  const catId = req.body.categoryId;
+  const updatedTitle = req.body.title;
+
+  ProductCategory.findById(catId)
+    .then((category) => {
+      if (!category) {
+        return next(new Error('Product Not Found'));
+      }
+
+      category.title = updatedTitle;
+
+      return Product.find().then((products) => {
+        category.save().then((result) => {
+          console.log('Updated Category!');
+          res.render('admin/edit-category', {
             pageTitle: 'Edit Category',
             path: '/admin/edit-categories/',
             category: category,
@@ -378,19 +415,57 @@ exports.getEditCategory = (req, res, next) => {
             user: req.user,
             isAuthenticated: req.session.isLoggedIn,
             isAdmin: req.session.isAdmin,
-            csrfToken: req.csrfToken()
+            csrfToken: req.csrfToken(),
+            successMessage: 'Successfully updated'
           });
-        })
-        .catch((err) => {
-          console.log(err);
         });
+      });
     })
     .catch((err) => {
-      res.status(500).json({ message: 'Failed!' });
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
     });
 };
 
-exports.postEditCategory = (req, res, next) => {};
+exports.postProductToCategory = (req, res, next) => {
+  const prodId = req.body.productId;
+  const catId = req.body.categoryId;
+  Product.findById(prodId)
+    .then((product) => {
+      ProductCategory.findById(catId).then((category) => {
+        category.addToCategory(product);
+      });
+    })
+    .then((result) => {
+      res.redirect('/admin/edit-categories/' + catId);
+    })
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
+};
+
+exports.deleteProductFromCategory = (req, res, next) => {
+  const catId = req.params.categoryId;
+  const prodId = req.params.productId;
+
+  ProductCategory.findById(catId)
+    .then((category) => {
+      if (!category) {
+        return next(new Error('Category Not Found'));
+      }
+      category.removeFromCategory(prodId);
+    })
+    .then(() => {
+      console.log('Deleted category');
+      res.status(200).json({ message: 'Success!' });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: 'Delete failed!' });
+    });
+};
 
 exports.getBestSellers = (req, res, next) => {
   const page = +req.query.page || 1;

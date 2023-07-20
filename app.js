@@ -30,7 +30,7 @@ const fileFilter = (req, file, cb) => {
 const app = express();
 const store = new MongoDBStore({
   uri: process.env.MONGO_URI,
-  collection: 'sessions',
+  collection: 'sessions'
 });
 const csrfProtection = csrf();
 
@@ -40,7 +40,7 @@ const fileStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     cb(null, new Date().toISOString() + '-' + file.originalname);
-  },
+  }
 });
 
 app.engine('ejs', ejsMate);
@@ -65,7 +65,7 @@ app.use(
     secret: 'mysecret',
     resave: false,
     saveUninitialized: false,
-    store: store,
+    store: store
   })
 );
 app.use(csrfProtection);
@@ -114,7 +114,7 @@ app.use((error, req, res, next) => {
     path: '/500',
     isAuthenticated: req.session.isLoggedIn,
     isAdmin: req.session.isAdmin,
-    user: req.user,
+    user: req.user
   });
 });
 

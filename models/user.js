@@ -5,23 +5,23 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   email: {
     type: String,
-    required: true,
+    required: true
   },
   firstName: {
     type: String,
-    required: true,
+    required: true
   },
   lastName: {
     type: String,
-    required: true,
+    required: true
   },
   isAdmin: {
     type: Boolean,
-    required: false,
+    required: false
   },
   isTemp: {
     type: Boolean,
-    required: false,
+    required: false
   },
   cart: {
     items: [
@@ -29,32 +29,37 @@ const userSchema = new Schema({
         productId: {
           type: Schema.Types.ObjectId,
           ref: 'Product',
-          required: true,
+          required: true
         },
-        quantity: { type: Number, required: true },
-      },
-    ],
-  },
+        quantity: { type: Number, required: true }
+      }
+    ]
+  }
 });
 
 userSchema.methods.addToCart = function (product) {
+  // Find index of product in cart
   const cartProductIndex = this.cart.items.findIndex((cp) => {
     return cp.productId.toString() === product._id.toString();
   });
   let newQuantity = 1;
   const updatedCartItems = [...this.cart.items];
+
+  // If product already exists in cart, we add quantity
   if (cartProductIndex >= 0) {
     newQuantity = this.cart.items[cartProductIndex].quantity + 1;
     updatedCartItems[cartProductIndex].quantity = newQuantity;
   } else {
     updatedCartItems.push({
       productId: product._id,
-      quantity: newQuantity,
+      quantity: newQuantity
     });
   }
+  //Create updatedCart with updatedItems
   const updatedCart = {
-    items: updatedCartItems,
+    items: updatedCartItems
   };
+  // Save cart
   this.cart = updatedCart;
   return this.save();
 };

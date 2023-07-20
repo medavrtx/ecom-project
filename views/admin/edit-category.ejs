@@ -14,15 +14,20 @@
         <div class="row mx-5">
           <div class="col-lg-4">
             <h2>Category Name</h2>
+            <% if (successMessage) {%>
+            <p class="text-success m-0 p-0"><%= successMessage %></p>
+            <%} else {%>
+            <div class="my-4"></div>
+            <%} %>
             <form
-              action="/admin/update-category/<%= category._id %>"
+              action="/admin/edit-categories/<%= category._id %>"
               method="POST"
             >
               <div class="form-group">
-                <label for="title"></label>
+                <label for="title" class="d-none"></label>
                 <input
                   type="text"
-                  class="form-control"
+                  class="form-control my-0"
                   id="title"
                   name="title"
                   placeholder="Category name"
@@ -30,6 +35,11 @@
                   required
                 />
               </div>
+              <input
+                type="hidden"
+                value="<%= category._id %>"
+                name="categoryId"
+              />
               <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
               <button type="submit" class="btn btn-outline-dark mt-3">
                 Update Name
@@ -49,7 +59,7 @@
                 <p>No products found in this category.</p>
               </div>
               <% } else { %> <% category.products.forEach((product) => { %>
-              <div class="col-lg-4 mb-4">
+              <article class="col-lg-4 mb-4">
                 <div class="card">
                   <a href="/admin/edit-product/<%= product.productId._id %>">
                     <div class="product-img">
@@ -69,15 +79,18 @@
                     $<%= product.productId.price %>
                   </span>
                   <div class="btn-row my-2">
-                    <a href="/admin/edit-product/<%= product.productId._id %>">
-                      <button type="button" class="btn btn-outline-dark">
-                        Edit Product
-                      </button>
-                    </a>
-                    <form
-                      action="/admin/remove-product-from-category/<%= category._id %>"
-                      method="POST"
+                    <a
+                      class="btn btn-outline-dark"
+                      href="/admin/edit-products/<%= product.productId._id %>?edit=true"
                     >
+                      Edit Product
+                    </a>
+                    <form action="">
+                      <input
+                        type="hidden"
+                        value="<%= category._id %>"
+                        name="categoryId"
+                      />
                       <input
                         type="hidden"
                         value="<%= product.productId._id %>"
@@ -88,13 +101,17 @@
                         name="_csrf"
                         value="<%= csrfToken %>"
                       />
-                      <button class="btn btn-outline-danger" type="submit">
+                      <button
+                        class="btn btn-outline-danger"
+                        type="button"
+                        onclick="removeFromCategory(this)"
+                      >
                         Remove from Category
                       </button>
                     </form>
                   </div>
                 </div>
-              </div>
+              </article>
               <% }) %> <% } %>
             </div>
           </div>
@@ -109,7 +126,7 @@
           <div class="row">
             <div class="col-lg-6">
               <form
-                action="/admin/add-product-to-category/<%= category._id %>"
+                action="/admin/edit-categories/<%= category._id %>/add-product"
                 method="POST"
               >
                 <div class="form-group">
@@ -128,6 +145,12 @@
                     <% }) %>
                   </select>
                 </div>
+                <input
+                  type="hidden"
+                  name="categoryId"
+                  value="<%= category._id %>"
+                />
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                 <button type="submit" class="btn btn-outline-dark mt-3">
                   Add Product to Category
                 </button>
