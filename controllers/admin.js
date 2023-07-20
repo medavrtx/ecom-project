@@ -93,6 +93,7 @@ exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
   const price = req.body.price;
   const description = req.body.description;
+  const category = req.body.category;
   const image = req.file;
   const errors = validationResult(req);
 
@@ -109,6 +110,7 @@ exports.postAddProduct = (req, res, next) => {
         title: title,
         price: price,
         description: description,
+        category: category,
         image: image,
       },
       errorMessage: 'Attached file is not an image',
@@ -128,6 +130,7 @@ exports.postAddProduct = (req, res, next) => {
         title: title,
         price: price,
         description: description,
+        category: category,
         image: image,
       },
       errorMessage: errors.array()[0].msg,
@@ -138,6 +141,7 @@ exports.postAddProduct = (req, res, next) => {
     title: title,
     price: price,
     description: description,
+    category: category,
     image: imageUrl,
     userId: req.user,
   });
@@ -164,11 +168,18 @@ exports.getEditProduct = (req, res, next) => {
     if (!product) {
       return res.redirect('/');
     }
+    const categoryOptions = [
+      { value: 'uncategorized', label: 'Select a category' },
+      { value: 'kits', label: 'Kits' },
+      { value: 'skincare', label: 'Skincare' },
+      { value: 'sun-protection', label: 'Sun Protection' },
+    ];
     res.render('admin/edit-product', {
       pageTitle: 'Edit Product',
       path: '/admin/edit-product',
       editing: editMode,
       product: product,
+      categoryOptions,
       user: req.user,
       isAuthenticated: req.session.isLoggedIn,
       isAdmin: req.session.isAdmin,
@@ -183,6 +194,7 @@ exports.postEditProduct = (req, res, next) => {
   const updatedTitle = req.body.title;
   const updatedPrice = req.body.price;
   const updatedDescription = req.body.description;
+  const updatedCategory = req.body.category;
   const image = req.file;
   const errors = validationResult(req);
 
@@ -200,6 +212,7 @@ exports.postEditProduct = (req, res, next) => {
         price: updatedPrice,
         image: updatedImage,
         description: updatedDescription,
+        updatedCategory: updatedCategory,
         _id: prodId,
       },
       errorMessage: errors.array()[0].msg,
@@ -214,6 +227,7 @@ exports.postEditProduct = (req, res, next) => {
       product.title = updatedTitle;
       product.price = updatedPrice;
       product.description = updatedDescription;
+      product.category = updatedCategory;
       if (image) {
         fileHelper.deleteFile(product.image);
         product.image = image.path;

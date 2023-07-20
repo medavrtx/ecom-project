@@ -17,7 +17,7 @@
         <% for( let product of products ) { %>
         <article class="col-lg-4 mb-4">
           <div class="card">
-            <a href="/shop/<%= product._id %>">
+            <a href="/admin/edit-product/<%= product._id %>?edit=true">
               <div class="product-img">
                 <img
                   class="img-fluid d-block mx-auto img-hover"
@@ -35,7 +35,7 @@
             <span class="product-price">$<%= product.price %></span>
             <div class="btn-row my-2">
               <a href="/admin/edit-product/<%= product._id %>?edit=true">
-                <button class="btn btn-outline-dark">Edit</button>
+                <button type="button" class="btn btn-outline-dark">Edit</button>
               </a>
 
               <input

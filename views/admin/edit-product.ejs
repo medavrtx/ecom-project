@@ -130,10 +130,11 @@
               name="category"
               id="category"
             >
-              <option value="">Select a category</option>
-              <option value="kits">Kits</option>
-              <option value="skincare">Skincare</option>
-              <option value="sun-protection">Sun Protection</option>
+            <% for (const option of categoryOptions) { %>
+              <option value="<%= option.value %>" <% if (option.value === product.category) { %>selected<% } %>>
+                <%= option.label %>
+              </option>
+            <% } %>
             </select>
           </div>
         </div>

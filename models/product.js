@@ -19,6 +19,16 @@ const productSchema = new Schema({
     type: String,
     required: true,
   },
+  category: {
+    type: String,
+    required: false,
+    default: 'Uncategorized',
+  },
+  bestSeller: {
+    type: Number,
+    required: false,
+    default: null,
+  },
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
