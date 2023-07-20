@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 
 const Product = require('../models/product');
 const Order = require('../models/order');
+const ProductCategory = require('../models/product-category');
 
 const fileHelper = require('../util/file');
 
@@ -290,8 +291,77 @@ exports.deleteProduct = (req, res, next) => {
     });
 };
 
-exports.getCategories = (req, res, next) => {
-  res.render('admin/categories', {
+// CATEGORIES
+exports.getEditCategories = (req, res, next) => {
+  ProductCategory.find().then((categories) => {
+    res.render('admin/edit-categories', {
+      pageTitle: 'Edit Categories',
+      path: '/admin/categories',
+      categories: categories,
+      user: req.user,
+      isAuthenticated: req.session.isLoggedIn,
+      isAdmin: req.session.isAdmin,
+      csrfToken: req.csrfToken()
+    });
+  });
+};
+
+exports.postAddCategory = (req, res, next) => {
+  const title = req.body.title;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return ProductCategory.find().then((categories) => {
+      res.render('admin/edit-categories', {
+        pageTitle: 'Edit Categories',
+        path: '/admin/categories',
+        categories: categories,
+        user: req.user,
+        isAuthenticated: req.session.isLoggedIn,
+        isAdmin: req.session.isAdmin,
+        csrfToken: req.csrfToken(),
+        errorMessage: errors.array()[0].msg
+      });
+    });
+  }
+
+  const productCategory = new ProductCategory({
+    title
+  });
+  productCategory
+    .save()
+    .then((result) => {
+      console.log('Created category');
+      return res.redirect('/admin/edit-categories');
+    })
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
+};
+
+exports.deleteCategory = (req, res, next) => {
+  const catId = req.params.categoryId;
+  ProductCategory.findById(catId)
+    .then((category) => {
+      if (!category) {
+        return next(new Error('Category Not Found'));
+      }
+
+      return ProductCategory.deleteOne({ _id: catId });
+    })
+    .then(() => {
+      console.log('Deleted category');
+      res.status(200).json({ message: 'Success!' });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: 'Delete failed!' });
+    });
+};
+
+exports.getEditCategory = (req, res, next) => {
+  res.render('admin/edit-categories', {
     pageTitle: 'Edit Categories',
     path: '/admin/categories',
     categories: categoryOptions,
@@ -300,6 +370,8 @@ exports.getCategories = (req, res, next) => {
     isAdmin: req.session.isAdmin
   });
 };
+
+exports.postEditCategory = (req, res, next) => {};
 
 exports.getBestSellers = (req, res, next) => {
   const page = +req.query.page || 1;

@@ -42,14 +42,40 @@ router.post(
   adminController.postEditProduct
 );
 
-// /admin/delete-product => POST
+// /admin/delete-product => DELETE
 router.delete(
   '/edit-product/:productId',
   isAdmin,
   adminController.deleteProduct
 );
 
-router.get('/categories', isAdmin, adminController.getCategories);
+// /admin/edit-categories => GET
+router.get('/edit-categories', isAdmin, adminController.getEditCategories);
+
+// /admin/add-category => POST
+router.post('/add-category', isAdmin, adminController.postAddCategory);
+
+// /admin/edit-category => DELETE
+router.delete(
+  '/edit-category/:categoryId',
+  isAdmin,
+  adminController.deleteCategory
+);
+
+// // /admin/edit-category => GET
+// router.get(
+//   '/edit-category/:categoryId',
+//   isAdmin,
+//   adminController.getEditCategory
+// );
+
+// // /admin/edit-category => POST
+// router.post(
+//   '/edit-category',
+//   body('title').isString().isLength({ min: 1 }).trim(),
+//   isAdmin,
+//   adminController.postEditCategory
+// );
 
 router.get('/best-sellers', isAdmin, adminController.getBestSellers);
 

@@ -9,8 +9,8 @@
           <a class="nav-link link" href="/admin/edit-products">Edit Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link link active" href="/admin/categories">
-            Categories
+          <a class="nav-link link active" href="/admin/edit-categories">
+            Edit Categories
           </a>
         </li>
         <li class="nav-item">
@@ -24,8 +24,34 @@
         <h1 class="center-title"><%= pageTitle %></h1>
       </div>
 
+      <!-- Add New Category Section -->
+      <div class="container-lg mt-4">
+        <div class="row mx-5">
+          <div class="col-lg-6">
+            <h2>Add New Category</h2>
+            <form action="/admin/add-category" method="POST">
+              <div class="form-group">
+                <label for="title"></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  name="title"
+                  placeholder="Category name"
+                  required
+                />
+              </div>
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button type="submit" class="btn btn-primary">
+                Add Category
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+
       <!-- Edit Categories Section -->
-      <div class="container-lg">
+      <div class="container-lg my-5">
         <div class="row mx-5">
           <div class="col-12">
             <% if (categories) { %>
@@ -33,20 +59,10 @@
               <% for (let category of categories) { %>
               <article class="col-lg-4 mb-4">
                 <div class="card">
-                  <a href="/admin/categories/<%= category._id %>/edit">
-                    <div class="category-img">
-                      <!-- Add category image here if available -->
-                      <!-- <img
-                        class="img-fluid d-block mx-auto img-hover"
-                        src="/<%= category.image %>"
-                        alt="<%= category.name %>"
-                      /> -->
-                    </div>
-                  </a>
                   <p
                     class="d-block text-dark text-decoration-none py-2 my-0 category-name"
                   >
-                    <%= category.name %>
+                    <%= category.title %>
                   </p>
                   <!-- List all products in this category -->
                   <ul class="list-group">
@@ -62,11 +78,20 @@
                         Edit Category
                       </button>
                     </a>
-
+                    <input
+                      type="hidden"
+                      name="categoryId"
+                      value="<%= category._id %>"
+                    />
+                    <input
+                      type="hidden"
+                      name="_csrf"
+                      value="<%= csrfToken %>"
+                    />
                     <button
                       class="btn btn-outline-dark"
-                      type="submit"
-                      onclick="deleteCategory('<%= category._id %>')"
+                      type="button"
+                      onclick="deleteCategory(this)"
                     >
                       Delete Category
                     </button>
@@ -78,30 +103,6 @@
             <% } else { %>
             <p>No categories found.</p>
             <% } %>
-          </div>
-        </div>
-      </div>
-
-      <!-- Add New Category Section -->
-      <div class="container-lg mt-4">
-        <div class="row mx-5">
-          <div class="col-lg-6">
-            <h2>Add New Category</h2>
-            <form action="/admin/categories" method="POST">
-              <div class="form-group">
-                <label for="categoryName">Category Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="categoryName"
-                  name="categoryName"
-                  required
-                />
-              </div>
-              <button type="submit" class="btn btn-primary">
-                Add Category
-              </button>
-            </form>
           </div>
         </div>
       </div>
