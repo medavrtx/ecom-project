@@ -28,42 +28,6 @@ const categoryOptions = [
     products: [{ title: 'booger', price: 22, _id: '0101' }]
   },
   {
-    value: 'kits',
-    name: 'Kits',
-    _id: '0101',
-    products: [{ title: 'booger', price: 22, _id: '0101' }]
-  },
-  {
-    value: 'skincare',
-    name: 'Skincare',
-    _id: '0101',
-    products: [{ title: 'booger', price: 22, _id: '0101' }]
-  },
-  {
-    value: 'kits',
-    name: 'Kits',
-    _id: '0101',
-    products: [{ title: 'booger', price: 22, _id: '0101' }]
-  },
-  {
-    value: 'skincare',
-    name: 'Skincare',
-    _id: '0101',
-    products: [{ title: 'booger', price: 22, _id: '0101' }]
-  },
-  {
-    value: 'kits',
-    name: 'Kits',
-    _id: '0101',
-    products: [{ title: 'booger', price: 22, _id: '0101' }]
-  },
-  {
-    value: 'skincare',
-    name: 'Skincare',
-    _id: '0101',
-    products: [{ title: 'booger', price: 22, _id: '0101' }]
-  },
-  {
     value: 'sun-protection',
     name: 'Sun Protection',
     _id: '0101',
@@ -71,7 +35,7 @@ const categoryOptions = [
   }
 ];
 
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 9;
 
 exports.getAdmin = (req, res, next) => {
   Product.find()
@@ -105,6 +69,7 @@ exports.getAdmin = (req, res, next) => {
 
 exports.getEditProducts = (req, res, next) => {
   const page = +req.query.page || 1;
+  const ITEMS_PER_PAGE = 3;
   let totalItems;
   Product.find({ userId: req.user._id })
     .countDocuments()
@@ -337,11 +302,34 @@ exports.getCategories = (req, res, next) => {
 };
 
 exports.getBestSellers = (req, res, next) => {
-  res.render('admin/best-sellers', {
-    pageTitle: 'Best Sellers',
-    path: '/admin/best-sellers',
-    user: req.user,
-    isAuthenticated: req.session.isLoggedIn,
-    isAdmin: req.session.isAdmin
-  });
+  const page = +req.query.page || 1;
+  let totalItems;
+  Product.find({ userId: req.user._id })
+    .countDocuments()
+    .then((numProducts) => {
+      totalItems = numProducts;
+      return Product.find()
+        .skip((page - 1) * ITEMS_PER_PAGE)
+        .limit(ITEMS_PER_PAGE);
+    })
+    .then((products) => {
+      res.render('admin/best-sellers', {
+        pageTitle: 'Best Sellers',
+        path: '/admin/best-sellers',
+        products: products,
+        bestSellers: [
+          { title: 'ayo', price: 22, _id: '0101' },
+          { title: 'ayo2', price: 22, _id: '0101' }
+        ],
+        user: req.user,
+        isAuthenticated: req.session.isLoggedIn,
+        isAdmin: req.session.isAdmin,
+        csrfToken: req.csrfToken()
+      });
+    })
+    .catch((err) => {
+      const error = new Error(err);
+      error.httpStatusCode = 500;
+      return next(error);
+    });
 };
