@@ -203,7 +203,7 @@ exports.getEditProduct = (req, res, next) => {
     }
     res.render('admin/edit-product', {
       pageTitle: 'Edit Product',
-      path: '/admin/edit-product',
+      path: '/admin/edit-products/:productId',
       editing: editMode,
       product: product,
       categoryOptions,
@@ -228,7 +228,7 @@ exports.postEditProduct = (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.status(422).render('admin/edit-product', {
       pageTitle: 'Edit Product',
-      path: '/admin/edit-product',
+      path: '/admin/edit-products/:productId',
       user: req.user,
       isAuthenticated: req.session.isLoggedIn,
       isAdmin: req.session.isAdmin,

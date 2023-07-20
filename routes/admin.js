@@ -28,11 +28,15 @@ router.post(
 router.get('/edit-products', isAdmin, adminController.getEditProducts);
 
 // /admin/edit-product => GET
-router.get('/edit-product/:productId', isAdmin, adminController.getEditProduct);
+router.get(
+  '/edit-products/:productId',
+  isAdmin,
+  adminController.getEditProduct
+);
 
 // /admin/edit-product => POST
 router.post(
-  '/edit-product',
+  '/edit-products',
   [
     body('title').isString().isLength({ min: 1 }).trim(),
     body('price').isFloat(),
@@ -44,7 +48,7 @@ router.post(
 
 // /admin/delete-product => DELETE
 router.delete(
-  '/edit-product/:productId',
+  '/edit-products/:productId',
   isAdmin,
   adminController.deleteProduct
 );
@@ -57,7 +61,7 @@ router.post('/add-category', isAdmin, adminController.postAddCategory);
 
 // /admin/edit-category => DELETE
 router.delete(
-  '/edit-category/:categoryId',
+  '/edit-categories/:categoryId',
   isAdmin,
   adminController.deleteCategory
 );
