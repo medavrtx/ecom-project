@@ -32,19 +32,39 @@
             </p>
           </div>
 
-          <!-- IMAGE PREVIEW -->
+          <!-- FORM IMAGE PREVIEW -->
           <% if (editing) {%>
-          <div id="form-preview-container" class="preview-container d-block">
+          <div class="preview-container d-block" id="form-preview-container">
             <img
               src="/<%= product.image %>"
               alt="Product Image Preview"
               class="preview-image"
               id="form-preview-image"
             />
+
+            <!-- Preview Buttons -->
+            <a class="btn preview-button edit-button" id="form-edit-button">
+              <i class="fa-solid fa-pencil"></i> Edit
+            </a>
+            <a
+              class="btn preview-button delete-button rounded-circle"
+              id="form-delete-button"
+            >
+              <i class="fa-solid fa-x"></i>
+            </a>
           </div>
           <% } else { %>
-          <div id="form-preview-container" class="preview-container"></div>
-
+          <div class="preview-container" id="form-preview-container">
+            <a class="btn preview-button edit-button" id="form-edit-button">
+              <i class="fa-solid fa-pencil"></i> Edit
+            </a>
+            <a
+              class="btn preview-button delete-button rounded-circle"
+              id="form-delete-button"
+            >
+              <i class="fa-solid fa-x"></i>
+            </a>
+          </div>
           <% } %>
         </div>
       </div>
@@ -135,7 +155,12 @@
     <!-- The modal -->
     <div id="modal" class="modal">
       <div class="modal-content">
-        <span class="close">&times;</span>
+        <!-- Close button -->
+        <span class="d-flex justify-content-end me-0">
+          <a class="btn modal-close p-0 my-2" id="modal-close-button">
+            <i class="fa-solid fa-circle-xmark fa-xl"></i>
+          </a>
+        </span>
 
         <!-- IMAGE UPLOAD -->
         <div id="modal-image-upload" class="image-upload bg-light">
@@ -148,23 +173,15 @@
 
             <input type="file" id="modal-file-input" accept="image/*" />
           </label>
-          <% if (editing) { %>
-          <div id="modal-preview-container" class="preview-container d-block">
-            <img
-              src="/<%= product.image %>"
-              alt="Product Image Preview"
-              class="preview-image"
-              id="modal-preview-image"
-            />
-          </div>
-          <% } else { %>
+
           <div id="modal-preview-container" class="preview-container"></div>
-          <% } %>
         </div>
 
         <div class="d-flex justify-content-end my-3">
-          <a class="btn btn-outline-dark me-3" id="cancelButton">Cancel</a>
-          <a class="btn btn-outline-dark" id="saveButton">Save</a>
+          <a class="btn btn-outline-dark me-3" id="modal-cancel-button"
+            >Cancel</a
+          >
+          <a class="btn btn-outline-dark" id="modal-save-button">Save</a>
         </div>
       </div>
     </div>
