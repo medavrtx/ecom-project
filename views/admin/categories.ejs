@@ -1,0 +1,110 @@
+<% layout('layouts/boilerplate')%>
+
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar Navigation -->
+    <div class="col-lg-2 bg-light sidebar py-4">
+      <ul class="nav flex-column pt-4">
+        <li class="nav-item">
+          <a class="nav-link link" href="/admin/edit-products">Edit Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link link active" href="/admin/categories">
+            Categories
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link link" href="/admin/best-sellers">Best Sellers</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-lg-10 content">
+      <div class="my-5">
+        <h1 class="center-title"><%= pageTitle %></h1>
+      </div>
+
+      <!-- Edit Categories Section -->
+      <div class="container-lg">
+        <div class="row mx-5">
+          <div class="col-12">
+            <% if (categories) { %>
+            <div class="row align-items-start">
+              <% for (let category of categories) { %>
+              <article class="col-lg-4 mb-4">
+                <div class="card">
+                  <a href="/admin/categories/<%= category._id %>/edit">
+                    <div class="category-img">
+                      <!-- Add category image here if available -->
+                      <!-- <img
+                        class="img-fluid d-block mx-auto img-hover"
+                        src="/<%= category.image %>"
+                        alt="<%= category.name %>"
+                      /> -->
+                    </div>
+                  </a>
+                  <p
+                    class="d-block text-dark text-decoration-none py-2 my-0 category-name"
+                  >
+                    <%= category.name %>
+                  </p>
+                  <!-- List all products in this category -->
+                  <ul class="list-group">
+                    <% for (let product of category.products) { %>
+                    <li class="list-group-item">
+                      <%= product.title %> - $<%= product.price %>
+                    </li>
+                    <% } %>
+                  </ul>
+                  <div class="btn-row my-2">
+                    <a href="/admin/categories/<%= category._id %>/edit">
+                      <button type="button" class="btn btn-outline-dark">
+                        Edit Category
+                      </button>
+                    </a>
+
+                    <button
+                      class="btn btn-outline-dark"
+                      type="submit"
+                      onclick="deleteCategory('<%= category._id %>')"
+                    >
+                      Delete Category
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <% } %>
+            </div>
+            <% } else { %>
+            <p>No categories found.</p>
+            <% } %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add New Category Section -->
+      <div class="container-lg mt-4">
+        <div class="row mx-5">
+          <div class="col-lg-6">
+            <h2>Add New Category</h2>
+            <form action="/admin/categories" method="POST">
+              <div class="form-group">
+                <label for="categoryName">Category Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="categoryName"
+                  name="categoryName"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Add Category
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

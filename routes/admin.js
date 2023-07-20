@@ -18,7 +18,7 @@ router.post(
   [
     body('title').isString().isLength({ min: 1 }).trim(),
     body('price').isFloat(),
-    body('description').isLength({ min: 1, max: 400 }).trim(),
+    body('description').isLength({ min: 1, max: 400 }).trim()
   ],
   isAdmin,
   adminController.postAddProduct
@@ -36,7 +36,7 @@ router.post(
   [
     body('title').isString().isLength({ min: 1 }).trim(),
     body('price').isFloat(),
-    body('description').isLength({ min: 1, max: 400 }).trim(),
+    body('description').isLength({ min: 1, max: 400 }).trim()
   ],
   isAdmin,
   adminController.postEditProduct
@@ -48,5 +48,9 @@ router.delete(
   isAdmin,
   adminController.deleteProduct
 );
+
+router.get('/categories', isAdmin, adminController.getCategories);
+
+router.get('/best-sellers', isAdmin, adminController.getBestSellers);
 
 module.exports = router;

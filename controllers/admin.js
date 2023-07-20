@@ -5,6 +5,72 @@ const Order = require('../models/order');
 
 const fileHelper = require('../util/file');
 
+const categoryOptions = [
+  {
+    value: 'uncategorized',
+    name: 'Select a category',
+    _id: '0101',
+    products: [
+      { title: 'booger', price: 22, _id: '0101' },
+      { title: 'yum', price: 22, _id: '0101' }
+    ]
+  },
+  {
+    value: 'kits',
+    name: 'Kits',
+    _id: '0101',
+    products: [{ title: 'booger', price: 22, _id: '0101' }]
+  },
+  {
+    value: 'skincare',
+    name: 'Skincare',
+    _id: '0101',
+    products: [{ title: 'booger', price: 22, _id: '0101' }]
+  },
+  {
+    value: 'kits',
+    name: 'Kits',
+    _id: '0101',
+    products: [{ title: 'booger', price: 22, _id: '0101' }]
+  },
+  {
+    value: 'skincare',
+    name: 'Skincare',
+    _id: '0101',
+    products: [{ title: 'booger', price: 22, _id: '0101' }]
+  },
+  {
+    value: 'kits',
+    name: 'Kits',
+    _id: '0101',
+    products: [{ title: 'booger', price: 22, _id: '0101' }]
+  },
+  {
+    value: 'skincare',
+    name: 'Skincare',
+    _id: '0101',
+    products: [{ title: 'booger', price: 22, _id: '0101' }]
+  },
+  {
+    value: 'kits',
+    name: 'Kits',
+    _id: '0101',
+    products: [{ title: 'booger', price: 22, _id: '0101' }]
+  },
+  {
+    value: 'skincare',
+    name: 'Skincare',
+    _id: '0101',
+    products: [{ title: 'booger', price: 22, _id: '0101' }]
+  },
+  {
+    value: 'sun-protection',
+    name: 'Sun Protection',
+    _id: '0101',
+    products: [{ title: 'booger', price: 22, _id: '0101' }]
+  }
+];
+
 const ITEMS_PER_PAGE = 3;
 
 exports.getAdmin = (req, res, next) => {
@@ -21,7 +87,7 @@ exports.getAdmin = (req, res, next) => {
             numListed: numProducts,
             numOrders: numOrders,
             isAuthenticated: req.session.isLoggedIn,
-            isAdmin: req.session.isAdmin,
+            isAdmin: req.session.isAdmin
           });
         })
         .catch((err) => {
@@ -66,7 +132,7 @@ exports.getEditProducts = (req, res, next) => {
         hasPreviousPage: page > 1,
         nextPage: page + 1,
         previousPage: page - 1,
-        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE),
+        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
       });
     })
     .catch((err) => {
@@ -83,9 +149,10 @@ exports.getAddProduct = (req, res, next) => {
     user: req.user,
     isAuthenticated: req.session.isLoggedIn,
     isAdmin: req.session.isAdmin,
+    categoryOptions,
     editing: false,
     hasError: false,
-    errorMessage: null,
+    errorMessage: null
   });
 };
 
@@ -111,10 +178,10 @@ exports.postAddProduct = (req, res, next) => {
         price: price,
         description: description,
         category: category,
-        image: image,
+        image: image
       },
       errorMessage: 'Attached file is not an image',
-      validationErrors: [],
+      validationErrors: []
     });
   }
   if (!errors.isEmpty()) {
@@ -131,9 +198,9 @@ exports.postAddProduct = (req, res, next) => {
         price: price,
         description: description,
         category: category,
-        image: image,
+        image: image
       },
-      errorMessage: errors.array()[0].msg,
+      errorMessage: errors.array()[0].msg
     });
   }
   const imageUrl = image.path;
@@ -143,7 +210,7 @@ exports.postAddProduct = (req, res, next) => {
     description: description,
     category: category,
     image: imageUrl,
-    userId: req.user,
+    userId: req.user
   });
   product
     .save()
@@ -165,15 +232,10 @@ exports.getEditProduct = (req, res, next) => {
   }
   const prodId = req.params.productId;
   Product.findById(prodId).then((product) => {
+    console.log(product);
     if (!product) {
       return res.redirect('/');
     }
-    const categoryOptions = [
-      { value: 'uncategorized', label: 'Select a category' },
-      { value: 'kits', label: 'Kits' },
-      { value: 'skincare', label: 'Skincare' },
-      { value: 'sun-protection', label: 'Sun Protection' },
-    ];
     res.render('admin/edit-product', {
       pageTitle: 'Edit Product',
       path: '/admin/edit-product',
@@ -184,7 +246,7 @@ exports.getEditProduct = (req, res, next) => {
       isAuthenticated: req.session.isLoggedIn,
       isAdmin: req.session.isAdmin,
       hasError: false,
-      errorMessage: null,
+      errorMessage: null
     });
   });
 };
@@ -213,10 +275,10 @@ exports.postEditProduct = (req, res, next) => {
         image: updatedImage,
         description: updatedDescription,
         updatedCategory: updatedCategory,
-        _id: prodId,
+        _id: prodId
       },
       errorMessage: errors.array()[0].msg,
-      validationErrors: errors.array(),
+      validationErrors: errors.array()
     });
   }
   Product.findById(prodId)
@@ -261,4 +323,25 @@ exports.deleteProduct = (req, res, next) => {
     .catch((err) => {
       res.status(500).json({ message: 'Delete failed!' });
     });
+};
+
+exports.getCategories = (req, res, next) => {
+  res.render('admin/categories', {
+    pageTitle: 'Edit Categories',
+    path: '/admin/categories',
+    categories: categoryOptions,
+    user: req.user,
+    isAuthenticated: req.session.isLoggedIn,
+    isAdmin: req.session.isAdmin
+  });
+};
+
+exports.getBestSellers = (req, res, next) => {
+  res.render('admin/best-sellers', {
+    pageTitle: 'Best Sellers',
+    path: '/admin/best-sellers',
+    user: req.user,
+    isAuthenticated: req.session.isLoggedIn,
+    isAdmin: req.session.isAdmin
+  });
 };

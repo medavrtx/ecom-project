@@ -44,7 +44,8 @@
 
             <!-- Preview Buttons -->
             <a class="btn preview-button edit-button" id="form-edit-button">
-              <i class="fa-solid fa-pencil"></i> Edit
+              <i class="fa-solid fa-pencil"></i>
+              Edit
             </a>
             <a
               class="btn preview-button delete-button rounded-circle"
@@ -56,7 +57,8 @@
           <% } else { %>
           <div class="preview-container" id="form-preview-container">
             <a class="btn preview-button edit-button" id="form-edit-button">
-              <i class="fa-solid fa-pencil"></i> Edit
+              <i class="fa-solid fa-pencil"></i>
+              Edit
             </a>
             <a
               class="btn preview-button delete-button rounded-circle"
@@ -130,11 +132,9 @@
               name="category"
               id="category"
             >
-            <% for (const option of categoryOptions) { %>
-              <option value="<%= option.value %>" <% if (option.value === product.category) { %>selected<% } %>>
-                <%= option.label %>
-              </option>
-            <% } %>
+              <% for (const option of categoryOptions) { %>
+              <option value="<%= option.value %>"><%= option.label %></option>
+              <% } %>
             </select>
           </div>
         </div>
@@ -170,7 +170,10 @@
               <i class="fas fa-image"></i>
             </div>
             <p class="upload-text">Drop your image here</p>
-            <p class="upload-text">or <b>click to browse</b></p>
+            <p class="upload-text">
+              or
+              <b>click to browse</b>
+            </p>
 
             <input
               type="file"
@@ -186,9 +189,9 @@
 
         <!-- Buttons -->
         <div class="d-flex justify-content-end my-3">
-          <a class="btn btn-outline-dark me-3" id="modal-cancel-button"
-            >Cancel</a
-          >
+          <a class="btn btn-outline-dark me-3" id="modal-cancel-button">
+            Cancel
+          </a>
           <a class="btn btn-outline-dark" id="modal-save-button">Save</a>
         </div>
       </div>

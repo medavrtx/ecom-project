@@ -1,65 +1,91 @@
 <% layout('layouts/boilerplate')%>
 
-<div class="my-5">
-  <h1 class="center-title"><%= pageTitle %></h1>
-</div>
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar Navigation -->
+    <div class="col-lg-2 bg-light sidebar py-4">
+      <ul class="nav flex-column pt-4">
+        <li class="nav-item">
+          <a class="nav-link link" href="/admin/edit-products">Edit Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link link" href="/admin/categories">Categories</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link link" href="/admin/best-sellers">Best Sellers</a>
+        </li>
+      </ul>
+    </div>
 
-<div class="category-links">
-  <a href="#">Kits</a>
-  <a href="#">Skincare</a>
-  <a href="#">Sun Protection</a>
-</div>
-<div class="container-lg">
-  <div class="row mx-5">
-    <div class="col-12">
-      <% if (products) { %>
-      <div class="row align-items-start">
-        <% for( let product of products ) { %>
-        <article class="col-lg-4 mb-4">
-          <div class="card">
-            <a href="/admin/edit-product/<%= product._id %>?edit=true">
-              <div class="product-img">
-                <img
-                  class="img-fluid d-block mx-auto img-hover"
-                  src="/<%= product.image %>"
-                  alt="<%= product.title %>"
-                />
-              </div>
-            </a>
-            <p
-              href="#"
-              class="d-block text-dark text-decoration-none py-2 my-0 product-name"
-            >
-              <%= product.title %>
-            </p>
-            <span class="product-price">$<%= product.price %></span>
-            <div class="btn-row my-2">
-              <a href="/admin/edit-product/<%= product._id %>?edit=true">
-                <button type="button" class="btn btn-outline-dark">Edit</button>
-              </a>
-
-              <input
-                type="hidden"
-                value="<%= product._id %>"
-                name="productId"
-              />
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-              <button
-                class="btn btn-outline-dark"
-                type="submit"
-                onclick="deleteProduct(this)"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </article>
-        <% } %>
+    <div class="col-lg-10 content">
+      <div class="my-5">
+        <h1 class="center-title"><%= pageTitle %></h1>
       </div>
-      <%- include('../includes/pagination.ejs', { currentPage: currentPage,
-      hasNextPage: hasNextPage, hasPreviousPage: hasPreviousPage, nextPage:
-      nextPage, previousPage: previousPage, lastPage: lastPage, path: path, })
-      %> <% } %>
+      <!-- <div class="category-links">
+        <a href="#">Kits</a>
+        <a href="#">Skincare</a>
+        <a href="#">Sun Protection</a>
+      </div> -->
+      <div class="container-lg">
+        <div class="row mx-5">
+          <div class="col-12">
+            <% if (products) { %>
+            <div class="row align-items-start">
+              <% for( let product of products ) { %>
+              <article class="col-lg-4 mb-4">
+                <div class="card">
+                  <a href="/admin/edit-product/<%= product._id %>?edit=true">
+                    <div class="product-img">
+                      <img
+                        class="img-fluid d-block mx-auto img-hover"
+                        src="/<%= product.image %>"
+                        alt="<%= product.title %>"
+                      />
+                    </div>
+                  </a>
+                  <p
+                    href="#"
+                    class="d-block text-dark text-decoration-none py-2 my-0 product-name"
+                  >
+                    <%= product.title %>
+                  </p>
+                  <span class="product-price">$<%= product.price %></span>
+                  <div class="btn-row my-2">
+                    <a href="/admin/edit-product/<%= product._id %>?edit=true">
+                      <button type="button" class="btn btn-outline-dark">
+                        Edit
+                      </button>
+                    </a>
+
+                    <input
+                      type="hidden"
+                      value="<%= product._id %>"
+                      name="productId"
+                    />
+                    <input
+                      type="hidden"
+                      name="_csrf"
+                      value="<%= csrfToken %>"
+                    />
+                    <button
+                      class="btn btn-outline-dark"
+                      type="submit"
+                      onclick="deleteProduct(this)"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </article>
+              <% } %>
+            </div>
+            <%- include('../includes/pagination.ejs', { currentPage:
+            currentPage, hasNextPage: hasNextPage, hasPreviousPage:
+            hasPreviousPage, nextPage: nextPage, previousPage: previousPage,
+            lastPage: lastPage, path: path, }) %> <% } %>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

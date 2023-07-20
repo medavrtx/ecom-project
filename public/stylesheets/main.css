@@ -913,6 +913,29 @@ h5 {
   opacity: 0.6;
 }
 
+/* EDIT PRODUCTS */
+
+.add-category-form input {
+  border: 1px solid var(--light-border);
+  outline: none;
+  color: var(--dark-border);
+  opacity: 0.5;
+  max-width: 120px;
+}
+
+.add-category-form button {
+  border: 1px solid var(--light-border);
+  color: var(--dark-border);
+  opacity: 0.5;
+  margin-left: 5px;
+}
+
+@media (max-width: 576px) {
+  .add-category-form {
+    display: none;
+  }
+}
+
 /* OTHER */
 .main-context {
   display: flex;

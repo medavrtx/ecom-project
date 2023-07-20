@@ -5,35 +5,35 @@ const Schema = mongoose.Schema;
 const productSchema = new Schema({
   title: {
     type: String,
-    required: true,
+    required: true
   },
   price: {
     type: String,
-    required: true,
+    required: true
   },
   description: {
     type: String,
-    required: true,
+    required: true
   },
   image: {
     type: String,
-    required: true,
-  },
-  category: {
-    type: String,
-    required: false,
-    default: 'Uncategorized',
+    required: true
   },
   bestSeller: {
     type: Number,
     required: false,
-    default: null,
+    default: null
+  },
+  categoryId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Product Category',
+    required: false
   },
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    require: true,
-  },
+    require: true
+  }
 });
 
 module.exports = mongoose.model('Product', productSchema);
