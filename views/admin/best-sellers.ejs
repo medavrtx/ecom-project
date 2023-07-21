@@ -17,40 +17,42 @@
       <!-- Best Sellers List Section -->
 
       <div class="container-lg mb-5">
-        <div class="row mx-5">
-          <div class="col-12">
-            <div class="container-lg">
-              <h2>Best Sellers List</h2>
-              <% if (bestSellers && bestSellers.length > 0) { %>
-              <ol id="sortable-list" class="list-group">
-                <% for (let i = 0; i < bestSellers.length; i++) { %>
-                <li
-                  class="list-group-item d-flex justify-content-between"
-                  data-id="<%= bestSellers[i].productId._id %>"
+        <div class="row d-flex justify-content-center">
+          <div class="col-xl-6">
+            <h2>Best Sellers List</h2>
+            <% if (bestSellers && bestSellers.length > 0) { %>
+            <ol id="sortable-list" class="list-group">
+              <% for (let i = 0; i < bestSellers.length; i++) { %>
+              <li
+                class="list-group-item d-flex justify-content-between"
+                data-id="<%= bestSellers[i].productId._id %>"
+              >
+                <div class="d-flex">
+                  <b id="orderNumber"><%= bestSellers[i].order %></b>
+                  <div class="ms-3">
+                    <%= bestSellers[i].productId.title %> - $<%=
+                    bestSellers[i].productId.price %>
+                  </div>
+                </div>
+                <input
+                  type="hidden"
+                  name="productId"
+                  value="<%= bestSellers[i].productId._id %>"
+                />
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  onclick="removeBestSeller(this)"
                 >
-                  <p id="orderNumber"><%= bestSellers[i].order %></p>
-                  <%= bestSellers[i].productId.title %> - $<%=
-                  bestSellers[i].productId.price %>
-                  <input
-                    type="hidden"
-                    name="productId"
-                    value="<%= bestSellers[i].productId._id %>"
-                  />
-                  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                  <button
-                    type="button"
-                    class="btn btn-outline-danger"
-                    onclick="removeBestSeller(this)"
-                  >
-                    Remove
-                  </button>
-                </li>
-                <% } %>
-              </ol>
-              <% } else { %>
-              <p>No products in the Best Sellers list.</p>
+                  Remove
+                </button>
+              </li>
               <% } %>
-            </div>
+            </ol>
+            <% } else { %>
+            <p>No products in the Best Sellers list.</p>
+            <% } %>
           </div>
         </div>
       </div>
@@ -58,62 +60,61 @@
       <!-- Available Products Section -->
 
       <div class="container-lg">
-        <div class="row mx-5">
-          <div class="col-12">
-            <div class="container-lg">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col-1">Product</th>
-                    <th scope="col" class="d-none d-md-table-cell"></th>
-                    <th scope="col-1">Add</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% for( let product of products ) { %>
-                  <tr>
-                    <!-- IMAGE -->
-                    <td class="col-1 d-none d-md-table-cell">
-                      <div class="cart-product-image">
-                        <img
-                          class="img-fluid d-block mx-auto"
-                          src="/<%= product.image %>"
-                          alt="<%= product.title %>"
+        <div class="row d-flex justify-content-center">
+          <div class="col-xl-9">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col-1">Product</th>
+                  <th scope="col" class="d-none d-md-table-cell"></th>
+                  <th scope="col-1">Add</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% for( let product of products ) { %>
+                <tr>
+                  <!-- IMAGE -->
+                  <td class="col-1 d-none d-md-table-cell">
+                    <div class="cart-product-image">
+                      <img
+                        class="img-fluid d-block mx-auto"
+                        src="/<%= product.image %>"
+                        alt="<%= product.title %>"
+                      />
+                    </div>
+                  </td>
+
+                  <!-- DETAILS -->
+                  <td class="col">
+                    <p><%= product.title %></p>
+                    <p class="cart-product-price">$<%= product.price %></p>
+                  </td>
+
+                  <!-- ADD TO BEST SELLERS -->
+                  <td class="col-3">
+                    <form action="/admin/best-sellers/add" method="POST">
+                      <div class="form-group">
+                        <input
+                          type="hidden"
+                          value="<%= product._id %>"
+                          name="productId"
                         />
+                        <input
+                          type="hidden"
+                          name="_csrf"
+                          value="<%= csrfToken %>"
+                        />
+                        <button class="btn btn-outline-dark" type="submit">
+                          Add To List
+                        </button>
                       </div>
-                    </td>
+                    </form>
+                  </td>
+                </tr>
+                <% } %>
+              </tbody>
+            </table>
 
-                    <!-- DETAILS -->
-                    <td class="col-9">
-                      <p><%= product.title %></p>
-                      <p class="cart-product-price">$<%= product.price %></p>
-                    </td>
-
-                    <!-- ADD TO BEST SELLERS -->
-                    <td class="col-3">
-                      <form action="/admin/best-sellers/add" method="POST">
-                        <div class="form-group">
-                          <input
-                            type="hidden"
-                            value="<%= product._id %>"
-                            name="productId"
-                          />
-                          <input
-                            type="hidden"
-                            name="_csrf"
-                            value="<%= csrfToken %>"
-                          />
-                          <button class="btn btn-outline-dark" type="submit">
-                            Add To List
-                          </button>
-                        </div>
-                      </form>
-                    </td>
-                  </tr>
-                  <% } %>
-                </tbody>
-              </table>
-            </div>
             <%- include('../includes/pagination.ejs', { currentPage:
             currentPage, hasNextPage: hasNextPage, hasPreviousPage:
             hasPreviousPage, nextPage: nextPage, previousPage: previousPage,

@@ -13,7 +13,6 @@ function updateOrderOnSort(event) {
     const productId = items[i].getAttribute('data-id');
     const newOrder = i + 1;
 
-    // Update the order of best sellers in the database using AJAX
     fetch(`/admin/best-sellers/${productId}`, {
       method: 'PUT',
       headers: {
@@ -30,14 +29,13 @@ function updateOrderOnSort(event) {
         }
       })
       .then((data) => {
-        const orderElement = items[i].querySelector('p');
+        const orderElement = items[i].querySelector('b');
         orderElement.textContent = newOrder;
       })
       .catch((error) => {
-        console.error(error.message); // Optional: Show error message
+        console.error(error.message);
       });
   }
 }
 
-// Call the initializeSortableList function when the DOM is ready
 document.addEventListener('DOMContentLoaded', initializeSortableList);
