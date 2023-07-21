@@ -32,11 +32,7 @@ router.post(
 );
 
 // /admin/products/:productId => GET
-router.get(
-  '/products/:productId',
-
-  adminController.getEditProduct
-);
+router.get('/products/:productId', adminController.getEditProduct);
 
 // /admin/products/:productId => POST
 router.post(
@@ -88,5 +84,14 @@ router.delete(
 
 // /admin/best-sellers => GET
 router.get('/best-sellers', adminController.getBestSellers);
+
+// /admin/best-sellers => POST
+router.post('/best-sellers/add', adminController.postAddBestSeller);
+
+// /admin/best-sellers => DELETE
+router.delete('/best-sellers/:productId', adminController.deleteBestSeller);
+
+// /admin/best-sellers => PUT
+router.put('/best-sellers/:productId', adminController.updateBestSellerOrder);
 
 module.exports = router;

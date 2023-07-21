@@ -80,3 +80,22 @@ const removeFromCategory = async (btn) => {
     console.log(err);
   }
 };
+
+const removeBestSeller = async (btn) => {
+  const productId = btn.parentNode.querySelector('[name=productId]').value;
+  const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
+
+  try {
+    const response = await fetch(`/admin/best-sellers/${productId}`, {
+      method: 'DELETE',
+      headers: {
+        'csrf-token': csrf
+      }
+    });
+    const data = await response.json();
+
+    window.location.reload();
+  } catch (err) {
+    console.log(err);
+  }
+};

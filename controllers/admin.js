@@ -3,10 +3,9 @@ const { validationResult } = require('express-validator');
 const Product = require('../models/product');
 const Order = require('../models/order');
 const ProductCategory = require('../models/product-category');
+const BestSeller = require('../models/best-seller');
 
 const fileHelper = require('../util/file');
-
-const ITEMS_PER_PAGE = 9;
 
 // GET ADMIN
 exports.getAdmin = async (req, res, next) => {
@@ -229,9 +228,7 @@ exports.postEditProduct = async (req, res, next) => {
     console.log('Updated Product!');
     res.redirect('/admin/products');
   } catch (err) {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    return next(error);
+    next(err);
   }
 };
 
@@ -305,7 +302,6 @@ exports.postAddCategory = async (req, res, next) => {
     console.log('Created category');
     res.redirect('/admin/categories');
   } catch (err) {
-    // Pass the error to the global error handler
     next(err);
   }
 };
@@ -330,6 +326,7 @@ exports.deleteCategory = async (req, res, next) => {
   }
 };
 
+// EDIT CATEGORY - GET
 exports.getEditCategory = async (req, res, next) => {
   try {
     const catId = req.params.categoryId;
@@ -361,6 +358,7 @@ exports.getEditCategory = async (req, res, next) => {
   }
 };
 
+// EDIT CATEGORY - POST
 exports.postEditCategory = async (req, res, next) => {
   try {
     const catId = req.body.categoryId;
@@ -397,6 +395,7 @@ exports.postEditCategory = async (req, res, next) => {
   }
 };
 
+// POST PRODUCT TO CATEGORY
 exports.postProductToCategory = async (req, res, next) => {
   try {
     const prodId = req.body.productId;
@@ -423,6 +422,7 @@ exports.postProductToCategory = async (req, res, next) => {
   }
 };
 
+// DELETE PRODUCT FROM CATEGORY
 exports.deleteProductFromCategory = async (req, res, next) => {
   try {
     const catId = req.params.categoryId;
@@ -444,33 +444,149 @@ exports.deleteProductFromCategory = async (req, res, next) => {
   }
 };
 
-exports.getBestSellers = (req, res, next) => {
+// BEST SELLERS - GET
+exports.getBestSellers = async (req, res, next) => {
   const page = +req.query.page || 1;
-  let totalItems;
-  Product.find()
-    .countDocuments()
-    .then((numProducts) => {
-      totalItems = numProducts;
-      return Product.find()
+  const ITEMS_PER_PAGE = 10;
+
+  try {
+    const totalItems = await Product.find({
+      userId: req.user._id
+    }).countDocuments();
+    const products = await Product.find()
+      .skip((page - 1) * ITEMS_PER_PAGE)
+      .limit(ITEMS_PER_PAGE);
+
+    const bestSellers = await BestSeller.find()
+      .populate('productId')
+      .sort({ order: 1 });
+
+    if (ITEMS_PER_PAGE * (page - 1) > totalItems) {
+      return res.redirect('/admin/products');
+    }
+
+    res.render('admin/best-sellers', {
+      pageTitle: 'Best Sellers',
+      path: '/admin/best-sellers',
+      products: products,
+      bestSellers,
+      user: req.user,
+      isAuthenticated: req.session.isLoggedIn,
+      isAdmin: req.session.isAdmin,
+      hasError: false,
+      csrfToken: req.csrfToken(),
+      totalProducts: totalItems,
+      currentPage: page,
+      hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+      hasPreviousPage: page > 1,
+      nextPage: page + 1,
+      previousPage: page - 1,
+      lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
+    });
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
+};
+
+// BEST SELLERS - POST
+
+exports.postAddBestSeller = async (req, res, next) => {
+  const prodId = req.body.productId;
+
+  try {
+    const existingProduct = await BestSeller.findOne({ productId: prodId });
+
+    if (existingProduct) {
+      const errorMessage = 'Product already exists in the best sellers list';
+
+      const page = +req.query.page || 1;
+      const ITEMS_PER_PAGE = 10;
+      const totalItems = await Product.find({
+        userId: req.user._id
+      }).countDocuments();
+      const products = await Product.find()
         .skip((page - 1) * ITEMS_PER_PAGE)
         .limit(ITEMS_PER_PAGE);
-    })
-    .then((products) => {
-      res.render('admin/best-sellers', {
+
+      const bestSellers = await BestSeller.find().populate('productId');
+
+      return res.status(409).render('admin/best-sellers', {
         pageTitle: 'Best Sellers',
         path: '/admin/best-sellers',
         products: products,
-        bestSellers: [
-          { title: 'ayo', price: 22, _id: '0101' },
-          { title: 'ayo2', price: 22, _id: '0101' }
-        ],
+        bestSellers,
         user: req.user,
         isAuthenticated: req.session.isLoggedIn,
         isAdmin: req.session.isAdmin,
-        csrfToken: req.csrfToken()
+        hasError: true,
+        errorMessage,
+        csrfToken: req.csrfToken(),
+        totalProducts: totalItems,
+        currentPage: page,
+        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
+        hasPreviousPage: page > 1,
+        nextPage: page + 1,
+        previousPage: page - 1,
+        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
       });
-    })
-    .catch((err) => {
-      next(err);
+    }
+    const totalItems = await BestSeller.countDocuments();
+
+    const bestSeller = new BestSeller({
+      productId: prodId,
+      order: totalItems + 1
     });
+
+    await bestSeller.save();
+    console.log('Added to Best Seller!');
+    res.redirect('/admin/best-sellers');
+  } catch (err) {
+    next(err);
+  }
+};
+
+// BEST SELLERS - DELETE
+
+exports.deleteBestSeller = async (req, res, next) => {
+  const productId = req.params.productId;
+
+  try {
+    await BestSeller.deleteOne({ productId: productId });
+
+    // Update the orders of the remaining items
+    const bestSellers = await BestSeller.find().sort({ order: 1 });
+    for (let i = 0; i < bestSellers.length; i++) {
+      bestSellers[i].order = i + 1;
+      await bestSellers[i].save();
+    }
+
+    res.status(200).json({ message: 'Product removed from best sellers list' });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to remove product' });
+  }
+};
+
+// BEST SELLERS - PUT
+
+exports.updateBestSellerOrder = async (req, res, next) => {
+  const productId = req.params.productId;
+  const newOrder = req.body.order;
+
+  try {
+    const bestSeller = await BestSeller.findOne({ productId });
+
+    if (!bestSeller) {
+      return res.status(404).json({ message: 'Best seller not found' });
+    }
+
+    bestSeller.order = newOrder;
+    await bestSeller.save();
+
+    console.log('Best seller order updated successfully');
+    res.status(200).json({ message: 'Best seller order updated successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Failed to update best seller order' });
+  }
 };

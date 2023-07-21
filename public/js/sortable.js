@@ -1,32 +1,43 @@
-document.addEventListener('DOMContentLoaded', function () {
-  new Sortable(document.getElementById('sortable-list'), {
+function initializeSortableList() {
+  const sortableList = document.getElementById('sortable-list');
+  new Sortable(sortableList, {
     animation: 150,
-    onUpdate: function (evt) {
-      // Get the updated order of the list items
-      const sortedIds = [];
-      const listItems = evt.from.children;
-      for (let i = 0; i < listItems.length; i++) {
-        sortedIds.push(listItems[i].dataset.id);
-      }
-
-      // Send the updated order to the server using AJAX
-      fetch('/admin/best-sellers/reorder', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-Token': '<%= csrfToken %>'
-        },
-        body: JSON.stringify({ sortedIds })
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Failed to update order.');
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-          // Handle the error if needed
-        });
-    }
+    onUpdate: updateOrderOnSort
   });
-});
+}
+
+function updateOrderOnSort(event) {
+  const csrf = event.item.querySelector('[name=_csrf]').value;
+  const items = event.from.children;
+  for (let i = 0; i < items.length; i++) {
+    const productId = items[i].getAttribute('data-id');
+    const newOrder = i + 1;
+
+    // Update the order of best sellers in the database using AJAX
+    fetch(`/admin/best-sellers/${productId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'csrf-token': csrf
+      },
+      body: JSON.stringify({ order: i + 1 })
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Failed to update best seller order');
+        }
+      })
+      .then((data) => {
+        const orderElement = items[i].querySelector('p');
+        orderElement.textContent = newOrder;
+      })
+      .catch((error) => {
+        console.error(error.message); // Optional: Show error message
+      });
+  }
+}
+
+// Call the initializeSortableList function when the DOM is ready
+document.addEventListener('DOMContentLoaded', initializeSortableList);

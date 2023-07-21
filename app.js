@@ -54,6 +54,7 @@ const aboutRoutes = require('./routes/about');
 
 app.use(compression());
 
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
@@ -117,8 +118,6 @@ app.use((error, req, res, next) => {
     user: req.user
   });
 });
-
-let dbConnection;
 
 mongoose.set('strictQuery', false);
 mongoose

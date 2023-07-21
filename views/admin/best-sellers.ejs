@@ -10,36 +10,47 @@
         <h1 class="center-title"><%= pageTitle %></h1>
       </div>
 
+      <% if (hasError) {%>
+      <p class="text-danger"><%= errorMessage %></p>
+      <%} %>
+
       <!-- Best Sellers List Section -->
+
       <div class="container-lg mb-5">
         <div class="row mx-5">
-          <div class="col-lg-12">
-            <h2>Best Sellers List</h2>
-            <% if (bestSellers && bestSellers.length > 0) { %>
-            <ol id="sortable-list" class="list-group">
-              <% for (let i = 0; i < bestSellers.length; i++) { %>
-              <li class="list-group-item" data-id="<%= bestSellers[i]._id %>">
-                <%= bestSellers[i].title %> - $<%= bestSellers[i].price %>
-                <div class="btn-group" role="group">
-                  <a href="/admin/best-sellers/edit/<%= bestSellers[i]._id %>">
-                    <button type="button" class="btn btn-outline-primary">
-                      Edit
-                    </button>
-                  </a>
+          <div class="col-12">
+            <div class="container-lg">
+              <h2>Best Sellers List</h2>
+              <% if (bestSellers && bestSellers.length > 0) { %>
+              <ol id="sortable-list" class="list-group">
+                <% for (let i = 0; i < bestSellers.length; i++) { %>
+                <li
+                  class="list-group-item d-flex justify-content-between"
+                  data-id="<%= bestSellers[i].productId._id %>"
+                >
+                  <p id="orderNumber"><%= bestSellers[i].order %></p>
+                  <%= bestSellers[i].productId.title %> - $<%=
+                  bestSellers[i].productId.price %>
+                  <input
+                    type="hidden"
+                    name="productId"
+                    value="<%= bestSellers[i].productId._id %>"
+                  />
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                   <button
                     type="button"
                     class="btn btn-outline-danger"
-                    onclick="removeBestSeller('<%= bestSellers[i]._id %>')"
+                    onclick="removeBestSeller(this)"
                   >
                     Remove
                   </button>
-                </div>
-              </li>
+                </li>
+                <% } %>
+              </ol>
+              <% } else { %>
+              <p>No products in the Best Sellers list.</p>
               <% } %>
-            </ol>
-            <% } else { %>
-            <p>No products in the Best Sellers list.</p>
-            <% } %>
+            </div>
           </div>
         </div>
       </div>
@@ -49,41 +60,64 @@
       <div class="container-lg">
         <div class="row mx-5">
           <div class="col-12">
-            <% if (products) { %>
-            <div class="row align-items-start">
-              <% for (let product of products) { %>
-              <article class="col-lg-4 mb-4">
-                <div class="card">
-                  <a href="/admin/best-sellers/add/<%= product._id %>">
-                    <div class="product-img">
-                      <img
-                        class="img-fluid d-block mx-auto img-hover"
-                        src="/<%= product.image %>"
-                        alt="<%= product.title %>"
-                      />
-                    </div>
-                  </a>
-                  <p
-                    href="#"
-                    class="d-block text-dark text-decoration-none py-2 my-0 product-name"
-                  >
-                    <%= product.title %>
-                  </p>
-                  <span class="product-price">$<%= product.price %></span>
-                  <div class="btn-row my-2">
-                    <a href="/admin/best-sellers/add/<%= product._id %>">
-                      <button type="button" class="btn btn-outline-dark">
-                        Add to Best Sellers
-                      </button>
-                    </a>
-                  </div>
-                </div>
-              </article>
-              <% } %>
+            <div class="container-lg">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col-1">Product</th>
+                    <th scope="col" class="d-none d-md-table-cell"></th>
+                    <th scope="col-1">Add</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% for( let product of products ) { %>
+                  <tr>
+                    <!-- IMAGE -->
+                    <td class="col-1 d-none d-md-table-cell">
+                      <div class="cart-product-image">
+                        <img
+                          class="img-fluid d-block mx-auto"
+                          src="/<%= product.image %>"
+                          alt="<%= product.title %>"
+                        />
+                      </div>
+                    </td>
+
+                    <!-- DETAILS -->
+                    <td class="col-9">
+                      <p><%= product.title %></p>
+                      <p class="cart-product-price">$<%= product.price %></p>
+                    </td>
+
+                    <!-- ADD TO BEST SELLERS -->
+                    <td class="col-3">
+                      <form action="/admin/best-sellers/add" method="POST">
+                        <div class="form-group">
+                          <input
+                            type="hidden"
+                            value="<%= product._id %>"
+                            name="productId"
+                          />
+                          <input
+                            type="hidden"
+                            name="_csrf"
+                            value="<%= csrfToken %>"
+                          />
+                          <button class="btn btn-outline-dark" type="submit">
+                            Add To List
+                          </button>
+                        </div>
+                      </form>
+                    </td>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
             </div>
-            <% } else { %>
-            <p>No available products found.</p>
-            <% } %>
+            <%- include('../includes/pagination.ejs', { currentPage:
+            currentPage, hasNextPage: hasNextPage, hasPreviousPage:
+            hasPreviousPage, nextPage: nextPage, previousPage: previousPage,
+            lastPage: lastPage, path: path, }) %>
           </div>
         </div>
       </div>
