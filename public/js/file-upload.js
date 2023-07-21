@@ -49,7 +49,7 @@ const cropperConfig = {
   checkCrossOrigin: false,
   checkOrientation: false,
 
-  background: false,
+  background: false
 };
 
 // Function to open the modal
@@ -151,7 +151,7 @@ function cropImage() {
   if (cropper) {
     const croppedCanvas = cropper.getCroppedCanvas({
       width: 800,
-      height: 800,
+      height: 800
     });
     const formPreviewImage = document.getElementById('form-preview-image');
     croppedImageDataURL = croppedCanvas.toDataURL('image/jpeg');
@@ -174,16 +174,20 @@ function cropImage() {
 modalSaveButton.addEventListener('click', () => {
   cropImage();
   const blob = dataURLToBlob(croppedImageDataURL);
-  const file = new File([blob], formTitleInput.value + '.jpg', {
-    type: 'image/jpeg',
-  });
+  const file = new File(
+    [blob],
+    formTitleInput.value.replace(/\s+/g, '_') + '.jpg',
+    {
+      type: 'image/jpeg'
+    }
+  );
   const dataTransfer = new DataTransfer();
   dataTransfer.items.add(file);
   modalFileInput.files = dataTransfer.files;
   closeModal();
 });
 
-// Delete form  preview image
+// Delete form preview image
 formDeleteButton.addEventListener('click', () => {
   if (cropper) {
     cropper.destroy(); // Destroy the previous Cropper instance if it exists
@@ -192,6 +196,8 @@ formDeleteButton.addEventListener('click', () => {
   formPreviewContainer.removeChild(formPreviewImage);
   formPreviewContainer.classList.remove('d-block');
   formPreviewContainer.style.display = 'none';
+
+  modalFileInput.value = '';
 
   const modalPreviewImage = document.getElementById('modal-preview-image');
   modalPreviewContainer.removeChild(modalPreviewImage);

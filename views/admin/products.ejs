@@ -16,7 +16,7 @@
               <% for( let product of products ) { %>
               <article class="col-lg-4 mb-4">
                 <div class="card">
-                  <a href="/admin/edit-products/<%= product._id %>?edit=true">
+                  <a href="/admin/products/<%= product._id %>?edit=true">
                     <div class="product-img">
                       <img
                         class="img-fluid d-block mx-auto img-hover"
@@ -33,7 +33,7 @@
                   </p>
                   <span class="product-price">$<%= product.price %></span>
                   <div class="btn-row my-2">
-                    <a href="/admin/edit-products/<%= product._id %>?edit=true">
+                    <a href="/admin/products/<%= product._id %>?edit=true">
                       <button type="button" class="btn btn-outline-dark">
                         Edit
                       </button>
@@ -50,7 +50,7 @@
                       value="<%= csrfToken %>"
                     />
                     <button
-                      class="btn btn-outline-dark"
+                      class="btn btn-outline-danger"
                       type="button"
                       onclick="deleteProduct(this)"
                     >

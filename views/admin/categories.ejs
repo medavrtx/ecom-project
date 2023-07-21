@@ -14,7 +14,7 @@
         <div class="row mx-5">
           <div class="col-lg-4">
             <h2>Add New Category</h2>
-            <form action="/admin/add-category" method="POST">
+            <form action="/admin/categories/add" method="POST">
               <div class="form-group">
                 <label for="title"></label>
                 <input
@@ -53,12 +53,12 @@
                   <ul class="list-group">
                     <% for (let product of category.products) { %>
                     <li class="list-group-item">
-                      <%= product.title %> - $<%= product.price %>
+                      <%= product.productId.title %>
                     </li>
                     <% } %>
                   </ul>
                   <div class="btn-row my-2">
-                    <a href="/admin/edit-categories/<%= category._id %>/">
+                    <a href="/admin/categories/<%= category._id %>/">
                       <button type="button" class="btn btn-outline-dark">
                         Edit Category
                       </button>

@@ -13,7 +13,7 @@
       <% } %>
 
       <form
-        action="/admin/<% if (editing) {%>edit-products<%} else {%>add-product<%} %>"
+        action="/admin/products/<% if (editing) {%>edit<%} else {%>add<%} %>"
         method="POST"
         enctype="multipart/form-data"
         class="w-100"
@@ -36,7 +36,7 @@
               </div>
 
               <!-- FORM IMAGE PREVIEW -->
-              <% if (editing) {%>
+              <% if (editing ) {%>
               <div
                 class="preview-container d-block"
                 id="form-preview-container"
@@ -126,24 +126,6 @@
                 >
 <% if (editing || hasError) {%><%=product.description%><%} %></textarea
                 >
-              </div>
-            </div>
-
-            <!-- CATEGORIES -->
-            <div class="row mb-3">
-              <div class="col-md-12">
-                <label for="category">Category</label>
-                <select
-                  class="form-select product-form-select"
-                  name="category"
-                  id="category"
-                >
-                  <% for (const option of categoryOptions) { %>
-                  <option value="<%= option.value %>">
-                    <%= option.label %>
-                  </option>
-                  <% } %>
-                </select>
               </div>
             </div>
 

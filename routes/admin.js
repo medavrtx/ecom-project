@@ -1,99 +1,92 @@
 const express = require('express');
 const router = express.Router();
-
 const { body } = require('express-validator');
 
 const adminController = require('../controllers/admin');
 const isAdmin = require('../middleware/is-admin');
 
+// Middleware to protect admin routes
+router.use(isAdmin);
+
 // /admin => GET
-router.get('/', isAdmin, adminController.getAdmin);
+router.get('/', adminController.getAdmin);
+
+// /admin/products
+
+// /admin/products => GET
+router.get('/products', adminController.getProducts);
 
 // /admin/add-product => GET
-router.get('/add-product', isAdmin, adminController.getAddProduct);
+router.get('/products/add', adminController.getAddProduct);
 
-// /admin/add-product => POST
+// /admin/products/add => POST
 router.post(
-  '/add-product',
+  '/products/add',
   [
     body('title').isString().isLength({ min: 1 }).trim(),
     body('price').isFloat(),
     body('description').isLength({ min: 1, max: 400 }).trim()
   ],
-  isAdmin,
+
   adminController.postAddProduct
 );
 
-// /admin/edit-products => GET
-router.get('/edit-products', isAdmin, adminController.getEditProducts);
-
-// /admin/edit-product => GET
+// /admin/products/:productId => GET
 router.get(
-  '/edit-products/:productId',
-  isAdmin,
+  '/products/:productId',
+
   adminController.getEditProduct
 );
 
-// /admin/edit-product => POST
+// /admin/products/:productId => POST
 router.post(
-  '/edit-products',
+  '/products/edit',
   [
     body('title').isString().isLength({ min: 1 }).trim(),
     body('price').isFloat(),
     body('description').isLength({ min: 1, max: 400 }).trim()
   ],
-  isAdmin,
+
   adminController.postEditProduct
 );
 
-// /admin/delete-product => DELETE
+// /admin/products/:productId/delete => DELETE
 router.delete(
-  '/edit-products/:productId',
-  isAdmin,
+  '/products/:productId/delete',
+
   adminController.deleteProduct
 );
 
-// /admin/edit-categories => GET
-router.get('/edit-categories', isAdmin, adminController.getEditCategories);
+// /admin/categories
 
-// /admin/add-category => POST
-router.post('/add-category', isAdmin, adminController.postAddCategory);
+// /admin/categories => GET
+router.get('/categories', adminController.getCategories);
 
-// /admin/edit-categories => DELETE
-router.delete(
-  '/edit-categories/:categoryId',
-  isAdmin,
-  adminController.deleteCategory
-);
+// /admin/categories/add => POST
+router.post('/categories/add', adminController.postAddCategory);
 
-// /admin/edit-categories => GET
-router.get(
-  '/edit-categories/:categoryId',
-  isAdmin,
-  adminController.getEditCategory
-);
+// /admin/categories/:categoryId/delete => DELETE
+router.delete('/categories/:categoryId/delete', adminController.deleteCategory);
 
-// /admin/edit-categories => POST
+// /admin/categories/:categoryId => GET
+router.get('/categories/:categoryId', adminController.getEditCategory);
+
+// /admin/categories/:categoryId => POST
+router.post('/categories/:categoryId', adminController.postEditCategory);
+
+// /admin/categories/:categoryId/add-product => POST
 router.post(
-  '/edit-categories/:categoryId',
-  isAdmin,
-  adminController.postEditCategory
-);
-
-// /admin/edit-categories/categoryId/add-product => POST
-router.post(
-  '/edit-categories/:categoryId/add-product',
-  isAdmin,
+  '/categories/:categoryId/add-product',
   adminController.postProductToCategory
 );
 
-// /admin/edit-categories/categoryId/add-product => DELETE
+// /admin/categories/:categoryId/:productId/delete => DELETE
 router.delete(
-  '/edit-categories/:categoryId/:productId',
-  isAdmin,
+  '/categories/:categoryId/:productId/delete',
   adminController.deleteProductFromCategory
 );
 
-router.get('/best-sellers', isAdmin, adminController.getBestSellers);
+// /admin/best-sellers => GET
+router.get('/best-sellers', adminController.getBestSellers);
 
 module.exports = router;

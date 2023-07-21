@@ -19,10 +19,7 @@
             <%} else {%>
             <div class="my-4"></div>
             <%} %>
-            <form
-              action="/admin/edit-categories/<%= category._id %>"
-              method="POST"
-            >
+            <form action="/admin/categories/<%= category._id %>" method="POST">
               <div class="form-group">
                 <label for="title" class="d-none"></label>
                 <input
@@ -61,7 +58,9 @@
               <% } else { %> <% category.products.forEach((product) => { %>
               <article class="col-lg-4 mb-4">
                 <div class="card">
-                  <a href="/admin/edit-product/<%= product.productId._id %>">
+                  <a
+                    href="/admin/products/<%= product.productId._id %>?edit=true"
+                  >
                     <div class="product-img">
                       <img
                         class="img-fluid d-block mx-auto img-hover"
@@ -81,7 +80,7 @@
                   <div class="btn-row my-2">
                     <a
                       class="btn btn-outline-dark"
-                      href="/admin/edit-products/<%= product.productId._id %>?edit=true"
+                      href="/admin/products/<%= product.productId._id %>?edit=true"
                     >
                       Edit Product
                     </a>
@@ -126,7 +125,7 @@
           <div class="row">
             <div class="col-lg-6">
               <form
-                action="/admin/edit-categories/<%= category._id %>/add-product"
+                action="/admin/categories/<%= category._id %>/add-product"
                 method="POST"
               >
                 <div class="form-group">
