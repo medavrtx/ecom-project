@@ -1,14 +1,18 @@
 <% layout('layouts/boilerplate')%>
 <div class="container-md my-5">
-  <div class="detail-card">
-    <div class="detail-products-image">
-      <img src="/<%= product.image %>" alt="<%= product.title %>" />
+  <div class="row">
+    <div class="col-lg-6 d-flex justify-content-center">
+      <div class="detail-products-image">
+        <img src="/<%= product.image %>" alt="<%= product.title %>" />
+      </div>
     </div>
-    <div class="detail-products-info">
-      <div class="products-title"><%= product.title %></div>
-      <div class="products-price">$<%= product.price %></div>
-      <div class="products-description"><%= product.description %></div>
-      <%- include('../includes/add-to-cart.ejs', {product: product}) %>
+    <div class="col-lg-6 d-flex justify-content-center align-items-center">
+      <div class="detail-products-info">
+        <div class="products-title"><%= product.title %></div>
+        <div class="products-price">$<%= product.price %></div>
+        <div class="products-description"><%= product.description %></div>
+        <%- include('../includes/add-to-cart.ejs', {product: product}) %>
+      </div>
     </div>
   </div>
 </div>

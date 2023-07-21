@@ -32,6 +32,23 @@ h5 {
   overflow: hidden;
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  margin-bottom: 100px;
+}
+
+.card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 @media (min-width: 1500px) {
   .main-container {
     padding: 0 10%;
@@ -519,6 +536,30 @@ h5 {
   }
 }
 
+.detail-products-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+  height: 500px;
+  overflow: hidden;
+}
+.detail-products-image img {
+  width: 100%;
+}
+
+.detail-products-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 300px;
+  width: 400px;
+  justify-content: space-evenly;
+}
+.detail-products-info .products-title {
+  font-size: 36px;
+}
+
 /* BRAND */
 
 .brand-banner {
@@ -925,6 +966,14 @@ h5 {
   flex-direction: row;
 }
 
+.btn-row a button {
+  height: 100%;
+}
+.btn-row button {
+  margin-left: 5px;
+  height: 100%;
+}
+
 .modal-close:hover {
   opacity: 0.6;
 }
@@ -950,204 +999,4 @@ h5 {
   .add-category-form {
     display: none;
   }
-}
-
-/* OTHER */
-.main-context {
-  display: flex;
-}
-
-.title {
-  display: flex;
-  flex-direction: row;
-}
-
-.slim {
-  height: 22px;
-  padding: 0 15px;
-}
-
-.btn-row a button {
-  height: 100%;
-}
-.btn-row button {
-  margin-left: 5px;
-  height: 100%;
-}
-
-.btn-nonbutton {
-  border: none;
-  background-color: transparent;
-  font-family: 'Lato', sans-serif;
-  font-size: 15px;
-  color: rgb(14, 45, 76);
-  padding: 0;
-}
-.btn-nonbutton:hover {
-  cursor: pointer;
-}
-
-.footer-title {
-  font-size: 12px;
-  color: rgb(237, 237, 237);
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-  margin-bottom: 100px;
-}
-
-.page-wrap {
-  min-height: 92.5%;
-  margin-bottom: -200px;
-}
-
-.nav-spacer {
-  width: 100%;
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.home-title {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.home-title h1 {
-  font-size: 50px;
-  color: rgb(14, 45, 76);
-}
-
-.products {
-  width: 80%;
-  display: grid;
-  grid-template-columns: repeat(2, 50%);
-  grid-template-rows: auto;
-  -moz-column-gap: 30px;
-  column-gap: 30px;
-  row-gap: 30px;
-  padding: 20px;
-  justify-items: center;
-  align-items: center;
-}
-
-.card {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.detail-card {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.detail-products-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 350px;
-  height: 500px;
-  overflow: hidden;
-}
-.detail-products-image img {
-  width: 100%;
-}
-
-.detail-products-info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  height: 300px;
-  width: 400px;
-  justify-content: space-evenly;
-}
-.detail-products-info .products-title {
-  font-size: 36px;
-}
-
-.user-sign-main {
-  display: flex;
-  flex-direction: row;
-  width: 70%;
-  justify-content: space-around;
-}
-
-.user-register {
-  display: flex;
-  flex-direction: column;
-  width: 30%;
-  border-radius: 10px;
-  justify-content: space-around;
-  padding: 15px;
-  background-color: rgb(237, 237, 237);
-}
-.user-register button {
-  width: 80%;
-  align-self: center;
-}
-
-.user-sign-up {
-  display: flex;
-  flex-direction: column;
-  width: 70%;
-  align-items: center;
-}
-
-.user-sign-up-form {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.user-sign-up-form div {
-  width: 45%;
-  padding: 5px;
-}
-.user-sign-up-form div select {
-  font-family: 'Lato', sans-serif;
-  width: 100%;
-  height: 22px;
-}
-.user-sign-up-form .form-control-btn {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-}
-.user-sign-up-form .form-control-btn button {
-  width: 100%;
-}
-
-.reset-link {
-  margin-top: 10px;
-  text-decoration: none;
-  color: rgb(14, 45, 76);
-  font-weight: 500;
-}
-.reset-link:hover {
-  opacity: 70%;
-}
-
-.user-reset-main {
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  justify-content: space-between;
-}
-.user-reset-main button {
-  margin-top: 15px;
-  width: 50%;
 }
