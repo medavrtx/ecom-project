@@ -35,7 +35,7 @@ exports.getAdmin = async (req, res, next) => {
 // GET PRODUCTS
 exports.getProducts = async (req, res, next) => {
   const page = +req.query.page || 1;
-  const ITEMS_PER_PAGE = 3;
+  const ITEMS_PER_PAGE = 10;
 
   try {
     const totalItems = await Product.find({
@@ -45,7 +45,7 @@ exports.getProducts = async (req, res, next) => {
       .skip((page - 1) * ITEMS_PER_PAGE)
       .limit(ITEMS_PER_PAGE);
 
-    if (ITEMS_PER_PAGE * page - 1 > totalItems) {
+    if (ITEMS_PER_PAGE * (page - 1) > totalItems) {
       return res.redirect('/admin/products');
     }
 
@@ -266,8 +266,8 @@ exports.getCategories = async (req, res, next) => {
     res.render('admin/categories', {
       pageTitle: 'Categories',
       path: '/admin/categories',
-      categories,
       user: req.user,
+      categories,
       isAuthenticated: req.session.isLoggedIn,
       isAdmin: req.session.isAdmin,
       csrfToken: req.csrfToken()

@@ -8,66 +8,74 @@
       <div class="my-5">
         <h1 class="center-title"><%= pageTitle %></h1>
       </div>
-      <div class="container-lg">
-        <div class="row mx-5">
-          <div class="col-12">
-            <% if (products) { %>
-            <div class="row align-items-start">
-              <% for( let product of products ) { %>
-              <article class="col-lg-4 mb-4">
-                <div class="card">
-                  <a href="/admin/products/<%= product._id %>?edit=true">
-                    <div class="product-img">
-                      <img
-                        class="img-fluid d-block mx-auto img-hover"
-                        src="/<%= product.image %>"
-                        alt="<%= product.title %>"
-                      />
-                    </div>
-                  </a>
-                  <p
-                    href="#"
-                    class="d-block text-dark text-decoration-none py-2 my-0 product-name"
-                  >
-                    <%= product.title %>
-                  </p>
-                  <span class="product-price">$<%= product.price %></span>
-                  <div class="btn-row my-2">
-                    <a href="/admin/products/<%= product._id %>?edit=true">
-                      <button type="button" class="btn btn-outline-dark">
-                        Edit
-                      </button>
-                    </a>
 
-                    <input
-                      type="hidden"
-                      value="<%= product._id %>"
-                      name="productId"
+      <div class="container-lg">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col-1">Product</th>
+              <th scope="col" class="d-none d-md-table-cell"></th>
+              <th scope="col-1">Edit</th>
+              <th scope="col-1">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for( let product of products ) { %>
+            <tr>
+              <!-- IMAGE -->
+              <td class="col-1 d-none d-md-table-cell">
+                <a href="/admin/products/<%= product._id %>?edit=true">
+                  <div class="cart-product-image">
+                    <img
+                      class="img-fluid d-block mx-auto img-hover"
+                      src="/<%= product.image %>"
+                      alt="<%= product.title %>"
                     />
-                    <input
-                      type="hidden"
-                      name="_csrf"
-                      value="<%= csrfToken %>"
-                    />
-                    <button
-                      class="btn btn-outline-danger"
-                      type="button"
-                      onclick="deleteProduct(this)"
-                    >
-                      Delete
-                    </button>
                   </div>
-                </div>
-              </article>
-              <% } %>
-            </div>
-            <%- include('../includes/pagination.ejs', { currentPage:
-            currentPage, hasNextPage: hasNextPage, hasPreviousPage:
-            hasPreviousPage, nextPage: nextPage, previousPage: previousPage,
-            lastPage: lastPage, path: path, }) %> <% } %>
-          </div>
-        </div>
+                </a>
+              </td>
+
+              <!-- DETAILS -->
+              <td>
+                <p><%= product.title %></p>
+                <p class="cart-product-price">$<%= product.price %></p>
+              </td>
+
+              <!-- EDIT -->
+              <td class="col-1">
+                <a
+                  class="btn btn-outline-dark"
+                  href="/admin/products/<%= product._id %>?edit=true"
+                >
+                  Edit
+                </a>
+              </td>
+
+              <!-- DELETE -->
+              <td class="text-end col-1">
+                <input
+                  type="hidden"
+                  value="<%= product._id %>"
+                  name="productId"
+                />
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                <button
+                  class="btn btn-outline-danger"
+                  type="button"
+                  onclick="deleteProduct(this)"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
       </div>
+      <%- include('../includes/pagination.ejs', { currentPage: currentPage,
+      hasNextPage: hasNextPage, hasPreviousPage: hasPreviousPage, nextPage:
+      nextPage, previousPage: previousPage, lastPage: lastPage, path: path, })
+      %>
     </div>
   </div>
 </div>

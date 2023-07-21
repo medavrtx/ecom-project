@@ -1,7 +1,7 @@
 const deleteProduct = async (btn) => {
   const prodId = btn.parentNode.querySelector('[name=productId]').value;
   const csrf = btn.parentNode.querySelector('[name=_csrf]').value;
-  const productElement = btn.closest('article');
+  const productElement = btn.closest('tr');
 
   const isConfirmed = confirm('Are you sure you want to delete this product?');
   if (!isConfirmed) {
