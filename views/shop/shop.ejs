@@ -1,12 +1,15 @@
 <% layout('layouts/boilerplate')%>
 
 <div class="my-5">
-  <h1 class="center-title">Shop All</h1>
+  <h1 class="center-title"><%= pageTitle %></h1>
 </div>
 <div class="category-links">
-  <a href="#">Kits</a>
-  <a href="#">Skincare</a>
-  <a href="#">Sun Protection</a>
+  <a href="/shop-all">All</a>
+  <a href="/shop/best-sellers">Best Sellers</a>
+  <% if (categories) { %> <% for( let category of categories ) { %>
+  <a href="/shop/<%=category.title.toLowerCase() %>"><%=category.title%></a>
+  <% } %> <% } %>
+  <button class="category-links-toggle" onclick="toggleLinks()">Show</button>
 </div>
 <div class="container-lg">
   <div class="row mx-5">
@@ -17,11 +20,11 @@
         <% for( let product of products ) { %>
         <div class="col mb-4">
           <div class="card">
-            <a href="/shop/<%= product._id %>">
+            <a href="/shop-all/<%= product._id %>">
               <div class="product-img">
                 <img
                   class="img-fluid d-block mx-auto img-hover"
-                  src="<%= product.image %>"
+                  src="/<%= product.image %>"
                   alt="<%= product.title %>"
                 />
               </div>
@@ -42,7 +45,7 @@
     </div>
   </div>
 
-  <div class="content">
-    <div class="home-title"></div>
-  </div>
+  <%- include('../includes/pagination.ejs', { currentPage: currentPage,
+  hasNextPage: hasNextPage, hasPreviousPage: hasPreviousPage, nextPage:
+  nextPage, previousPage: previousPage, lastPage: lastPage, path: path, }) %>
 </div>

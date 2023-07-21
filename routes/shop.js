@@ -10,10 +10,10 @@ router.get('/', shopController.getHome);
 router.get('/shop-all', shopController.getProducts);
 
 // => GET
-router.get('/shop/:productId', shopController.getProduct);
+router.get('/shop-all/:productId', shopController.getProduct);
 
-// /info => GET
-router.get('/info', shopController.getInfo);
+// => GET
+router.get('/shop/:categoryTitle', shopController.getCategory);
 
 // /cart => GET
 router.get('/cart', shopController.getCart);
@@ -38,7 +38,6 @@ router.get('/checkout/cancel', (req, res) => {
   res.redirect('/checkout');
 });
 
-// /order => POST
-router.post('/order', shopController.postOrder);
+router.get('/thank-you', shopController.getThankYou);
 
 module.exports = router;

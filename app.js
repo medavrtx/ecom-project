@@ -53,7 +53,6 @@ const authRoutes = require('./routes/auth');
 const aboutRoutes = require('./routes/about');
 
 app.use(compression());
-
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
@@ -85,20 +84,26 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  if (!req.session.user) {
-    return next();
+  if (req.session.isLoggedIn) {
+    User.findById(req.session.user._id)
+      .then((user) => {
+        if (!user) {
+          req.user = new User();
+        } else {
+          req.user = user;
+        }
+        next();
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+  } else {
+    if (!req.session.temporaryCart) {
+      req.session.temporaryCart = { items: [] };
+    }
+    req.user = req.session.temporaryCart;
+    next();
   }
-  User.findById(req.session.user._id)
-    .then((user) => {
-      if (!user) {
-        return next();
-      }
-      req.user = user;
-      next();
-    })
-    .catch((err) => {
-      throw new Error(err);
-    });
 });
 
 app.use('/admin', adminRoutes);
@@ -126,14 +131,6 @@ mongoose
     console.log('Connected to MongoDB');
 
     app.listen(process.env.PORT || 3000);
-
-    // Add Nodemon event listener for 'exit' event
-    process.once('SIGUSR2', () => {
-      mongoose.connection.close(() => {
-        console.log('Disconnected from MongoDB');
-        process.kill(process.pid, 'SIGUSR2');
-      });
-    });
   })
   .catch((err) => {
     console.log(err);

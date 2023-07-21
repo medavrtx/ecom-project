@@ -450,16 +450,17 @@ exports.getBestSellers = async (req, res, next) => {
   const ITEMS_PER_PAGE = 10;
 
   try {
-    const totalItems = await Product.find({
-      userId: req.user._id
-    }).countDocuments();
-    const products = await Product.find()
-      .skip((page - 1) * ITEMS_PER_PAGE)
-      .limit(ITEMS_PER_PAGE);
-
     const bestSellers = await BestSeller.find()
       .populate('productId')
       .sort({ order: 1 });
+
+    const totalItems = await Product.find({
+      userId: req.user._id
+    }).countDocuments();
+
+    const products = await Product.find()
+      .skip((page - 1) * ITEMS_PER_PAGE)
+      .limit(ITEMS_PER_PAGE);
 
     if (ITEMS_PER_PAGE * (page - 1) > totalItems) {
       return res.redirect('/admin/products');

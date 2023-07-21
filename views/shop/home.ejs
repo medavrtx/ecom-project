@@ -44,7 +44,7 @@
   </div>
 
   <!-- Best Sellers -->
-  <% if (bestSellers?.length > 0) {%>
+  <% if (bestSellers) {%>
 
   <div class="row my-5">
     <h1 class="text-center">Best Sellers</h1>
@@ -59,7 +59,7 @@
     <% for (let product of bestSellers) {%>
     <div class="col product-item mx-auto">
       <div class="product-img">
-        <a href="/shop/<%= product.productId._id  %>">
+        <a href="/shop-all/<%= product.productId._id  %>">
           <img
             class="img-fluid d-block mx-auto img-hover"
             src="<%= product.productId.image %>"
@@ -68,7 +68,7 @@
         </a>
       </div>
       <a
-        href="/shop/<%= product.productId._id  %>"
+        href="/shop-all/<%= product.productId._id  %>"
         class="d-block py-2 product-name link"
       >
         <%= product.productId.title %>
@@ -77,7 +77,7 @@
     </div>
     <%} %>
   </div>
-  <%} else {%> <%} %>
+  <%} %>
 
   <!-- Info Section -->
 

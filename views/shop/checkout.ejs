@@ -44,22 +44,23 @@
     <div class="col-lg-3 order-lg-2">
       <div class="subtotal">
         <span class="me-5">Subtotal</span>
-        <span class="float-end"> $<%= totalPrice %> </span>
+        <span class="float-end">$<%= totalPrice %></span>
       </div>
       <div class="subtotal">
         <span class="me-5">Estimated Tax</span>
-        <span class="float-end">
-          $<%= (totalPrice * .09375).toFixed(2) %>
-        </span>
+        <span class="float-end">$<%= (totalPrice * .09375).toFixed(2) %></span>
       </div>
       <div class="subtotal">
         <span class="me-5">Shipping</span>
-        <span class="float-end">$10</span>
+        <span class="float-end">
+          <% const shipping = totalPrice > 50 ? 'Free' : '$10' %><%= shipping %>
+        </span>
       </div>
       <div class="subtotal">
         <span class="larger-font me-5">Total</span>
         <span class="larger-font float-end">
-          $<%= (totalPrice + 10 + (totalPrice * .09375)).toFixed(2) %>
+          $<%= (totalPrice + (totalPrice > 50 ? 0 : 10) + (totalPrice *
+          .09375)).toFixed(2) %>
         </span>
       </div>
       <button class="btn btn-outline-dark float-end w-100 my-3" id="order-btn">
@@ -71,7 +72,7 @@
         var orderBtn = document.getElementById('order-btn');
         orderBtn.addEventListener('click', function () {
           stripe.redirectToCheckout({
-            sessionId: '<%= sessionId %>',
+            sessionId: '<%= sessionId %>'
           });
         });
       </script>
