@@ -21,10 +21,10 @@
           <div class="col-xl-6">
             <h2>Best Sellers List</h2>
             <% if (bestSellers && bestSellers.length > 0) { %>
-            <ol id="sortable-list" class="list-group">
+            <ol id="sortable-list" class="list-group cursor-grab">
               <% for (let i = 0; i < bestSellers.length; i++) { %>
               <li
-                class="list-group-item d-flex justify-content-between"
+                class="list-group-item d-flex justify-content-between hover-opacity"
                 data-id="<%= bestSellers[i].productId._id %>"
               >
                 <div class="d-flex">

@@ -8,11 +8,6 @@
   --gradient-color: rgb(223, 242, 241);
   --gradient-neutral: rgb(197, 197, 197);
   --promo-color: #c2ffcc;
-  /* --breakpoint-sm: 576px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 992px;
-  --breakpoint-xl: 1200px;
-  --breakpoint-xxl: 1500px; */
 }
 
 body {
@@ -150,6 +145,22 @@ h5 {
 .btn-container {
   display: flex;
   align-items: center;
+}
+
+.cursor-grab {
+  cursor: grab;
+}
+
+.cursor-grab:active {
+  cursor: grabbing;
+}
+
+.hover-opacity {
+  transition: all 0.3s ease;
+}
+
+.hover-opacity:hover {
+  opacity: 0.7;
 }
 
 /* NAVBAR */
