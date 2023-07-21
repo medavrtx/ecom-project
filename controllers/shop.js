@@ -1,46 +1,30 @@
 const Product = require('../models/product');
 const Order = require('../models/order');
 const User = require('../models/user');
+const BestSeller = require('../models/best-seller');
 
 const ITEMS_PER_PAGE = 2;
 
-exports.getHome = (req, res, next) => {
-  const page = +req.query.page || 1;
-  let totalItems;
-  Product.find()
-    .countDocuments()
-    .then((numProducts) => {
-      totalItems = numProducts;
-      return Product.find()
-        .skip((page - 1) * ITEMS_PER_PAGE)
-        .limit(ITEMS_PER_PAGE);
-    })
-    .then((products) => {
-      if (ITEMS_PER_PAGE * page - 1 > totalItems) {
-        res.redirect('/');
-      }
-      res.render('shop/home', {
-        products: products,
-        pageTitle: 'ECOM',
-        path: '/',
-        user: req.user,
-        isAuthenticated: req.session.isLoggedIn,
-        isAdmin: req.session.isAdmin,
-        csrfToken: req.csrfToken(),
-        totalProducts: totalItems,
-        currentPage: page,
-        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
-        hasPreviousPage: page > 1,
-        nextPage: page + 1,
-        previousPage: page - 1,
-        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE),
-      });
-    })
-    .catch((err) => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
+exports.getHome = async (req, res, next) => {
+  try {
+    const bestSellers = await BestSeller.find()
+      .populate('productId')
+      .sort({ order: 1 });
+
+    res.render('shop/home', {
+      bestSellers,
+      pageTitle: 'Luminae Skincare',
+      path: '/',
+      user: req.user,
+      isAuthenticated: req.session.isLoggedIn,
+      isAdmin: req.session.isAdmin,
+      csrfToken: req.csrfToken()
     });
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
 };
 
 exports.getProducts = (req, res, next) => {
@@ -61,7 +45,7 @@ exports.getProducts = (req, res, next) => {
         isAuthenticated: req.session.isLoggedIn,
         isAdmin: req.session.isAdmin,
         csrfToken: req.csrfToken(),
-        totalProducts: totalItems,
+        totalProducts: totalItems
       });
     })
     .catch((err) => {
@@ -81,7 +65,7 @@ exports.getProduct = (req, res, next) => {
         path: '/shop/' + prodId,
         user: req.user,
         isAuthenticated: req.session.isLoggedIn,
-        isAdmin: req.session.isAdmin,
+        isAdmin: req.session.isAdmin
       });
     })
     .catch((err) => {
@@ -97,7 +81,7 @@ exports.getInfo = (req, res, next) => {
     path: '/info',
     user: req.user,
     isAuthenticated: req.session.isLoggedIn,
-    isAdmin: req.session.isAdmin,
+    isAdmin: req.session.isAdmin
   });
 };
 
@@ -124,7 +108,7 @@ exports.getCart = (req, res, next) => {
         totalQty: totalQty,
         user: req.user,
         isAuthenticated: req.session.isLoggedIn,
-        isAdmin: req.session.isAdmin,
+        isAdmin: req.session.isAdmin
       });
     })
     .catch((err) => {
@@ -147,7 +131,7 @@ exports.postCart = (req, res, next) => {
           firstName: 'Temporary',
           lastName: 'User',
           isTemp: true,
-          cart: { items: [] },
+          cart: { items: [] }
         });
         req.user = user;
       }
@@ -175,7 +159,7 @@ exports.getCheckout = (req, res, next) => {
       return stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         shipping_address_collection: {
-          allowed_countries: ['US', 'CA'],
+          allowed_countries: ['US', 'CA']
         },
         shipping_options: [
           {
@@ -184,21 +168,21 @@ exports.getCheckout = (req, res, next) => {
               type: 'fixed_amount',
               fixed_amount: {
                 amount: 1000,
-                currency: 'usd',
+                currency: 'usd'
               },
               display_name: '$10',
               delivery_estimate: {
                 minimum: {
                   unit: 'business_day',
-                  value: 5,
+                  value: 5
                 },
                 maximum: {
                   unit: 'business_day',
-                  value: 7,
-                },
-              },
-            },
-          },
+                  value: 7
+                }
+              }
+            }
+          }
         ],
         line_items: products.map((p) => {
           return {
@@ -208,19 +192,19 @@ exports.getCheckout = (req, res, next) => {
               unit_amount: parseInt(p.productId.price).toFixed(2) * 100,
               product_data: {
                 name: p.productId.title,
-                description: p.productId.description,
-              },
+                description: p.productId.description
+              }
             },
-            quantity: p.quantity,
+            quantity: p.quantity
           };
         }),
         automatic_tax: {
-          enabled: true,
+          enabled: true
         },
         mode: 'payment',
         success_url:
           req.protocol + '://' + req.get('host') + '/checkout/success',
-        cancel_url: req.protocol + '://' + req.get('host') + '/checkout/cancel',
+        cancel_url: req.protocol + '://' + req.get('host') + '/checkout/cancel'
       });
     })
     .then((session) => {
@@ -234,7 +218,7 @@ exports.getCheckout = (req, res, next) => {
         isAuthenticated: req.session.isLoggedIn,
         isAdmin: req.session.isAdmin,
         stripe: req.stripePk,
-        sessionId: session.id,
+        sessionId: session.id
       });
     })
     .catch((err) => {
@@ -258,10 +242,10 @@ exports.getCheckoutSuccess = (req, res, next) => {
       const order = new Order({
         user: {
           email: req.user.email,
-          userId: req.user,
+          userId: req.user
         },
         products: products,
-        createdAt: new Date(),
+        createdAt: new Date()
       });
       return order.save();
     })
@@ -327,10 +311,10 @@ exports.postOrder = (req, res, next) => {
       const order = new Order({
         user: {
           email: req.user.email,
-          userId: req.user,
+          userId: req.user
         },
         products: products,
-        createdAt: new Date(),
+        createdAt: new Date()
       });
       return order.save();
     })

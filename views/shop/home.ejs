@@ -44,6 +44,7 @@
   </div>
 
   <!-- Best Sellers -->
+  <% if (bestSellers?.length > 0) {%>
 
   <div class="row my-5">
     <h1 class="text-center">Best Sellers</h1>
@@ -55,102 +56,46 @@
   </div>
 
   <div class="row g-4 my-5 mx-auto owl-carousel owl-theme">
+    <% for (let product of bestSellers) {%>
     <div class="col product-item mx-auto">
       <div class="product-img">
-        <img
-          class="img-fluid d-block mx-auto img-hover"
-          src="images/products/product1.png"
-          alt=""
-        />
+        <a href="/shop/<%= product.productId._id  %>">
+          <img
+            class="img-fluid d-block mx-auto img-hover"
+            src="<%= product.productId.image %>"
+            alt=""
+          />
+        </a>
       </div>
       <a
-        href="#"
-        class="d-block text-dark text-decoration-none py-2 product-name"
-        >Luminae Skincare Pack</a
+        href="/shop/<%= product.productId._id  %>"
+        class="d-block py-2 product-name link"
       >
-      <span class="product-price">$70</span>
+        <%= product.productId.title %>
+      </a>
+      <span class="product-price">$<%= product.productId.price %></span>
     </div>
-
-    <div class="col product-item mx-auto">
-      <div class="product-img">
-        <img
-          class="img-fluid d-block mx-auto img-hover"
-          src="images/products/product2.png"
-          alt=""
-        />
-      </div>
-      <a
-        href="#"
-        class="d-block text-dark text-decoration-none py-2 product-name"
-        >Purity Cleanser</a
-      >
-      <span class="product-price">$25</span>
-    </div>
-
-    <div class="col product-item mx-auto">
-      <div class="product-img">
-        <img
-          class="img-fluid d-block mx-auto img-hover"
-          src="images/products/product3.png"
-          alt=""
-        />
-      </div>
-      <a
-        href="#"
-        class="d-block text-dark text-decoration-none py-2 product-name"
-        >Chemical Exfoliator</a
-      >
-      <span class="product-price">$20</span>
-    </div>
-
-    <div class="col product-item mx-auto">
-      <div class="product-img">
-        <img
-          class="img-fluid d-block mx-auto img-hover"
-          src="images/products/product4.png"
-          alt=""
-        />
-      </div>
-      <a
-        href="#"
-        class="d-block text-dark text-decoration-none py-2 product-name"
-        >Luxury Lotion</a
-      >
-      <span class="product-price">$30</span>
-    </div>
-
-    <div class="col product-item mx-auto">
-      <div class="product-img">
-        <img
-          class="img-fluid d-block mx-auto img-hover"
-          src="images/products/product5.png"
-          alt=""
-        />
-      </div>
-      <a
-        href="#"
-        class="d-block text-dark text-decoration-none py-2 product-name"
-        >Perfect UV Sunscreen</a
-      >
-      <span class="product-price">$30</span>
-    </div>
+    <%} %>
   </div>
+  <%} else {%> <%} %>
 
   <!-- Info Section -->
 
   <div class="my-4">
     <div class="row">
       <div class="col-md-8">
-        <div class="image-wrapper">
-          <div class="image-text mx-4 my-4 img-hover">
-            <h1 class="text-light">Daily Essentials</h1>
+        <a href="/brand">
+          <div class="image-wrapper">
+            <div class="image-text mx-4 my-4 img-hover">
+              <h1 class="text-light">Daily Essentials</h1>
+            </div>
+            <img
+              class="d-block w-100 img-hover"
+              src="images/success/success1.jpg"
+              alt="DailyEssentials"
+            />
           </div>
-          <img
-            class="d-block w-100 img-hover"
-            src="images/success/success1.jpg"
-            alt="DailyEssentials"
-          />
-        </div>
+        </a>
       </div>
 
       <div class="col-md-4">
