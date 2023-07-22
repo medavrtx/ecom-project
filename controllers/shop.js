@@ -442,7 +442,10 @@ exports.getThankYou = async (req, res, next) => {
   try {
     res.render('shop/thank-you', {
       pageTitle: 'Thank You',
-      path: '/thank-you'
+      path: '/thank-you',
+      user: req.user || null,
+      isAuthenticated: req.session.isLoggedIn || true,
+      isAdmin: req.session.isAdmin || false
     });
   } catch (err) {
     next(err);

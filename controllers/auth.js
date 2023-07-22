@@ -8,229 +8,217 @@ const User = require('../models/user');
 const Order = require('../models/order');
 
 exports.getLogIn = (req, res, next) => {
-  let message = req.flash('error');
-  if (message.length > 0) {
-    message = message[0];
-  } else {
-    message = null;
-  }
+  const errorMessage = req.flash('error')[0] || null;
   res.render('auth/login', {
     pageTitle: 'Sign In',
     path: '/user/login',
     isAuthenticated: req.session.isLoggedIn,
     isAdmin: req.session.isAdmin,
-    errorMessage: message,
+    errorMessage,
     oldInput: {
       email: '',
-      password: '',
+      password: ''
     },
-    validationErrors: [],
+    validationErrors: []
   });
 };
 
-exports.postLogIn = (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  const errors = validationResult(req);
+exports.postLogIn = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+    const errors = validationResult(req);
 
-  if (!errors.isEmpty()) {
+    if (!errors.isEmpty()) {
+      return res.status(422).render('auth/login', {
+        path: '/login',
+        pageTitle: 'Login',
+        errorMessage: errors.array()[0].msg,
+        oldInput: {
+          email,
+          password
+        },
+        validationErrors: errors.array()
+      });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(422).render('auth/login', {
+        path: '/login',
+        pageTitle: 'Login',
+        errorMessage: 'Invalid email or password',
+        oldInput: {
+          email,
+          password
+        },
+        validationErrors: []
+      });
+    }
+
+    const doMatch = await bcrypt.compare(password, user.toObject().password);
+    if (doMatch) {
+      req.session.isLoggedIn = true;
+      req.session.isAdmin = user.isAdmin;
+      req.session.user = user;
+      await req.session.save();
+      return res.redirect('/');
+    }
+
     return res.status(422).render('auth/login', {
       path: '/login',
       pageTitle: 'Login',
-      errorMessage: errors.array()[0].msg,
+      errorMessage: 'Invalid email or password',
       oldInput: {
-        email: email,
-        password: password,
+        email,
+        password
       },
-      validationErrors: errors.array(),
+      validationErrors: []
     });
+  } catch (err) {
+    next(err);
   }
-  User.findOne({ email: email })
-    .then((user) => {
-      if (!user) {
-        return res.status(422).render('auth/login', {
-          path: '/login',
-          pageTitle: 'Login',
-          errorMessage: 'Invalid email or password',
-          oldInput: {
-            email: email,
-            password: password,
-          },
-          validationErrors: [],
-        });
-      }
-      bcrypt
-        .compare(password, user.toObject().password)
-        .then((doMatch) => {
-          if (doMatch) {
-            req.session.isLoggedIn = true;
-            req.session.isAdmin = user.isAdmin;
-            req.session.user = user;
-            return req.session.save((err) => {
-              console.log(err);
-              res.redirect('/');
-            });
-          }
-          return res.status(422).render('auth/login', {
-            path: '/login',
-            pageTitle: 'Login',
-            errorMessage: 'Invalid email or password',
-            oldInput: {
-              email: email,
-              password: password,
-            },
-            validationErrors: [],
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          res.redirect('/login');
-        });
-    })
-    .catch((err) => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
-    });
 };
 
 exports.getRegistration = (req, res, next) => {
-  let message = req.flash('error');
-  if (message.length > 0) {
-    message = message[0];
-  } else {
-    message = null;
-  }
+  const errorMessage = req.flash('error')[0] || null;
   res.render('auth/registration', {
-    pageTitle: 'Create Account',
+    pageTitle: 'Register',
     path: '/registration',
     isAuthenticated: req.session.isLoggedIn,
     isAdmin: req.session.isAdmin,
-    errorMessage: message,
+    errorMessage,
     oldInput: {
       email: '',
       password: '',
       firstName: '',
-      lastName: '',
-    },
+      lastName: ''
+    }
   });
 };
 
-exports.postRegistration = (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
-  const agreement = req.body.agreement;
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(422).render('auth/registration', {
-      path: '/registration',
-      pageTitle: 'Registration',
-      errorMessage: errors.array()[0].msg,
-      oldInput: {
-        email: email,
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-      },
-    });
-  }
-  if (!agreement) {
-    return res.status(422).render('auth/registration', {
-      path: '/registration',
-      pageTitle: 'Registration',
-      errorMessage:
-        'Please agree to the terms by checking the agreement checkbox before submitting the form',
-      oldInput: {
-        email: email,
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-      },
-    });
-  }
-  return bcrypt
-    .hash(password, 12)
-    .then((hashedPassword) => {
-      const user = new User({
-        email: email,
-        password: hashedPassword,
-        firstName: firstName,
-        lastName: lastName,
-        isAdmin: false,
-        cart: { items: [] },
+exports.postRegistration = async (req, res, next) => {
+  try {
+    const { email, password, firstName, lastName, confirmPassword, agreement } =
+      req.body;
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).render('auth/registration', {
+        path: '/registration',
+        pageTitle: 'Register',
+        errorMessage: errors.array()[0].msg,
+        oldInput: {
+          email,
+          password,
+          firstName,
+          lastName
+        }
       });
-      return user.save();
-    })
-    .then((result) => {
-      console.log('success');
-      res.redirect('/login');
-    })
-    .catch((err) => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
+    }
+
+    if (!agreement) {
+      return res.status(422).render('auth/registration', {
+        path: '/registration',
+        pageTitle: 'Register',
+        errorMessage:
+          'Please agree to the terms by checking the agreement checkbox before submitting the form',
+        oldInput: {
+          email: email,
+          password: password,
+          firstName: firstName,
+          lastName: lastName
+        }
+      });
+    }
+
+    if (password !== confirmPassword) {
+      return res.status(422).render('auth/registration', {
+        path: '/registration',
+        pageTitle: 'Register',
+        errorMessage: 'Passwords do not match',
+        oldInput: {
+          email,
+          password,
+          firstName,
+          lastName,
+          confirmPassword: ''
+        }
+      });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    const user = new User({
+      email,
+      password: hashedPassword,
+      firstName,
+      lastName,
+      isAdmin: false,
+      cart: { items: [] }
     });
+
+    await user.save();
+    console.log('success');
+    res.redirect('/login');
+  } catch (err) {
+    next(err);
+  }
 };
 
 exports.getReset = (req, res, next) => {
-  let message = req.flash('error');
-  if (message.length > 0) {
-    message = message[0];
-  } else {
-    message = null;
-  }
+  const errorMessage = req.flash('error')[0] || null;
   res.render('auth/reset', {
     pageTitle: 'Reset Password',
     path: '/reset',
+    user: req.user,
     isAuthenticated: req.session.isLoggedIn,
     isAdmin: req.session.isAdmin,
-    errorMessage: message,
+    errorMessage
   });
 };
 
-exports.postReset = (req, res, next) => {
-  const email = req.body.email;
-  const currentPw = req.body.currentPassword;
-  const newPw = req.body.newPassword;
-  const confirmPw = req.body.confirmPassword;
-  let resetUser;
-  User.findOne({ email: email }).then((user) => {
-    if (!user) {
+exports.postReset = async (req, res, next) => {
+  try {
+    const { email, currentPassword, newPassword, confirmPassword } = req.body;
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
       req.flash('error', 'Invalid email or password');
       return res.redirect('/login');
     }
-    bcrypt.compare(currentPw, user.password).then((doMatch) => {
-      if (doMatch && newPw === confirmPw) {
-        resetUser = user;
-      } else {
-        req.flash('error', 'Invalid email or password');
-        return res.redirect('/login');
-      }
-    });
-    bcrypt
-      .hash(newPw, 12)
-      .then((hashedPassword) => {
-        resetUser.password = hashedPassword;
-        return resetUser.save();
-      })
-      .then((result) => {
-        req.flash('success', 'Successfully reset password!');
-        return res.redirect('/login');
-      })
-      .catch((err) => {
-        const error = new Error(err);
-        error.httpStatusCode = 500;
-        return next(error);
-      });
-  });
+
+    if (newPassword !== confirmPassword) {
+      req.flash('error', 'Passwords do not match');
+      return res.redirect('/login');
+    }
+
+    const user = await User.findOne({ email });
+
+    if (
+      !user ||
+      !(await bcrypt.compare(currentPassword, user.password)) ||
+      newPassword !== confirmPassword
+    ) {
+      req.flash('error', 'Invalid email or password');
+      return res.redirect('/login');
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+    user.password = hashedPassword;
+    await user.save();
+
+    if (req.user instanceof User) {
+      req.flash('success', 'Successfully reset password!');
+      return res.redirect('/user/' + req.user._id);
+    } else {
+      req.flash('success', 'Successfully reset password!');
+      return res.redirect('/login');
+    }
+  } catch (err) {
+    next(err);
+  }
 };
 
-exports.postLogOut = (req, res, next) => {
-  req.session.destroy((err) => console.log(err));
-  res.redirect('/');
-};
 exports.postLogOut = (req, res, next) => {
   req.session.destroy((err) => console.log(err));
   res.redirect('/');
@@ -238,79 +226,118 @@ exports.postLogOut = (req, res, next) => {
 
 exports.getUser = (req, res, next) => {
   res.render('auth/index', {
-    pageTitle: 'Your Cart',
+    pageTitle: 'My Account',
     path: '/user',
     user: req.user,
     isAuthenticated: req.session.isLoggedIn,
-    isAdmin: req.session.isAdmin,
+    isAdmin: req.session.isAdmin
   });
 };
 
-exports.getOrders = (req, res, next) => {
-  Order.find({ 'user.userId': req.user._id })
-    .sort({ createdAt: -1 })
-    .then((orders) => {
-      res.render('auth/orders', {
-        path: '/user/orders',
-        pageTitle: 'My Orders',
-        orders: orders,
-        user: req.user,
-        isAuthenticated: req.session.isLoggedIn,
-        isAdmin: req.session.isAdmin,
-      });
-    })
-    .catch((err) => {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
+exports.getOrders = async (req, res, next) => {
+  try {
+    const orders = await Order.find({ 'user.userId': req.user._id }).sort({
+      createdAt: -1
     });
+    res.render('auth/orders', {
+      path: '/user/orders',
+      pageTitle: 'My Orders',
+      orders,
+      user: req.user,
+      isAuthenticated: req.session.isLoggedIn,
+      isAdmin: req.session.isAdmin
+    });
+  } catch (err) {
+    next(err);
+  }
 };
 
-exports.getInvoice = (req, res, next) => {
-  const orderId = req.params.orderId;
-  Order.findById(orderId)
-    .then((order) => {
-      if (!order) {
-        return next(new Error('No order found.'));
-      }
-      if (order.user.userId.toString() !== req.user._id.toString()) {
-        return next(new Error('Unauthorized'));
-      }
-      const invoiceName = 'invoice-' + orderId + '.pdf';
-      const invoicePath = path.join('data', 'invoices', invoiceName);
+exports.getInvoice = async (req, res, next) => {
+  try {
+    const orderId = req.params.orderId;
+    const order = await Order.findById(orderId);
 
-      const pdfDoc = new PDFDocument();
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader(
-        'Content-Disposition',
-        'inline; filename="' + invoiceName + '"'
-      );
-      pdfDoc.pipe(fs.createWriteStream(invoicePath));
-      pdfDoc.pipe(res);
+    if (!order) {
+      throw new Error('No order found.');
+    }
 
-      pdfDoc.fontSize(26).text('ECOM');
-      pdfDoc.moveUp();
-      pdfDoc.text('_______________________________');
-      pdfDoc.fontSize(20).text('Invoice', { underline: true });
-      let totalPrice = 0;
-      order.products.forEach((prod) => {
-        totalPrice = totalPrice + prod.quantity * prod.product.price;
-        pdfDoc
-          .fontSize(14)
-          .text(
-            prod.product.title +
-              ' - ' +
-              prod.quantity +
-              ' x ' +
-              '$' +
-              prod.product.price
-          );
-      });
-      pdfDoc.moveDown();
-      pdfDoc.text('_________________');
-      pdfDoc.fontSize(20).text('Total Price: $' + totalPrice);
+    if (order.user.userId.toString() !== req.user._id.toString()) {
+      throw new Error('Unauthorized');
+    }
 
-      pdfDoc.end();
-    })
-    .catch((err) => next(err));
+    const user = await User.findById(order.user.userId);
+
+    const invoiceName = `invoice-${orderId}.pdf`;
+    const invoicePath = path.join('data', 'invoices', invoiceName);
+
+    const pdfDoc = new PDFDocument();
+    pdfDoc.pipe(fs.createWriteStream(invoicePath));
+    pdfDoc.pipe(res);
+
+    pdfDoc
+      .font('Helvetica-Bold')
+      .fontSize(20)
+      .text('INVOICE', { align: 'right' })
+      .moveDown(0.5);
+
+    pdfDoc
+      .font('Helvetica')
+      .fontSize(14)
+      .text(`Invoice Number: ${orderId}`, { align: 'right' })
+      .moveDown(0.5)
+      .text(`Date: ${new Date(order.createdAt).toLocaleDateString()}`, {
+        align: 'right'
+      })
+      .moveDown(0.5);
+
+    pdfDoc
+      .fontSize(14)
+      .text('Bill To:')
+      .font('Helvetica-Bold')
+      .text(`${user.firstName} ${user.lastName}`)
+      .font('Helvetica')
+      .text(user.email)
+      .moveDown(1.5);
+
+    // Order Details
+    pdfDoc
+      .fontSize(16)
+      .font('Helvetica-Bold')
+      .text('Order Details')
+      .moveDown(0.5);
+
+    let totalPrice = 0;
+
+    order.products.forEach((prod) => {
+      const itemTotal = prod.quantity * prod.product.price;
+      totalPrice += itemTotal;
+
+      pdfDoc
+        .font('Helvetica')
+        .fontSize(12)
+        .text(
+          `${prod.product.title} x ${prod.quantity} - $${prod.product.price} each`
+        )
+        .text(`Total: $${itemTotal.toFixed(2)}`)
+        .moveDown(0.5);
+    });
+
+    // Total Price
+    pdfDoc
+      .font('Helvetica-Bold')
+      .fontSize(16)
+      .text(`Total: $${totalPrice.toFixed(2)}`, { align: 'right' })
+      .moveDown(1);
+
+    // Thank You Message
+    pdfDoc
+      .font('Helvetica')
+      .fontSize(14)
+      .text('Thank you for your purchase!', { align: 'center' })
+      .moveDown(1);
+
+    pdfDoc.end();
+  } catch (err) {
+    next(err);
+  }
 };
