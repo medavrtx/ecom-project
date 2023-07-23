@@ -3,13 +3,18 @@
 <div class="my-5">
   <h1 class="center-title"><%= pageTitle %></h1>
 </div>
-<div class="category-links">
+<div class="category-links collapse-menu">
   <a href="/shop-all">All</a>
   <a href="/shop/best-sellers">Best Sellers</a>
   <% if (categories) { %> <% for( let category of categories ) { %>
   <a href="/shop/<%=category.title.toLowerCase() %>"><%=category.title%></a>
   <% } %> <% } %>
-  <button class="category-links-toggle" onclick="toggleLinks()">Show</button>
+  <button
+    class="category-links-toggle collapse-menu-toggle"
+    onclick="toggleLinks()"
+  >
+    Show
+  </button>
 </div>
 <div class="container-lg">
   <div class="row mx-5">

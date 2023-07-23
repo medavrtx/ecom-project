@@ -1,8 +1,8 @@
 function toggleLinks() {
-  const links = document.querySelectorAll('.category-links a');
-  const toggleButton = document.querySelector('.category-links-toggle');
+  const links = document.querySelectorAll('.collapse-menu a');
+  const toggleButton = document.querySelector('.collapse-menu-toggle');
   const isActive = document
-    .querySelector('.category-links')
+    .querySelector('.collapse-menu')
     .classList.toggle('active');
 
   links.forEach((link) => {
@@ -18,8 +18,8 @@ function toggleLinks() {
 
 function checkWindowSize() {
   const windowWidth = window.innerWidth;
-  const toggleButton = document.querySelector('.category-links-toggle');
-  const links = document.querySelectorAll('.category-links a');
+  const toggleButton = document.querySelector('.collapse-menu-toggle');
+  const links = document.querySelectorAll('.collapse-menu a');
 
   if (windowWidth <= 768) {
     // Hide links and show toggle button on small screens
@@ -34,7 +34,7 @@ function checkWindowSize() {
     });
     toggleButton.textContent = 'Show';
     toggleButton.style.display = 'none';
-    document.querySelector('.category-links').classList.remove('active');
+    document.querySelector('.collapse-menu').classList.remove('active');
   }
 }
 

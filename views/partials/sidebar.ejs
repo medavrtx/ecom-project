@@ -1,21 +1,15 @@
 <div class="col-lg-2 bg-light sidebar py-4">
-  <ul class="nav flex-column pt-4">
-    <li class="nav-item">
-      <a class="nav-link link" href="/admin">Admin Dashboard</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link" href="/admin/products/add">Add Product</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link" href="/admin/products">Edit Products</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link active" href="/admin/categories">
-        Edit Categories
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link link" href="/admin/best-sellers">Best Sellers</a>
-    </li>
-  </ul>
+  <div class="collapse-menu">
+    <a class="nav-link link" href="/admin">Admin Dashboard</a>
+    <a class="nav-link link" href="/admin/products/add">Add Product</a>
+    <a class="nav-link link" href="/admin/products">Edit Products</a>
+    <a class="nav-link link active" href="/admin/categories">Edit Categories</a>
+    <a class="nav-link link" href="/admin/best-sellers">Best Sellers</a>
+    <button
+      class="category-links-toggle collapse-menu-toggle"
+      onclick="toggleLinks()"
+    >
+      Show
+    </button>
+  </div>
 </div>
