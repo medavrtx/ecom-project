@@ -306,11 +306,8 @@ exports.getInvoice = async (req, res, next) => {
       .text('Order Details')
       .moveDown(0.5);
 
-    let totalPrice = 0;
-
     order.products.forEach((prod) => {
       const itemTotal = prod.quantity * prod.product.price;
-      totalPrice += itemTotal;
 
       pdfDoc
         .font('Helvetica')
@@ -324,9 +321,27 @@ exports.getInvoice = async (req, res, next) => {
 
     // Total Price
     pdfDoc
+      .fontSize(14)
       .font('Helvetica-Bold')
+      .text('Total Details', {
+        align: 'right'
+      })
+      .font('Helvetica')
+      .text(`Subtotal: $${order.totalDetails.subtotal.toFixed(2)}`, {
+        align: 'right'
+      })
+      .text(`Tax: $${order.totalDetails.tax.toFixed(2)}`, {
+        align: 'right'
+      })
+      .text(`Shipping: $${order.totalDetails.shipping.toFixed(2)}`, {
+        align: 'right'
+      })
+      .moveDown(1)
       .fontSize(16)
-      .text(`Total: $${totalPrice.toFixed(2)}`, { align: 'right' })
+      .font('Helvetica-Bold')
+      .text(`Total: $${order.totalDetails.total.toFixed(2)}`, {
+        align: 'right'
+      })
       .moveDown(1);
 
     // Thank You Message

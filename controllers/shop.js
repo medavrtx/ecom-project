@@ -413,13 +413,27 @@ exports.getCheckoutSuccess = async (req, res, next) => {
     const userEmail = user ? req.user.email : 'Guest';
     const userId = user ? req.user._id : '000000000000000000000000';
 
+    const subtotal = products.reduce((total, p) => {
+      return total + parseFloat(p.product.price) * p.quantity;
+    }, 0);
+
+    const tax = parseFloat((subtotal * 0.09375).toFixed(2));
+    const shipping = parseFloat(subtotal > 50 ? 0 : 10);
+    const total = parseFloat(subtotal + tax + shipping);
+
     const order = new Order({
       user: {
         email: userEmail,
         userId: userId
       },
       products,
-      createdAt: new Date()
+      createdAt: new Date(),
+      totalDetails: {
+        subtotal,
+        tax,
+        shipping,
+        total
+      }
     });
 
     await order.save();

@@ -6,18 +6,24 @@ const orderSchema = new Schema({
   products: [
     {
       product: { type: Object, required: true },
-      quantity: { type: Number, required: true },
-    },
+      quantity: { type: Number, required: true }
+    }
   ],
   user: {
     email: { type: String, required: true },
     userId: {
       type: Schema.Types.ObjectId,
       required: true,
-      ref: 'User',
-    },
+      ref: 'User'
+    }
   },
   createdAt: { type: Date, required: true },
+  totalDetails: {
+    subtotal: { type: Number, required: true },
+    tax: { type: Number, required: true },
+    shipping: { type: Number, required: true },
+    total: { type: Number, required: true }
+  }
 });
 
 module.exports = mongoose.model('Order', orderSchema);
