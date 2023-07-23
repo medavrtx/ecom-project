@@ -10,9 +10,12 @@
 </nav>
 <div class="content">
   <h1 class="orders-title"><%= pageTitle %></h1>
+  <% if (errorMessage) {%>
+  <div class="user-message text-danger"><%= errorMessage %></div>
+  <% } %>
   <div class="row w-75">
     <div class="col-md-6 offset-md-3">
-      <form>
+      <form action="/user/<%=user._id %>/settings" method="POST">
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
           <input
@@ -21,7 +24,6 @@
             id="email"
             name="email"
             value="<%= user.email %>"
-            disabled
           />
         </div>
         <div class="mb-3">
@@ -53,6 +55,7 @@
             class="form-control product-form-input"
           />
         </div>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
         <button type="submit" class="btn btn-outline-dark">Save Changes</button>
       </form>
       <p class="mt-3">

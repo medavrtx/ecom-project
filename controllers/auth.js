@@ -363,11 +363,71 @@ exports.getInvoice = async (req, res, next) => {
 };
 
 exports.getSettings = (req, res, next) => {
+  const errorMessage = req.flash('error')[0] || null;
   res.render('auth/settings', {
     pageTitle: 'Settings',
     path: '/settings',
     isAuthenticated: req.session.isLoggedIn,
     isAdmin: req.session.isAdmin,
-    user: req.user
+    user: req.user,
+    errorMessage
   });
+};
+
+exports.postSettings = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const { email, firstName, lastName, password } = req.body;
+
+    const errors = validationResult(req);
+    const user = await User.findById(userId);
+
+    if (!errors.isEmpty() || !user) {
+      return res.status(422).render('auth/settings', {
+        pageTitle: 'Settings',
+        path: '/settings',
+        errorMessage: errors.array()[0].msg,
+        isAuthenticated: req.session.isLoggedIn,
+        isAdmin: req.session.isAdmin,
+        user: req.user
+      });
+    }
+
+    if (email !== user.email) {
+      const userDoc = await User.findOne({ email });
+      if (userDoc) {
+        return res.status(422).render('auth/settings', {
+          pageTitle: 'Settings',
+          path: '/settings',
+          errorMessage: 'E-Mail exists already, please pick a different one.',
+          isAuthenticated: req.session.isLoggedIn,
+          isAdmin: req.session.isAdmin,
+          user: req.user
+        });
+      }
+    }
+
+    const doMatch = await bcrypt.compare(password, user.toObject().password);
+    if (doMatch) {
+      user.email = email;
+      user.firstName = firstName;
+      user.lastName = lastName;
+      await user.save();
+
+      req.flash('success', 'Successfully updated!');
+      return res.redirect(`/user/${user._id}`);
+    } else {
+      console.log('lol');
+      return res.status(422).render('auth/settings', {
+        pageTitle: 'Settings',
+        path: '/settings',
+        isAuthenticated: req.session.isLoggedIn,
+        isAdmin: req.session.isAdmin,
+        errorMessage: 'Invalid password',
+        user: req.user
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
 };

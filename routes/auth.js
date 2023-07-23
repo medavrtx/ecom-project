@@ -25,10 +25,7 @@ router.get('/reset', authController.getReset);
 router.post(
   '/login',
   [
-    body('email')
-      .isEmail()
-      .withMessage('Please enter a valid email')
-      .normalizeEmail(),
+    body('email').isEmail().withMessage('Please enter a valid email'),
     body('password', 'Please enter a password with at least 5 characters')
       .isLength({ min: 5 })
       .trim()
@@ -51,8 +48,7 @@ router.post(
             );
           }
         });
-      })
-      .normalizeEmail(),
+      }),
     body('password', 'Please enter a password with at least 5 characters.')
       .isLength({ min: 5 })
       .trim(),
@@ -85,5 +81,16 @@ router.get('/user/:userId/orders/:orderId', isAuth, authController.getInvoice);
 
 // /user/settings => GET
 router.get('/user/:userId/settings', isAuth, authController.getSettings);
+
+router.post(
+  '/user/:userId/settings',
+  [
+    check('email').isEmail().withMessage('Please enter a valid email.'),
+    body('firstName', 'Please enter a valid name.').isLength({ min: 1 }).trim(),
+    body('lastName', 'Please enter a valid name.').isLength({ min: 1 }).trim()
+  ],
+  isAuth,
+  authController.postSettings
+);
 
 module.exports = router;
