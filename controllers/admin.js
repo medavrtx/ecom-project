@@ -261,6 +261,19 @@ exports.deleteProduct = async (req, res, next) => {
       { $pull: { products: { productId: product._id } } }
     );
 
+    const bestSellerItem = await BestSeller.findOne({ productId: prodId });
+
+    if (bestSellerItem) {
+      const deletedOrder = bestSellerItem.order;
+
+      await BestSeller.updateMany(
+        { order: { $gt: deletedOrder } },
+        { $inc: { order: -1 } }
+      );
+
+      await BestSeller.deleteOne({ productId: prodId });
+    }
+
     fileHelper.deleteFile(product.image);
     await Product.deleteOne({ _id: prodId, userId: req.user._id });
 
