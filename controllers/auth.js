@@ -231,7 +231,7 @@ exports.postLogOut = (req, res, next) => {
 
 exports.getUser = (req, res, next) => {
   res.render('auth/index', {
-    pageTitle: 'My Account',
+    pageTitle: 'Your Account',
     path: '/user',
     user: req.user,
     isAuthenticated: req.session.isLoggedIn,
@@ -246,7 +246,7 @@ exports.getOrders = async (req, res, next) => {
     });
     res.render('auth/orders', {
       path: '/user/orders',
-      pageTitle: 'My Orders',
+      pageTitle: 'Your Orders',
       orders,
       user: req.user,
       isAuthenticated: req.session.isLoggedIn,

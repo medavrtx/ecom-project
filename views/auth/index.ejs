@@ -3,19 +3,25 @@
 <div class="container py-5">
   <div class="row">
     <div class="col-12">
-      <h1 class="mb-4">My Account</h1>
+      <h1 class="mb-4"><%= pageTitle %></h1>
     </div>
   </div>
   <div class="row py-5">
     <div class="col-12 d-flex justify-content-center">
-      <div class="btn-group-collapse">
-        <a href="/user/<%= user._id %>/orders" class="btn btn-outline-dark">
-          Orders
-        </a>
-        <a href="/user/<%= user._id %>/settings" class="btn btn-outline-dark">
-          Settings
-        </a>
-      </div>
+      <a
+        href="/user/<%= user._id %>/orders"
+        class="btn btn-outline-dark btn-large mx-1"
+      >
+        <i class="fas fa-clipboard-list me-2"></i>
+        Orders
+      </a>
+      <a
+        href="/user/<%= user._id %>/settings"
+        class="btn btn-outline-dark btn-large mx-1"
+      >
+        <i class="fas fa-cog me-2"></i>
+        Settings
+      </a>
     </div>
   </div>
 </div>

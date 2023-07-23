@@ -1,5 +1,13 @@
 <% layout('layouts/boilerplate')%>
 
+<nav aria-label="breadcrumb ">
+  <ol class="breadcrumb ms-5 mt-2">
+    <li class="breadcrumb-item">
+      <a href="/user/<%=user._id %>" class="link">Your Account</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><%= pageTitle %></li>
+  </ol>
+</nav>
 <div class="container-md mt-5">
   <h1 class="orders-title"><%= pageTitle %></h1>
   <div class="accordion my-5" id="ordersAccordion">
