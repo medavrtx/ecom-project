@@ -74,7 +74,6 @@ const removeFromCategory = async (btn) => {
       }
     );
     const data = await response.json();
-    console.log(data);
     productElement.remove();
   } catch (err) {
     console.log(err);

@@ -36,7 +36,7 @@
               </div>
 
               <!-- FORM IMAGE PREVIEW -->
-              <% if (editing ) {%>
+              <% if (editing && hasImage) {%>
               <div
                 class="preview-container d-block"
                 id="form-preview-container"
@@ -170,7 +170,7 @@
                   name="image"
                   accept="image/*"
                   id="modal-file-input"
-                  data-access="<% if (editing) {%>/<%= product.image %><%} %>"
+                  data-access="<% if (editing && hasImage) {%>/<%= product.image %><%} %>"
                 />
               </label>
 

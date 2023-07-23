@@ -19,10 +19,10 @@ exports.getAdmin = async (req, res, next) => {
       pageTitle: 'Admin Dashboard',
       path: '/admin',
       user: req.user,
-      numListed: numProducts,
-      numOrders: numOrders,
       isAuthenticated: req.session.isLoggedIn,
-      isAdmin: req.session.isAdmin
+      isAdmin: req.session.isAdmin,
+      numListed: numProducts,
+      numOrders: numOrders
     });
   } catch (err) {
     const error = new Error(err);
@@ -56,7 +56,6 @@ exports.getProducts = async (req, res, next) => {
       isAuthenticated: req.session.isLoggedIn,
       isAdmin: req.session.isAdmin,
       csrfToken: req.csrfToken(),
-      totalProducts: totalItems,
       currentPage: page,
       hasNextPage: ITEMS_PER_PAGE * page < totalItems,
       hasPreviousPage: page > 1,
@@ -119,7 +118,7 @@ exports.postAddProduct = async (req, res, next) => {
 
   try {
     if (!image || !image.mimetype.startsWith('image/')) {
-      return renderError('Please enter a valid image', false);
+      return renderError('Please select a image', false);
     }
 
     if (!errors.isEmpty()) {
@@ -150,68 +149,83 @@ exports.postAddProduct = async (req, res, next) => {
 };
 
 // EDIT PRODUCT - GET
-exports.getEditProduct = (req, res, next) => {
-  const editMode = req.query.edit;
-  if (!editMode) {
-    return res.redirect('/');
-  }
-  const prodId = req.params.productId;
-  Product.findById(prodId)
-    .then((product) => {
-      if (!product) {
-        return res.redirect('/');
-      }
-      res.render('admin/edit-product', {
-        pageTitle: 'Edit Product',
-        path: '/admin/products/' + prodId,
-        editing: editMode,
-        product,
-        user: req.user,
-        isAuthenticated: req.session.isLoggedIn,
-        isAdmin: req.session.isAdmin,
-        hasError: false,
-        hasImage: true,
-        errorMessage: null
-      });
-    })
-    .catch((err) => {
-      next(err);
+exports.getEditProduct = async (req, res, next) => {
+  try {
+    const editMode = req.query.edit;
+    if (!editMode) {
+      return res.redirect('/admin/products');
+    }
+
+    const prodId = req.params.productId;
+    const product = await Product.findById(prodId);
+
+    if (!product) {
+      return res.redirect('/');
+    }
+
+    res.render('admin/edit-product', {
+      pageTitle: 'Edit Product',
+      path: '/admin/products/' + prodId,
+      editing: editMode,
+      product,
+      user: req.user,
+      isAuthenticated: req.session.isLoggedIn,
+      isAdmin: req.session.isAdmin,
+      hasError: false,
+      hasImage: true,
+      errorMessage: null
     });
+  } catch (err) {
+    next(err);
+  }
 };
 
 // EDIT PRODUCT - POST
 exports.postEditProduct = async (req, res, next) => {
   try {
-    const prodId = req.body.productId;
-    const updatedTitle = req.body.title;
-    const updatedPrice = req.body.price;
-    const updatedDescription = req.body.description;
+    const {
+      productId: prodId,
+      title: updatedTitle,
+      price: updatedPrice,
+      description: updatedDescription
+    } = req.body;
 
     const image = req.file;
     const errors = validationResult(req);
+    const product = await Product.findById(prodId);
 
-    if (!errors.isEmpty()) {
+    const renderError = (errorMessage, validationErrors = []) => {
       return res.status(422).render('admin/edit-product', {
         pageTitle: 'Edit Product',
-        path: '/admin/products/' + prodId,
+        path: `/admin/products/${prodId}?edit=true`,
         user: req.user,
         isAuthenticated: req.session.isLoggedIn,
         isAdmin: req.session.isAdmin,
         editing: true,
         hasError: true,
+        hasImage: true,
         product: {
           title: updatedTitle,
           price: updatedPrice,
-          image: image ? image.path : '',
+          image: product.image,
           description: updatedDescription,
           _id: prodId
         },
-        errorMessage: errors.array()[0].msg,
-        validationErrors: errors.array()
+        errorMessage: errorMessage,
+        validationErrors: validationErrors
       });
+    };
+
+    if (!image && req.body.deleteImage === 'true') {
+      return renderError(
+        'To replace the current image, please select a new image. Please do not leave the image empty.'
+      );
     }
 
-    const product = await Product.findById(prodId);
+    if (!errors.isEmpty()) {
+      return renderError(errors.array()[0].msg);
+    }
+
     if (!product || product.userId.toString() !== req.user._id.toString()) {
       return res.redirect('/');
     }

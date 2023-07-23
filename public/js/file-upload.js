@@ -178,7 +178,7 @@ modalSaveButton.addEventListener('click', () => {
     [blob],
     formTitleInput.value.replace(/\s+/g, '_') + '.jpg',
     {
-      type: 'image/jpeg'
+      type: 'image/jpg'
     }
   );
   const dataTransfer = new DataTransfer();
@@ -197,10 +197,14 @@ formDeleteButton.addEventListener('click', () => {
   formPreviewContainer.classList.remove('d-block');
   formPreviewContainer.style.display = 'none';
 
-  modalFileInput.value = '';
+  const deleteImageInput = document.createElement('input');
+  deleteImageInput.type = 'hidden';
+  deleteImageInput.name = 'deleteImage';
+  deleteImageInput.value = 'true';
+  formPreviewContainer.appendChild(deleteImageInput);
 
   const modalPreviewImage = document.getElementById('modal-preview-image');
-  modalPreviewContainer.removeChild(modalPreviewImage);
+  modalPreviewImage.remove();
   modalPreviewContainer.style.display = 'none';
 });
 
@@ -222,6 +226,24 @@ formEditButton.addEventListener('click', () => {
   }
 });
 
+// document.addEventListener('DOMContentLoaded', async () => {
+//   const dataAccess = modalFileInput.getAttribute('data-access');
+
+//   if (dataAccess) {
+//     const blob = await convertFilePathToBlob(dataAccess);
+//     const file = new File(
+//       [blob],
+//       formTitleInput.value.replace(/\s+/g, '_') + '.jpg',
+//       {
+//         type: 'image/jpg'
+//       }
+//     );
+//     const dataTransfer = new DataTransfer();
+//     dataTransfer.items.add(file);
+//     modalFileInput.files = dataTransfer.files;
+//   }
+// });
+
 // Function to convert data URL to Blob
 function dataURLToBlob(dataURL) {
   const byteString = atob(dataURL.split(',')[1]);
@@ -234,4 +256,23 @@ function dataURLToBlob(dataURL) {
   }
 
   return new Blob([ab], { type: mimeString });
+}
+
+// Function to convert FilePath to Blob
+function convertFilePathToBlob(filePath) {
+  return new Promise((resolve, reject) => {
+    fetch(filePath)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Unable to fetch the file.');
+        }
+        return response.blob();
+      })
+      .then((blob) => {
+        resolve(blob);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 }
