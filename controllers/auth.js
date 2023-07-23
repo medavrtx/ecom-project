@@ -61,7 +61,12 @@ exports.postLogIn = async (req, res, next) => {
       req.session.isAdmin = user.isAdmin;
       req.session.user = user;
       await req.session.save();
-      return res.redirect('/');
+
+      if (user.isAdmin) {
+        return res.redirect('/admin');
+      } else {
+        return res.redirect(`/user/${user._id}`);
+      }
     }
 
     return res.status(422).render('auth/login', {
