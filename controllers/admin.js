@@ -15,6 +15,19 @@ exports.getAdmin = async (req, res, next) => {
       Order.countDocuments()
     ]);
 
+    const profitResult = await Order.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalProfit: { $sum: '$totalDetails.total' }
+        }
+      }
+    ]);
+
+    const profit = parseFloat(
+      profitResult.length ? profitResult[0].totalProfit : 0
+    ).toFixed(2);
+
     res.render('admin/index', {
       pageTitle: 'Admin Dashboard',
       path: '/admin',
@@ -22,7 +35,8 @@ exports.getAdmin = async (req, res, next) => {
       isAuthenticated: req.session.isLoggedIn,
       isAdmin: req.session.isAdmin,
       numListed: numProducts,
-      numOrders: numOrders
+      numOrders: numOrders,
+      profit
     });
   } catch (err) {
     const error = new Error(err);
