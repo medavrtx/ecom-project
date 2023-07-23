@@ -78,6 +78,24 @@ exports.getContact = (req, res, next) => {
   });
 };
 
+exports.postContact = (req, res, next) => {
+  try {
+    const name = req.body.name;
+    const message = `Thank you ${name} for contacting us! Our team will get back to you as soon as possible.`;
+
+    res.render('about/thank-you', {
+      pageTitle: 'Thank You',
+      path: '/thank-you',
+      user: req.user,
+      message,
+      isAuthenticated: req.session.isLoggedIn,
+      isAdmin: req.session.isAdmin
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.getCareers = (req, res, next) => {
   res.render('about/career', {
     pageTitle: 'Career',
@@ -111,12 +129,13 @@ exports.getTerms = (req, res, next) => {
 exports.postNewsletter = (req, res, next) => {
   try {
     const email = req.body.email.trim();
+    const message = `Thank you ${email} from joining our newsletter!`;
     if (email.length > 0) {
       res.render('about/thank-you', {
         pageTitle: 'Thank You',
         path: '/thank-you',
         user: req.user,
-        email,
+        message,
         isAuthenticated: req.session.isLoggedIn,
         isAdmin: req.session.isAdmin
       });

@@ -22,6 +22,8 @@ router.get('/faqs', aboutController.getFaqs);
 
 router.get('/contact', aboutController.getContact);
 
+router.post('/contact', aboutController.postContact);
+
 router.get('/careers', aboutController.getCareers);
 
 router.get('/privacy-policy', aboutController.getPrivacy);
