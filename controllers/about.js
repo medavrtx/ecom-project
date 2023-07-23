@@ -58,6 +58,16 @@ exports.getSuccess = (req, res, next) => {
   });
 };
 
+exports.getFaqs = (req, res, next) => {
+  res.render('about/faq', {
+    pageTitle: 'FAQs',
+    path: '/faq',
+    user: req.user,
+    isAuthenticated: req.session.isLoggedIn,
+    isAdmin: req.session.isAdmin
+  });
+};
+
 exports.postNewsletter = (req, res, next) => {
   try {
     const email = req.body.email.trim();
