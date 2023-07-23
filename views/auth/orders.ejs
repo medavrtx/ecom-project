@@ -45,12 +45,14 @@
               </div>
             </li>
             <% }) %>
+            <b>Order Total: $<%= order.totalDetails.total %></b>
           </ul>
           <a
             href="/user/<%=user._id %> /orders/<%=order._id %> "
             class="btn btn-outline-dark"
-            >Invoice</a
           >
+            Invoice
+          </a>
         </div>
       </div>
     </div>
