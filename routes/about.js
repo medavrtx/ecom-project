@@ -18,4 +18,6 @@ router.get('/routine', aboutController.getRoutine);
 
 router.get('/success', aboutController.getSuccess);
 
+router.post('/newsletter', aboutController.postNewsletter);
+
 module.exports = router;

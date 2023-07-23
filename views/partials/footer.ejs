@@ -7,12 +7,14 @@
         Be the first to learn about our latest news, products and exclusive
         offers.
       </p>
-      <form action="/newsletter">
+      <form action="/newsletter" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
         <div class="input-group mb-3 custom-form">
           <label for="email"></label>
           <input
             class="form-control"
             type="email"
+            name="email"
             placeholder="Email address"
           />
           <div class="input-group-append">
@@ -100,7 +102,10 @@
 
     <div class="py-5 mx-auto copyright-links">
       <div class="privacy-terms">
-        <a href="#">Privacy Policy</a> | <a href="#">Terms & Conditions</a> |
+        <a href="#">Privacy Policy</a>
+        |
+        <a href="#">Terms & Conditions</a>
+        |
       </div>
       <div>&copy; 2023 Luminae</div>
     </div>

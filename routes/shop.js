@@ -34,10 +34,6 @@ router.get('/checkout', shopController.getCheckout);
 router.get('/checkout/success', shopController.getCheckoutSuccess);
 
 // /checkout => GET
-router.get('/checkout/cancel', (req, res) => {
-  res.redirect('/checkout');
-});
-
-router.get('/thank-you', shopController.getThankYou);
+router.get('/checkout/cancel', shopController.getCheckoutCancel);
 
 module.exports = router;

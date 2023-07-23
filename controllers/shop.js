@@ -438,12 +438,21 @@ exports.getCheckoutSuccess = async (req, res, next) => {
 
     await order.save();
 
+    const orderId = order._id;
+
     if (user) {
       await req.user.clearCart();
       res.redirect(`/user/${req.user._id}/orders`);
     } else {
       req.session.temporaryCart.items = [];
-      res.redirect('/thank-you');
+      res.render('shop/thank-you', {
+        pageTitle: 'Thank You',
+        path: '/shop/thank-you',
+        user: req.user || null,
+        isAuthenticated: req.session.isLoggedIn || false,
+        isAdmin: req.session.isAdmin || false,
+        orderId
+      });
     }
   } catch (err) {
     const error = new Error(err);
@@ -452,16 +461,6 @@ exports.getCheckoutSuccess = async (req, res, next) => {
   }
 };
 
-exports.getThankYou = async (req, res, next) => {
-  try {
-    res.render('shop/thank-you', {
-      pageTitle: 'Thank You',
-      path: '/thank-you',
-      user: req.user || null,
-      isAuthenticated: req.session.isLoggedIn || true,
-      isAdmin: req.session.isAdmin || false
-    });
-  } catch (err) {
-    next(err);
-  }
+exports.getCheckoutCancel = (req, res, next) => {
+  res.redirect('/checkout');
 };

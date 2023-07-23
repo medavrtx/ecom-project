@@ -1,0 +1,1 @@
+const csrfToken = req.csrfToken();

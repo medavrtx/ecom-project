@@ -89,7 +89,7 @@
             class="dropdown-menu dropdown-menu-end dropdown-menu-light"
             aria-labelledby="navbarDarkDropdownMenuLink"
           >
-            <% if (isAuthenticated) { %> <% if (isAdmin) { %>
+            <% if (isAuthenticated && user) { %> <% if (isAdmin) { %>
             <li>
               <a class="dropdown-item" href="/admin">Admin</a>
             </li>
