@@ -226,6 +226,7 @@ formEditButton.addEventListener('click', () => {
   }
 });
 
+// Auto input image file into Modal File Input
 // document.addEventListener('DOMContentLoaded', async () => {
 //   const dataAccess = modalFileInput.getAttribute('data-access');
 

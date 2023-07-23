@@ -256,6 +256,11 @@ exports.deleteProduct = async (req, res, next) => {
       return res.status(404).json({ message: 'Product not found' });
     }
 
+    await ProductCategory.updateMany(
+      { 'products.productId': product._id },
+      { $pull: { products: { productId: product._id } } }
+    );
+
     fileHelper.deleteFile(product.image);
     await Product.deleteOne({ _id: prodId, userId: req.user._id });
 

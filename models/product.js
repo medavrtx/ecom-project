@@ -26,4 +26,19 @@ const productSchema = new Schema({
   }
 });
 
+productSchema.pre('remove', async function (next) {
+  const ProductCategory = require('./productCategory');
+  const productId = this._id;
+
+  try {
+    await ProductCategory.updateMany(
+      { 'products.productId': productId },
+      { $pull: { products: { productId: productId } } }
+    );
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = mongoose.model('Product', productSchema);
