@@ -1,0 +1,45 @@
+<% layout('layouts/boilerplate')%>
+
+<div class="content">
+  <h1 class="mb-4">Contact</h1>
+  <div class="row w-75">
+    <div class="col-md-6 offset-md-3">
+      <form action="/contact" method="POST">
+        <div class="form-group">
+          <label for="name" class="form-label"></label>
+          <input
+            type="text"
+            class="form-control product-form-input"
+            id="name"
+            name="name"
+            placeholder="Name"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="email" class="form-label"></label>
+          <input
+            type="email"
+            class="form-control product-form-input"
+            id="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
+        </div>
+        <div class="form-group custom-form mb-3">
+          <label for="message" class="form-label"></label>
+          <textarea
+            class="form-control product-form-textarea"
+            id="message"
+            name="message"
+            rows="5"
+            placeholder="Enter your message"
+            required
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-outline-dark">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

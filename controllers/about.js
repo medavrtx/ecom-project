@@ -68,6 +68,46 @@ exports.getFaqs = (req, res, next) => {
   });
 };
 
+exports.getContact = (req, res, next) => {
+  res.render('about/contact', {
+    pageTitle: 'Contact',
+    path: '/contact',
+    user: req.user,
+    isAuthenticated: req.session.isLoggedIn,
+    isAdmin: req.session.isAdmin
+  });
+};
+
+exports.getCareers = (req, res, next) => {
+  res.render('about/career', {
+    pageTitle: 'Career',
+    path: '/careers',
+    user: req.user,
+    isAuthenticated: req.session.isLoggedIn,
+    isAdmin: req.session.isAdmin
+  });
+};
+
+exports.getPrivacy = (req, res, next) => {
+  res.render('about/privacy', {
+    pageTitle: 'Privacy Policy',
+    path: '/privacy-policy',
+    user: req.user,
+    isAuthenticated: req.session.isLoggedIn,
+    isAdmin: req.session.isAdmin
+  });
+};
+
+exports.getTerms = (req, res, next) => {
+  res.render('about/terms', {
+    pageTitle: 'Terms & Conditions',
+    path: '/terms-conditions',
+    user: req.user,
+    isAuthenticated: req.session.isLoggedIn,
+    isAdmin: req.session.isAdmin
+  });
+};
+
 exports.postNewsletter = (req, res, next) => {
   try {
     const email = req.body.email.trim();

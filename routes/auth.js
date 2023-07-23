@@ -31,7 +31,7 @@ router.post(
       .normalizeEmail(),
     body('password', 'Please enter a password with at least 5 characters')
       .isLength({ min: 5 })
-      .trim(),
+      .trim()
   ],
   authController.postLogIn
 );
@@ -63,7 +63,7 @@ router.post(
           throw new Error('Passwords have to match');
         }
         return true;
-      }),
+      })
   ],
   authController.postRegistration
 );
@@ -82,5 +82,8 @@ router.get('/user/:userId/orders', isAuth, authController.getOrders);
 
 // /user/orders/invoice => GET
 router.get('/user/:userId/orders/:orderId', isAuth, authController.getInvoice);
+
+// /user/settings => GET
+router.get('/user/:userId/settings', isAuth, authController.getSettings);
 
 module.exports = router;

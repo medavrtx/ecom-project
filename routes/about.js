@@ -20,6 +20,14 @@ router.get('/success', aboutController.getSuccess);
 
 router.get('/faqs', aboutController.getFaqs);
 
+router.get('/contact', aboutController.getContact);
+
+router.get('/careers', aboutController.getCareers);
+
+router.get('/privacy-policy', aboutController.getPrivacy);
+
+router.get('/terms-conditions', aboutController.getTerms);
+
 router.post('/newsletter', aboutController.postNewsletter);
 
 module.exports = router;

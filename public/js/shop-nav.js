@@ -40,6 +40,5 @@ function checkWindowSize() {
 
 window.addEventListener('load', () => {
   checkWindowSize();
-  toggleLinks();
 });
 window.addEventListener('resize', checkWindowSize);

@@ -361,3 +361,13 @@ exports.getInvoice = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.getSettings = (req, res, next) => {
+  res.render('auth/settings', {
+    pageTitle: 'Settings',
+    path: '/settings',
+    isAuthenticated: req.session.isLoggedIn,
+    isAdmin: req.session.isAdmin,
+    user: req.user
+  });
+};
