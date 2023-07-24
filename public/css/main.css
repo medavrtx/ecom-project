@@ -278,24 +278,6 @@ h5 {
   z-index: 4;
 }
 
-/* ADMIN */
-.admin-card {
-  padding: 20px;
-  border-radius: 20px;
-  border: 1px solid var(--light-border);
-  background-color: var(--light-color);
-}
-
-.admin-number {
-  font-size: 36px;
-  font-weight: bold;
-}
-
-.admin-label {
-  font-size: 18px;
-  color: #999;
-}
-
 /* ADD PRODUCT */
 
 .image-upload {

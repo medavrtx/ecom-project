@@ -1,3 +1,5 @@
+let width = 768;
+
 function toggleLinks() {
   const links = document.querySelectorAll('.collapse-menu a');
   const toggleButton = document.querySelector('.collapse-menu-toggle');
@@ -8,11 +10,10 @@ function toggleLinks() {
   links.forEach((link) => {
     link.style.display = isActive
       ? 'block'
-      : window.innerWidth > 768
+      : window.innerWidth > width
       ? 'block'
       : 'none';
   });
-
   toggleButton.textContent = isActive ? 'Hide' : 'Show More';
 }
 
@@ -21,7 +22,7 @@ function checkWindowSize() {
   const toggleButton = document.querySelector('.collapse-menu-toggle');
   const links = document.querySelectorAll('.collapse-menu a');
 
-  if (windowWidth <= 768) {
+  if (windowWidth <= width) {
     // Hide links and show toggle button on small screens
     links.forEach((link) => {
       link.style.display = 'none';

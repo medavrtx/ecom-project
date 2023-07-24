@@ -1,0 +1,16 @@
+.admin-card {
+  padding: 20px;
+  border-radius: 20px;
+  border: 1px solid var(--light-border);
+  background-color: var(--light-color);
+}
+
+.admin-number {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.admin-label {
+  font-size: 18px;
+  color: #999;
+}

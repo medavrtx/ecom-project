@@ -1,31 +1,44 @@
-<% layout('layouts/boilerplate')%>
+<%- include('../partials/head.ejs') %>
+<link rel="stylesheet" href="/css/partials/sidebar.css" />
+<link rel="stylesheet" href="/css/admin/index.css" />
+</head>
 
-<div class="container-fluid">
-  <div class="row">
-    <%- include('../partials/sidebar')%>
-    <div class="col-lg-10 content">
-      <div class="my-5">
-        <h1 class="center-title"><%= pageTitle %></h1>
-      </div>
-
-      <div class="container d-flex justify-content-center">
-        <div class="row admin-card w-75">
-          <div class="text-center col-lg-4 my-3">
-            <div class="admin-number"><%= numOrders %></div>
-            <div class="admin-label">Orders</div>
+<body>
+  <%- include('../partials/navbar')%>
+  
+  <main class="w-100">
+    <div class="container-fluid px-0">
+      <div class="row g-0">
+        <%- include('../partials/sidebar')%>
+        <div class="col-md-9 col-lg-10 my-5">
+          <%- include('../partials/flash') %>
+          <div class="mb-5">
+            <h1 class="center-title"><%= pageTitle %></h1>
           </div>
-          <div class="text-center col-lg-4 my-3">
-            <div class="admin-number"><%= numListed %></div>
-            <div class="admin-label">Listed</div>
-          </div>
-          <div class="text-center col-lg-4 my-3">
-            <div class="admin-number d-flex justify-content-center">
-              $<%=profit%>
+    
+          <div class="container d-flex justify-content-center">
+            <div class="row admin-card w-75">
+              <div class="text-center col-md-4 my-3">
+                <div class="admin-number"><%= numOrders %></div>
+                <div class="admin-label">Orders</div>
+              </div>
+              <div class="text-center col-md-4 my-3">
+                <div class="admin-number"><%= numListed %></div>
+                <div class="admin-label">Listed</div>
+              </div>
+              <div class="text-center col-md-4 my-3">
+                <div class="admin-number d-flex justify-content-center">
+                  $<%=profit%>
+                </div>
+                <div class="admin-label">Profit</div>
+              </div>
             </div>
-            <div class="admin-label">Profit</div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+ 
+
+  
+  <script src="/js/collapse-menu.js"></script>
+<%- include('../partials/end')%>
