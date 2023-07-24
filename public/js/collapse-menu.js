@@ -28,7 +28,7 @@ function checkWindowSize() {
     });
     toggleButton.style.display = 'block';
   } else {
-    // Show links and hide toggle button on larger screens
+    // Show links and hide toggle button on font-sz-lg screens
     links.forEach((link) => {
       link.style.display = 'block';
     });

@@ -88,12 +88,34 @@ h5 {
   font-size: 0.9rem;
 }
 
+.font-sz-lg {
+  font-size: 1.3rem;
+}
+
 .card {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.table > :not(:first-child) {
+  border-top: 1px solid var(--dark-border);
+}
+
+.table-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 110px;
+  height: 110px;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.table-image img {
+  width: 100%;
 }
 
 /* OTHER */
@@ -141,10 +163,6 @@ h5 {
 .link-list a:hover {
   opacity: 0.6;
   text-decoration: underline;
-}
-
-.larger-font {
-  font-size: 1.3rem;
 }
 
 .custom-banner {
