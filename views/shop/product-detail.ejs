@@ -1,18 +1,42 @@
-<% layout('layouts/boilerplate')%>
-<div class="container-md my-5">
-  <div class="row">
-    <div class="col-lg-6 d-flex justify-content-center">
-      <div class="detail-products-image">
-        <img src="/<%= product.image %>" alt="<%= product.title %>" />
+<%- include('../partials/head.ejs') %>
+  <link rel="stylesheet" href="/css/shop/product-detail.css" />
+</head>
+
+<body>
+  <%- include('../partials/navbar')%>
+
+  
+  <main class="main-container">
+
+    <%- include('../partials/flash') %>
+
+    <div class="container-md my-5">
+
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="/shop-all" class="link">Shop All</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page"><%= pageTitle %></li>
+        </ol>
+      </nav>
+
+      <div class="row p-3">
+        <div class="col-lg-6 d-flex justify-content-center p-lg-5">
+          <div class="d-flex justify-content-center align-items-center">
+            <img class="img-fluid d-block mx-auto" src="/<%= product.image %>" alt="<%= product.title %>" />
+          </div>
+        </div>
+        <div class="col-lg-6 d-flex justify-content-center align-items-center">
+          <div class="detail-products-info">
+            <div class="products-title"><%= product.title %></div>
+            <div class="products-price">$<%= product.price %></div>
+            <div class="products-description"><%= product.description %></div>
+            <%- include('../includes/add-to-cart.ejs', {product: product}) %>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-lg-6 d-flex justify-content-center align-items-center">
-      <div class="detail-products-info">
-        <div class="products-title"><%= product.title %></div>
-        <div class="products-price">$<%= product.price %></div>
-        <div class="products-description"><%= product.description %></div>
-        <%- include('../includes/add-to-cart.ejs', {product: product}) %>
-      </div>
-    </div>
-  </div>
-</div>
+
+
+<%- include('../partials/end')%>
