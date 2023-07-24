@@ -1,192 +1,229 @@
-<% layout('layouts/boilerplate')%>
+<%- include('../partials/head.ejs') %>
+<link rel="stylesheet" href="/css/partials/sidebar.css" />
+<link rel="stylesheet" href="/css/admin/edit-product.css" />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.css"
+  integrity="sha512-C4k/QrN4udgZnXStNFS5osxdhVECWyhMsK1pnlk+LkC7yJGCqoYxW4mH3/ZXLweODyzolwdWSqmmadudSHMRLA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/>
+</head>
 
-<div class="container-fluid">
-  <div class="row">
-    <%- include('../partials/sidebar')%>
-    <div class="col-lg-10 content">
-      <div class="my-5">
-        <h1 class="center-title"><%= pageTitle %></h1>
-      </div>
+<body>
+  <%- include('../partials/navbar')%>
+  
+  <main class="w-100">
+    <div class="container-fluid px-0">
+      <div class="row g-0">
+        <%- include('../partials/sidebar')%>
+        <div class="col-md-9 col-lg-10 my-5">
+          <%- include('../partials/flash') %>
+          <div class="mb-3">
+            <h1 class="center-title"><%= pageTitle %></h1>
+          </div>
+    
+          <% if (errorMessage) {%>
+            <div class="text-danger text-center"><%= errorMessage %></div>
+            <% } %>
+      
+            <form
+              action="/admin/products/<% if (editing) {%>edit<%} else {%>add<%} %>"
+              method="POST"
+              enctype="multipart/form-data"
+              class="w-100"
+            >
+              <div class="row border mx-xs-5 mx-3 rounded-3">
 
-      <% if (errorMessage) {%>
-      <div class=" text-danger"><%= errorMessage %></div>
-      <% } %>
 
-      <form
-        action="/admin/products/<% if (editing) {%>edit<%} else {%>add<%} %>"
-        method="POST"
-        enctype="multipart/form-data"
-        class="w-100"
-      >
-        <div class="row border mx-sm-5 rounded-3">
-          <!-- IMAGE -->
-          <div
-            class="col-lg-6 d-flex flex-column align-items-center justify-content-center p-5"
-          >
-            <!-- IMAGE UPLOAD -->
-            <div class="image-upload bg-light">
-              <div id="form-image-area" class="image-area">
-                <div class="upload-icon">
-                  <i class="fas fa-image"></i>
+                
+                <!-- IMAGE -->
+                <div
+                  class="col-sm-6 d-flex flex-column align-items-center justify-content-center p-4"
+                >
+                  <!-- IMAGE UPLOAD -->
+                  <div class="image-upload bg-light">
+                    <div id="form-image-area" class="image-area">
+                      <div class="upload-icon">
+                        <i class="fas fa-image"></i>
+                      </div>
+                      <p class="mt-2">
+                        Click here to
+                        <b>Add Image</b>
+                      </p>
+                    </div>
+      
+                    <!-- FORM IMAGE PREVIEW -->
+                    <% if (editing && hasImage) {%>
+                    <div
+                      class="preview-container d-block"
+                      id="form-preview-container"
+                    >
+                      <img
+                        src="/<%= product.image %>"
+                        alt="Product Image Preview"
+                        class="preview-image"
+                        id="form-preview-image"
+                      />
+      
+                      <!-- Preview Buttons -->
+                      <a class="btn preview-button edit-button" id="form-edit-button">
+                        <i class="fa-solid fa-pencil"></i>
+                        Edit
+                      </a>
+                      <a
+                        class="btn preview-button delete-button rounded-circle"
+                        id="form-delete-button"
+                      >
+                        <i class="fa-solid fa-x"></i>
+                      </a>
+                    </div>
+                    <% } else { %>
+                    <div class="preview-container" id="form-preview-container">
+                      <a class="btn preview-button edit-button" id="form-edit-button">
+                        <i class="fa-solid fa-pencil"></i>
+                        Edit
+                      </a>
+                      <a
+                        class="btn preview-button delete-button rounded-circle"
+                        id="form-delete-button"
+                      >
+                        <i class="fa-solid fa-x"></i>
+                      </a>
+                    </div>
+                    <% } %>
+                  </div>
                 </div>
-                <p class="upload-text">
-                  Click here to
-                  <b>Add Image</b>
-                </p>
-              </div>
+      
 
-              <!-- FORM IMAGE PREVIEW -->
-              <% if (editing && hasImage) {%>
-              <div
-                class="preview-container d-block"
-                id="form-preview-container"
-              >
-                <img
-                  src="/<%= product.image %>"
-                  alt="Product Image Preview"
-                  class="preview-image"
-                  id="form-preview-image"
-                />
 
-                <!-- Preview Buttons -->
-                <a class="btn preview-button edit-button" id="form-edit-button">
-                  <i class="fa-solid fa-pencil"></i>
-                  Edit
-                </a>
-                <a
-                  class="btn preview-button delete-button rounded-circle"
-                  id="form-delete-button"
-                >
-                  <i class="fa-solid fa-x"></i>
-                </a>
+                <!-- DETAILS -->
+                <div class="col-sm-6 p-4 d-flex flex-column justify-content-between">
+                  <!-- PRODUCT NAME -->
+                  <div class="row mb-3">
+                    <div class="col-md-12">
+                      <label for="title">Product name</label>
+                      <input
+                        class="form-control box-form-input"
+                        type="text"
+                        name="title"
+                        id="title"
+                        placeholder="Enter product name"
+                        value="<% if (editing || hasError) {%><%=product.title%><%} else {%><%} %>"
+                      />
+                    </div>
+                  </div>
+      
+                  <!-- PRICE -->
+                  <div class="row mb-3">
+                    <div class="col-md-12">
+                      <label for="price">Price</label>
+                      <div class="input-group input-group-price">
+                        <input
+                          type="text"
+                          class="form-control box-form-input input-price"
+                          name="price"
+                          id="price"
+                          oninput="formatPriceInput(this)"
+                          placeholder="Price"
+                          value="<% if (editing || hasError) {%><%=product.price%><%} else {%><%} %>"
+                        />
+                      </div>
+                    </div>
+                  </div>
+      
+                  <!-- DESCRIPTION -->
+                  <div class="row mb-3">
+                    <div class="col-md-12 underline-form">
+                      <label for="description">Description</label>
+                      <textarea
+                        class="form-control box-form-textarea"
+                        rows="5"
+                        name="description"
+                        id="description"
+                        placeholder="Enter description"
+                      ><% if (editing || hasError) {%><%=product.description%><%} %></textarea>
+                    </div>
+                  </div>
+      
+                  <!-- BUTTON -->
+                  <div>
+                    <button class="btn btn-outline-dark" type="submit">
+                      <% if (editing) {%>Update product<%} else {%>Add product<%} %>
+                    </button>
+                  </div>
+                </div>
               </div>
-              <% } else { %>
-              <div class="preview-container" id="form-preview-container">
-                <a class="btn preview-button edit-button" id="form-edit-button">
-                  <i class="fa-solid fa-pencil"></i>
-                  Edit
-                </a>
-                <a
-                  class="btn preview-button delete-button rounded-circle"
-                  id="form-delete-button"
-                >
-                  <i class="fa-solid fa-x"></i>
-                </a>
-              </div>
+      
+              <% if (editing) {%>
+              <input type="hidden" value="<%= product._id %>" name="productId" />
               <% } %>
-            </div>
-          </div>
-
-          <!-- DETAILS -->
-          <div class="col-lg-6 p-5 d-flex flex-column justify-content-between">
-            <!-- PRODUCT NAME -->
-            <div class="row mb-3">
-              <div class="col-md-12">
-                <label for="title">Product name</label>
-                <input
-                  class="form-control box-form-input"
-                  type="text"
-                  name="title"
-                  id="title"
-                  placeholder="Enter product name"
-                  value="<% if (editing || hasError) {%><%=product.title%><%} else {%><%} %>"
-                />
-              </div>
-            </div>
-
-            <!-- PRICE -->
-            <div class="row mb-3">
-              <div class="col-md-12">
-                <label for="price">Price</label>
-                <div class="input-group">
-                  <span class="input-group-symbol" id="dollar-sign">$</span>
-                  <input
-                    type="text"
-                    class="form-control box-form-input input-price"
-                    name="price"
-                    id="price"
-                    oninput="formatPriceInput(this)"
-                    placeholder="Price"
-                    value="<% if (editing || hasError) {%><%=product.price%><%} else {%><%} %>"
-                  />
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      
+              <!-- The modal -->
+              <div id="modal" class="modal">
+                <div class="modal-content">
+                  <!-- Close button -->
+                  <span class="d-flex justify-content-end me-0">
+                    <a class="btn modal-close p-0 my-2" id="modal-close-button">
+                      <i class="fa-solid fa-circle-xmark fa-xl"></i>
+                    </a>
+                  </span>
+      
+                  <!-- IMAGE UPLOAD -->
+                  <div id="modal-image-upload" class="image-upload bg-light">
+                    <label class="image-area" for="modal-file-input">
+                      <div class="upload-icon">
+                        <i class="fas fa-image"></i>
+                      </div>
+                      <p class="mt-2">Drop your image here</p>
+                      <p class="mt-2">
+                        or
+                        <b>click to browse</b>
+                      </p>
+      
+                      <input
+                        type="file"
+                        name="image"
+                        accept="image/*"
+                        id="modal-file-input"
+                        data-access="<% if (editing && hasImage) {%>/<%= product.image %><%} %>"
+                      />
+                    </label>
+      
+                    <div id="modal-preview-container" class="preview-container"></div>
+                  </div>
+      
+                  <!-- Buttons -->
+                  <div class="d-flex justify-content-end my-3">
+                    <a class="btn btn-outline-dark me-3" id="modal-cancel-button">
+                      Cancel
+                    </a>
+                    <a class="btn btn-outline-dark" id="modal-save-button">Save</a>
+                  </div>
                 </div>
               </div>
-            </div>
+            </form>
 
-            <!-- DESCRIPTION -->
-            <div class="row mb-3">
-              <div class="col-md-12 underline-form">
-                <label for="description">Description</label>
-                <textarea
-                  class="form-control box-form-textarea"
-                  rows="5"
-                  name="description"
-                  id="description"
-                  placeholder="Enter description"
-                >
-<% if (editing || hasError) {%><%=product.description%><%} %></textarea
-                >
-              </div>
-            </div>
 
-            <!-- BUTTON -->
-            <div>
-              <button class="btn btn-outline-dark" type="submit">
-                <% if (editing) {%>Update product<%} else {%>Add product<%} %>
-              </button>
-            </div>
-          </div>
+
         </div>
-
-        <% if (editing) {%>
-        <input type="hidden" value="<%= product._id %>" name="productId" />
-        <% } %>
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-
-        <!-- The modal -->
-        <div id="modal" class="modal">
-          <div class="modal-content">
-            <!-- Close button -->
-            <span class="d-flex justify-content-end me-0">
-              <a class="btn modal-close p-0 my-2" id="modal-close-button">
-                <i class="fa-solid fa-circle-xmark fa-xl"></i>
-              </a>
-            </span>
-
-            <!-- IMAGE UPLOAD -->
-            <div id="modal-image-upload" class="image-upload bg-light">
-              <label class="image-area" for="modal-file-input">
-                <div class="upload-icon">
-                  <i class="fas fa-image"></i>
-                </div>
-                <p class="upload-text">Drop your image here</p>
-                <p class="upload-text">
-                  or
-                  <b>click to browse</b>
-                </p>
-
-                <input
-                  type="file"
-                  name="image"
-                  accept="image/*"
-                  id="modal-file-input"
-                  data-access="<% if (editing && hasImage) {%>/<%= product.image %><%} %>"
-                />
-              </label>
-
-              <div id="modal-preview-container" class="preview-container"></div>
-            </div>
-
-            <!-- Buttons -->
-            <div class="d-flex justify-content-end my-3">
-              <a class="btn btn-outline-dark me-3" id="modal-cancel-button">
-                Cancel
-              </a>
-              <a class="btn btn-outline-dark" id="modal-save-button">Save</a>
-            </div>
-          </div>
-        </div>
-      </form>
+      </div>
     </div>
-  </div>
-</div>
+ 
+
+  
+  <script src="/js/collapse-menu.js"></script>
+  <script src="/js/format-price.js"></script>
+  <script src="/js/file-upload.js"></script>
+  <script
+  src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.js"
+  integrity="sha512-LjPH94gotDTvKhoxqvR5xR2Nur8vO5RKelQmG52jlZo7SwI5WLYwDInPn1n8H9tR0zYqTqfNxWszUEy93cHHwg=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+  ></script>
+
+<%- include('../partials/end')%>
+
+
+

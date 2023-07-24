@@ -196,15 +196,21 @@ h5 {
   box-shadow: none;
 }
 
-.input-group-symbol {
-  background-color: var(--bg-light-color);
-  border-right: none;
-  padding-right: 5px;
+.input-group-price {
+  position: relative;
+}
+
+.input-group-price::before {
+  content: '$';
+  position: absolute;
+  align-self: center;
+  left: 10px;
+  z-index: 4;
+  pointer-events: none;
 }
 
 .input-price {
-  border-left: none;
-  padding-left: 0;
+  padding-left: 25px;
 }
 
 .btn-large {
@@ -215,7 +221,27 @@ h5 {
   align-items: center;
 }
 
+.brand {
+  font-family: 'Crimson Text';
+}
+
+.brand-mark {
+  font-size: 1.5rem;
+}
+
 /* OTHER */
+.btn-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.btn-row a button {
+  height: 100%;
+}
+.btn-row button {
+  margin-left: 5px;
+  height: 100%;
+}
 
 .content {
   display: flex;
@@ -224,14 +250,6 @@ h5 {
   justify-content: center;
   padding: 15px;
   margin-bottom: 100px;
-}
-
-.brand {
-  font-family: 'Crimson Text';
-}
-
-.brand-mark {
-  font-size: 1.5rem;
 }
 
 .link-list {
@@ -276,137 +294,4 @@ h5 {
 
 .z-index-4 {
   z-index: 4;
-}
-
-/* ADD PRODUCT */
-
-.image-upload {
-  width: 100%;
-  padding-top: 100%;
-  border: 1px solid var(--light-border);
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.image-upload.drag-over {
-  border-color: #bababa;
-}
-
-.image-area {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.image-area input[type='file'] {
-  display: none;
-}
-
-.image-area:hover {
-  background-color: var(--light-border);
-}
-
-.upload-icon {
-  font-size: 40px;
-}
-
-.upload-text {
-  margin-top: 10px;
-}
-
-.preview-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: none;
-}
-
-.preview-button {
-  position: absolute;
-  top: 10px;
-  border: none;
-  font-size: 1rem;
-  cursor: pointer;
-  z-index: 3;
-}
-
-.delete-button {
-  right: 10px;
-  font-size: 0.9rem;
-  color: var(--dark-color);
-  background-color: var(--gradient-neutral);
-}
-
-.delete-button:hover {
-  background-color: #e1e1e1;
-}
-
-.edit-button {
-  left: 10px;
-  color: var(--dark-color);
-  background-color: var(--gradient-neutral);
-}
-
-.edit-button:hover {
-  background-color: #e1e1e1;
-}
-
-.preview-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* FORM DETAILS */
-
-/* Modal styles */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 6;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
-}
-
-.btn-row {
-  display: flex;
-  flex-direction: row;
-}
-
-.btn-row a button {
-  height: 100%;
-}
-.btn-row button {
-  margin-left: 5px;
-  height: 100%;
-}
-
-.modal-close:hover {
-  opacity: 0.6;
 }
