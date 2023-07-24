@@ -1,9 +1,3 @@
 .brand-banner {
   background-image: url('/images/brand/brand2.jpg');
 }
-
-.brand-section-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
