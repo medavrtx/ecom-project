@@ -1,8 +1,17 @@
-<% layout('layouts/boilerplate')%>
+<%- include('./partials/head.ejs') %>
+</head>
 
-<div class="my-5">
-  <h1 class="center-title">Some Error Occurred</h1>
-  <p class="text-center my-5">
-    We're working on fixing this, sorry for the inconvenience.
-  </p>
-</div>
+<body>
+  <%- include('./partials/navbar')%>
+
+    <%- include('./partials/flash') %>
+
+      <main class="container">
+        <div class="text-center my-5 py-5">
+          <h1 class="center-title py-5">Some Error Occurred</h1>
+          <p class="text-center my-5">
+            We're working on fixing this, sorry for the inconvenience.
+          </p>
+        </div>
+
+<%- include('./partials/end')%>

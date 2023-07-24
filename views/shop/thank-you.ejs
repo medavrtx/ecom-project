@@ -1,19 +1,22 @@
-<% layout('layouts/boilerplate')%>
+<%- include('../partials/head.ejs') %>
+</head>
 
-<div class="container-md text-center py-5">
-  <h1 class="py-5">Thank You</h1>
-  <p>Thank you for your order!</p>
-  <p>Order: #<%= orderId %></p>
+<body>
+  <%- include('../partials/navbar')%>
 
-  <div class="row mt-3">
-    <div class="col">
-      <a href="/" class="link">Go to Home Page</a>
+    <%- include('../partials/flash') %>
+    
+<body>
+  <main class="container py-3">
+    <div class="text-center my-5">
+      <h1 class="center-title py-5">Thank You</h1>
+      <p class="text-center">Thank you for your order!</p>
+      <p>Order: #<%= orderId %></p>
     </div>
-  </div>
-  <p class="my-3">OR</p>
-  <div class="row">
-    <div class="col">
+    <div class="text-center my-5">
+      <a href="/" class="link">Go to Home Page</a>
+      <p class="my-3">OR</p>
       <a href="/shop-all" class="btn btn-outline-dark">Start Shopping</a>
     </div>
-  </div>
-</div>
+
+<%- include('../partials/end')%>
