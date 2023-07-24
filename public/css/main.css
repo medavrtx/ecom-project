@@ -105,6 +105,10 @@ h5 {
   align-items: center;
 }
 
+.flash {
+  margin: 15px;
+}
+
 .table > :not(:first-child) {
   border-top: 1px solid var(--dark-border);
 }
@@ -310,12 +314,6 @@ h5 {
   display: flex;
   justify-content: center;
   margin-top: 15px;
-}
-
-/* LOGIN */
-
-.user-message {
-  text-align: center;
 }
 
 /* ADMIN */

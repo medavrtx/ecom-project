@@ -30,6 +30,6 @@ router.get('/privacy-policy', aboutController.getPrivacy);
 
 router.get('/terms-conditions', aboutController.getTerms);
 
-router.post('/newsletter', aboutController.postNewsletter);
+router.route('/newsletter').post(aboutController.postNewsletter);
 
 module.exports = router;

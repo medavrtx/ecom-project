@@ -142,7 +142,7 @@ exports.postNewsletter = (req, res, next) => {
       });
     } else {
       req.flash('error', 'Invalid email address');
-      res.redirect('/error');
+      throw new Error('Invalid email address');
     }
   } catch (err) {
     next(err);
