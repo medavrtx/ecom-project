@@ -1,87 +1,97 @@
-<% layout('layouts/boilerplate')%>
-<div class="container">
-  <div class="row custom-banner success-banner">
-    <div class="custom-overlay">
-      <h1 class="brand mb-5 my-5">Success Stories</h1>
-      <p>Read what our happy customers have to say about their experiences.</p>
+<%- include('../partials/head.ejs') %>
+  <link rel="stylesheet" href="/css/about/success.css" />
+</head>
+
+<body>
+  <%- include('../partials/navbar')%>
+
+  <main class="container-lg">
+    <div class="row custom-banner success-banner">
+      <div class="custom-overlay">
+        <h1 class="brand mb-5 my-5">Success Stories</h1>
+        <p>Read what our happy customers have to say about their experiences.</p>
+      </div>
+    </div>
+  
+    <!-- TESTIMONIALS -->
+    <div>
+      <div class="row py-5">
+        <div class="col-lg-6">
+          <div class="testimonial-card">
+            <img src="/images/success/success6.jpg" alt="User Photo" />
+            <h3>Emily T.</h3>
+            <p>
+              "Luminae Skincare has been a savior for my sensitive skin. I
+              struggled with redness and irritation for years, but after
+              discovering their products, my skin feels calm and balanced. The
+              gentle yet effective formulations have made a noticeable difference.
+              The Purity Cleanser is soothing, the Chemical Exfoliator is
+              non-irritating, and the Luxury Lotion keeps my skin nourished all
+              day. Luminae Skincare truly understands and caters to sensitive
+              skin."
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="testimonial-card">
+            <img src="/images/success/success9.jpg" alt="User Photo" />
+            <h3>Michael B.</h3>
+            <p>
+              "As a guy who values simplicity and effectiveness, Luminae Skincare
+              has been a revelation. The 3-step routine is straightforward and
+              easy to follow. The Purity Cleanser has helped control my oily skin,
+              while the Chemical Exfoliator has improved the texture of my skin
+              remarkably. The Luxury Lotion provides just the right amount of
+              hydration without feeling heavy. Luminae Skincare has transformed my
+              skincare game."
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="testimonial-card">
+            <img src="/images/success/success7.jpg" alt="User Photo" />
+            <h3>Sarah R.</h3>
+            <p>
+              "Luminae Skincare has been a game-changer for me! After
+              incorporating their products into my routine, my skin has never
+              looked better. The Purity Cleanser leaves my skin feeling refreshed
+              and clean, while the Chemical Exfoliator has smoothed out my
+              complexion. The Luxury Lotion is the perfect final touch, leaving my
+              skin hydrated and glowing. Luminae Skincare is now an essential part
+              of my self-care ritual."
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="testimonial-card">
+            <img src="/images/success/success8.jpg" alt="User Photo" />
+            <h3>David L.</h3>
+            <p>
+              "Luminae Skincare has become a staple in my daily routine. I spend a
+              lot of time outdoors, and the Perfect UV Sunscreen has been a
+              lifesaver. It provides excellent protection against the sun's
+              harmful rays without leaving a greasy residue. I also love the
+              Purity Cleanser and Chemical Exfoliator for keeping my skin fresh
+              and revitalized. Luminae Skincare has become my go-to brand for
+              reliable and high-quality skincare."
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="row font-sz-lg-font py-5 mx-3">
+        <p>
+          At Luminae Skincare, we are dedicated to creating transformative
+          skincare solutions that empower individuals to embrace their natural
+          beauty. We invite you to explore our Success Stories page to discover
+          more inspiring testimonials from our satisfied customers. Join the
+          Luminae community and experience the joy of radiant, healthy skin.
+        </p>
+      </div>
     </div>
   </div>
 
-  <!-- TESTIMONIALS -->
-  <div class="px-5">
-    <div class="row py-5">
-      <div class="col-lg-6">
-        <div class="testimonial-card">
-          <img src="/images/success/success6.jpg" alt="User Photo" />
-          <h3>Emily T.</h3>
-          <p>
-            "Luminae Skincare has been a savior for my sensitive skin. I
-            struggled with redness and irritation for years, but after
-            discovering their products, my skin feels calm and balanced. The
-            gentle yet effective formulations have made a noticeable difference.
-            The Purity Cleanser is soothing, the Chemical Exfoliator is
-            non-irritating, and the Luxury Lotion keeps my skin nourished all
-            day. Luminae Skincare truly understands and caters to sensitive
-            skin."
-          </p>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="testimonial-card">
-          <img src="/images/success/success9.jpg" alt="User Photo" />
-          <h3>Michael B.</h3>
-          <p>
-            "As a guy who values simplicity and effectiveness, Luminae Skincare
-            has been a revelation. The 3-step routine is straightforward and
-            easy to follow. The Purity Cleanser has helped control my oily skin,
-            while the Chemical Exfoliator has improved the texture of my skin
-            remarkably. The Luxury Lotion provides just the right amount of
-            hydration without feeling heavy. Luminae Skincare has transformed my
-            skincare game."
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-6">
-        <div class="testimonial-card">
-          <img src="/images/success/success7.jpg" alt="User Photo" />
-          <h3>Sarah R.</h3>
-          <p>
-            "Luminae Skincare has been a game-changer for me! After
-            incorporating their products into my routine, my skin has never
-            looked better. The Purity Cleanser leaves my skin feeling refreshed
-            and clean, while the Chemical Exfoliator has smoothed out my
-            complexion. The Luxury Lotion is the perfect final touch, leaving my
-            skin hydrated and glowing. Luminae Skincare is now an essential part
-            of my self-care ritual."
-          </p>
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="testimonial-card">
-          <img src="/images/success/success8.jpg" alt="User Photo" />
-          <h3>David L.</h3>
-          <p>
-            "Luminae Skincare has become a staple in my daily routine. I spend a
-            lot of time outdoors, and the Perfect UV Sunscreen has been a
-            lifesaver. It provides excellent protection against the sun's
-            harmful rays without leaving a greasy residue. I also love the
-            Purity Cleanser and Chemical Exfoliator for keeping my skin fresh
-            and revitalized. Luminae Skincare has become my go-to brand for
-            reliable and high-quality skincare."
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="row font-sz-lg-font py-5 mx-3">
-      <p>
-        At Luminae Skincare, we are dedicated to creating transformative
-        skincare solutions that empower individuals to embrace their natural
-        beauty. We invite you to explore our Success Stories page to discover
-        more inspiring testimonials from our satisfied customers. Join the
-        Luminae community and experience the joy of radiant, healthy skin.
-      </p>
-    </div>
-  </div>
-</div>
+  
+
+<%- include('../partials/end')%>

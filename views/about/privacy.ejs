@@ -1,42 +1,55 @@
-<% layout('layouts/boilerplate')%>
+<%- include('../partials/head.ejs') %>
+</head>
 
-<div class="container my-5">
-  <h1 class="mb-4 text-center">Privacy Policy</h1>
-  <p>
-    This Privacy Policy describes how Luminae Skincare ("we", "us", or "our")
-    collects, uses, and discloses your personal information when you use our
-    website.
-  </p>
-  <p>
-    <strong>Information We Collect:</strong>
-    We may collect personal information that you provide to us, such as your
-    name, email address, and contact information when you subscribe to our
-    newsletter or contact us through the website.
-  </p>
-  <p>
-    <strong>How We Use Your Information:</strong>
-    We may use your personal information to send you marketing communications,
-    respond to your inquiries, and improve our services.
-  </p>
-  <p>
-    <strong>Sharing Your Information:</strong>
-    We do not sell, trade, or otherwise transfer your personal information to
-    third parties. Your information may be shared with our service providers for
-    the purpose of providing our services to you.
-  </p>
-  <p>
-    <strong>Security:</strong>
-    We take reasonable measures to protect your personal information from
-    unauthorized access, use, or disclosure.
-  </p>
-  <p>
-    <strong>Changes to this Privacy Policy:</strong>
-    We may update this Privacy Policy from time to time, and any changes will be
-    posted on this page.
-  </p>
-  <p>
-    <strong>Contact Us:</strong>
-    If you have any questions or concerns about our Privacy Policy, please
-    contact us at privacy@luminaeskincare.com.
-  </p>
-</div>
+<body>
+  <%- include('../partials/navbar')%>
+  <main class="main-container mb-5 px-3">
+    <div class="my-5 d-flex flex-column align-items-center">
+      <h1 class="center-title mb-3">Privacy Policy</h1>
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <p>
+            This Privacy Policy describes how Luminae Skincare ("we", "us", or "our")
+            collects, uses, and discloses your personal information when you use our
+            website.
+          </p>
+          <p>
+            <strong>Information We Collect:</strong>
+            We may collect personal information that you provide to us, such as your
+            name, email address, and contact information when you subscribe to our
+            newsletter or contact us through the website.
+          </p>
+          <p>
+            <strong>How We Use Your Information:</strong>
+            We may use your personal information to send you marketing communications,
+            respond to your inquiries, and improve our services.
+          </p>
+          <p>
+            <strong>Sharing Your Information:</strong>
+            We do not sell, trade, or otherwise transfer your personal information to
+            third parties. Your information may be shared with our service providers for
+            the purpose of providing our services to you.
+          </p>
+          <p>
+            <strong>Security:</strong>
+            We take reasonable measures to protect your personal information from
+            unauthorized access, use, or disclosure.
+          </p>
+          <p>
+            <strong>Changes to this Privacy Policy:</strong>
+            We may update this Privacy Policy from time to time, and any changes will be
+            posted on this page.
+          </p>
+          <p>
+            <strong>Contact Us:</strong>
+            If you have any questions or concerns about our Privacy Policy, please
+            contact us at privacy@luminaeskincare.com.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  
+
+<%- include('../partials/end')%>
+

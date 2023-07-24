@@ -1,12 +1,25 @@
-<% layout('layouts/boilerplate')%>
+<%- include('../partials/head.ejs') %>
+</head>
 
-<div class="content">
-  <h1 class="mb-4">Careers</h1>
-  <div class="row w-100">
-    <div class="col-md-6 offset-md-3">
-      <ul class="list-group">
-        <li class="list-group-item">No jobs available right now</li>
-      </ul>
+<body>
+  <%- include('../partials/navbar')%>
+
+  <main class="main-container mb-5">
+    <div class="my-5 d-flex flex-column align-items-center">
+      <h1 class="mb-3 center-title">Careers</h1>
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <ul class="list-group">
+            <li class="list-group-item">No jobs available right now</li>
+          </ul>
+        </div>
+        <div class="row my-5 font-sz-sm mx-1">
+          <div class="col-md-6 offset-md-3">
+            Stay tuned for future opportunities! We are always on the lookout for talented individuals to join our team.</div>
+          </div>
+      </div>
     </div>
-  </div>
-</div>
+
+  
+
+<%- include('../partials/end')%>

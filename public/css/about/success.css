@@ -1,0 +1,24 @@
+.success-banner {
+  background-image: url('/images/success/successbanner.jpg');
+}
+
+.testimonial-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  background-color: #fff;
+  margin-bottom: 15px;
+}
+
+.testimonial-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.testimonial-card p {
+  margin-bottom: 0;
+}

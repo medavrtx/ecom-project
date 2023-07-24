@@ -84,7 +84,7 @@
               <div class="col-md-12">
                 <label for="title">Product name</label>
                 <input
-                  class="form-control product-form-input"
+                  class="form-control box-form-input"
                   type="text"
                   name="title"
                   id="title"
@@ -99,10 +99,10 @@
               <div class="col-md-12">
                 <label for="price">Price</label>
                 <div class="input-group">
-                  <span class="input-group-text" id="dollar-sign">$</span>
+                  <span class="input-group-symbol" id="dollar-sign">$</span>
                   <input
                     type="text"
-                    class="form-control product-form-input price-input"
+                    class="form-control box-form-input input-price"
                     name="price"
                     id="price"
                     oninput="formatPriceInput(this)"
@@ -115,10 +115,10 @@
 
             <!-- DESCRIPTION -->
             <div class="row mb-3">
-              <div class="col-md-12 custom-form">
+              <div class="col-md-12 underline-form">
                 <label for="description">Description</label>
                 <textarea
-                  class="form-control product-form-textarea"
+                  class="form-control box-form-textarea"
                   rows="5"
                   name="description"
                   id="description"
