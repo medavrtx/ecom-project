@@ -1,38 +1,34 @@
+const express = require('express');
+const session = require('express-session');
 const path = require('path');
+const mongoose = require('mongoose');
+const MongoDBStore = require('connect-mongodb-session')(session);
+const flash = require('connect-flash');
+const csrf = require('csurf');
 require('dotenv').config({ path: './.env.local' });
 
-const bodyParser = require('body-parser');
-const express = require('express');
-const mongoose = require('mongoose');
-const session = require('express-session');
-const MongoDBStore = require('connect-mongodb-session')(session);
-const csrf = require('csurf');
-const flash = require('connect-flash');
+const ejsMate = require('ejs-mate');
 const multer = require('multer');
 const compression = require('compression');
-const ejsMate = require('ejs-mate');
+const bodyParser = require('body-parser');
+
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+const authRoutes = require('./routes/auth');
+const aboutRoutes = require('./routes/about');
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
 
-const fileFilter = (req, file, cb) => {
-  if (
-    file.mimetype === 'image/png' ||
-    file.mimetype === 'image/jpg' ||
-    file.mimetype === 'image/jpeg'
-  ) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
+const dbUrl = process.env.MONGO_URI;
+const secret = process.env.SESSION_SECRET || 'thisshouldbeasecret';
 
 const app = express();
-const store = new MongoDBStore({
-  uri: process.env.MONGO_URI,
-  collection: 'sessions'
-});
-const csrfProtection = csrf();
+
+// File Storing
+const fileFilter = (req, file, cb) => {
+  cb(null, file.mimetype === 'image/jpg');
+};
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -43,31 +39,37 @@ const fileStorage = multer.diskStorage({
   }
 });
 
+app.use(
+  multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
+);
+
+// EJS Views
 app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-const adminRoutes = require('./routes/admin');
-const shopRoutes = require('./routes/shop');
-const authRoutes = require('./routes/auth');
-const aboutRoutes = require('./routes/about');
+// Initial Config
+const store = new MongoDBStore({
+  uri: dbUrl,
+  collection: 'sessions'
+});
 
 app.use(compression());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(
-  multer({ storage: fileStorage, fileFilter: fileFilter }).single('image')
-);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
-app.use(
-  session({
-    secret: 'mysecret',
-    resave: false,
-    saveUninitialized: false,
-    store: store
-  })
-);
+
+// Session
+const sessionConfig = {
+  secret: secret,
+  resave: false,
+  saveUninitialized: false,
+  store: store
+};
+app.use(session(sessionConfig));
+
+const csrfProtection = csrf();
 app.use(csrfProtection);
 app.use(flash());
 
@@ -79,43 +81,42 @@ app.use((req, res, next) => {
   next();
 });
 
+// Stripe
 app.use((req, res, next) => {
   req.stripePk = process.env.STRIPEPK;
   req.stripeSk = process.env.STRIPESK;
   next();
 });
 
-app.use((req, res, next) => {
-  if (req.session.isLoggedIn) {
-    User.findById(req.session.user._id)
-      .then((user) => {
-        if (!user) {
-          req.user = new User();
-        } else {
-          req.user = user;
-        }
-        next();
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
-  } else {
-    if (!req.session.temporaryCart) {
-      req.session.temporaryCart = { items: [] };
+// Assign user to req.user & Guest User temporaryCart
+app.use(async (req, res, next) => {
+  try {
+    if (req.session.isLoggedIn) {
+      const user = await User.findById(req.session.user._id);
+      req.user = user || new User();
+    } else {
+      if (!req.session.temporaryCart) {
+        req.session.temporaryCart = { items: [] };
+      }
+      req.user = req.session.temporaryCart;
     }
-    req.user = req.session.temporaryCart;
     next();
+  } catch (err) {
+    next(err);
   }
 });
 
+// Routes
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
 app.use(aboutRoutes);
 
-app.get('/500', errorController.get500);
-app.use(errorController.get404);
+app.all('*', (req, res, next) => {
+  next(new ExpressError('Page Not Found', 404));
+});
 
+app.get('/500', errorController.get500);
 app.use((error, req, res, next) => {
   res.status(500).render('500', {
     pageTitle: 'Error',
@@ -127,13 +128,17 @@ app.use((error, req, res, next) => {
 });
 
 mongoose.set('strictQuery', false);
+
+mongoose.connection.on('error', (err) => {
+  console.error('MongoDB connection error:', err);
+});
+
 mongoose
-  .connect(process.env.MONGO_URI, { maxPoolSize: 5 })
+  .connect(dbUrl, { maxPoolSize: 5 })
   .then(() => {
     console.log('Connected to MongoDB');
-
     app.listen(process.env.PORT || 3000);
   })
-  .catch((err) => {
-    console.log(err);
+  .catch((e) => {
+    console.log('Error connecting to MongoDB:', e);
   });

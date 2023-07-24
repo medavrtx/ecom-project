@@ -5,7 +5,7 @@ const Order = require('../models/order');
 const ProductCategory = require('../models/product-category');
 const BestSeller = require('../models/best-seller');
 
-const fileHelper = require('../util/file');
+const fileHelper = require('../utils/File');
 
 // GET ADMIN
 exports.getAdmin = async (req, res, next) => {

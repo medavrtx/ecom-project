@@ -1,112 +1,112 @@
 <footer class="footer bg-light pt-3 mt-auto text-dark">
-  <!-- Newsletter  -->
-  <div class="newsletter row mx-auto my-5 container">
-    <div class="col-md-6">
-      <h3>NEWSLETTER</h3>
-      <p class="my-3">
-        Be the first to learn about our latest news, products and exclusive
-        offers.
-      </p>
-      <form action="/newsletter" method="POST">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-        <div class="input-group mb-3 custom-form">
-          <label for="email"></label>
-          <input
-            class="form-control"
-            type="email"
-            name="email"
-            placeholder="Email address"
-          />
-          <div class="input-group-append">
-            <button class="btn btn-outline-dark">SUBSCRIBE</button>
+    <!-- Newsletter  -->
+    <div class="newsletter row mx-auto my-5 container">
+      <div class="col-md-6">
+        <h3>NEWSLETTER</h3>
+        <p class="my-3">
+          Be the first to learn about our latest news, products and exclusive
+          offers.
+        </p>
+        <form action="/newsletter" method="POST">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+          <div class="input-group mb-3 custom-form">
+            <label for="email"></label>
+            <input
+              class="form-control"
+              type="email"
+              name="email"
+              placeholder="Email address"
+            />
+            <div class="input-group-append">
+              <button class="btn btn-outline-dark">SUBSCRIBE</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  
+    <!-- Footer Notes -->
+    <div class="footer-notes pt-5">
+      <div class="row mx-auto container">
+        <!-- Brand -->
+        <div class="col-md-4 footer-brand py-4">
+          <div class="brand brand-mark">LUMINAE</div>
+          <div class="footer-socials">
+            <div class="icon-imagebox"><div class="facebook"></div></div>
+            <div class="icon-imagebox"><div class="instagram"></div></div>
+            <div class="icon-imagebox"><div class="twitter"></div></div>
           </div>
         </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Footer Notes -->
-  <div class="footer-notes pt-5">
-    <div class="row mx-auto container">
-      <!-- Brand -->
-      <div class="col-md-4 footer-brand py-4">
-        <div class="brand brand-mark">LUMINAE</div>
-        <div class="footer-socials">
-          <div class="icon-imagebox"><div class="facebook"></div></div>
-          <div class="icon-imagebox"><div class="instagram"></div></div>
-          <div class="icon-imagebox"><div class="twitter"></div></div>
+  
+        <!-- Links -->
+        <div class="col-md-8 row">
+          <!-- Shop -->
+          <div class="col">
+            <h5>Shop</h5>
+            <ul class="link-list">
+              <li>
+                <a href="/shop-all">Shop All</a>
+              </li>
+              <li>
+                <a href="/shop/kits">Kits</a>
+              </li>
+              <li>
+                <a href="/shop/skincare">Skincare</a>
+              </li>
+              <li>
+                <a href="/shop/sun%20protection">Sun Protection</a>
+              </li>
+            </ul>
+          </div>
+          <!-- About -->
+          <div class="col">
+            <h5>About</h5>
+            <ul class="link-list">
+              <li>
+                <a href="/brand">Brand</a>
+              </li>
+              <li>
+                <a href="/routine">Routine</a>
+              </li>
+              <li>
+                <a href="/research">Research</a>
+              </li>
+              <li>
+                <a href="/success">Success Stories</a>
+              </li>
+            </ul>
+          </div>
+          <!-- Contact -->
+          <div class="col">
+            <h5>Contact</h5>
+            <ul class="link-list">
+              <li>
+                <a href="/faqs">FAQs</a>
+              </li>
+              <li>
+                <a href="/contact">Contact</a>
+              </li>
+              <li>
+                <a href="/careers">Careers</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
-
-      <!-- Links -->
-      <div class="col-md-8 row">
-        <!-- Shop -->
-        <div class="col">
-          <h5>Shop</h5>
-          <ul class="link-list">
-            <li>
-              <a href="/shop-all">Shop All</a>
-            </li>
-            <li>
-              <a href="/shop/kits">Kits</a>
-            </li>
-            <li>
-              <a href="/shop/skincare">Skincare</a>
-            </li>
-            <li>
-              <a href="/shop/sun%20protection">Sun Protection</a>
-            </li>
-          </ul>
+  
+      <div class="py-5 mx-auto copyright-links">
+        <div class="privacy-terms">
+          <a href="/privacy-policy">Privacy Policy</a>
+          |
+          <a href="/terms-conditions">Terms & Conditions</a>
+          |
         </div>
-        <!-- About -->
-        <div class="col">
-          <h5>About</h5>
-          <ul class="link-list">
-            <li>
-              <a href="/brand">Brand</a>
-            </li>
-            <li>
-              <a href="/routine">Routine</a>
-            </li>
-            <li>
-              <a href="/research">Research</a>
-            </li>
-            <li>
-              <a href="/success">Success Stories</a>
-            </li>
-          </ul>
-        </div>
-        <!-- Contact -->
-        <div class="col">
-          <h5>Contact</h5>
-          <ul class="link-list">
-            <li>
-              <a href="/faqs">FAQs</a>
-            </li>
-            <li>
-              <a href="/contact">Contact</a>
-            </li>
-            <li>
-              <a href="/careers">Careers</a>
-            </li>
-          </ul>
-        </div>
+        <div>&copy; 2023 Luminae</div>
       </div>
     </div>
-
-    <div class="py-5 mx-auto copyright-links">
-      <div class="privacy-terms">
-        <a href="/privacy-policy">Privacy Policy</a>
-        |
-        <a href="/terms-conditions">Terms & Conditions</a>
-        |
-      </div>
-      <div>&copy; 2023 Luminae</div>
+  
+    <div class="alert alert-warning my-0" role="alert">
+      This is a mock site for demonstration purposes only. The content and
+      information on this website are not real.
     </div>
-  </div>
-
-  <div class="alert alert-warning my-0" role="alert">
-    This is a mock site for demonstration purposes only. The content and
-    information on this website are not real.
-  </div>
-</footer>
+  </footer>

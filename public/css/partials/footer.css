@@ -1,0 +1,115 @@
+.footer {
+  width: 100%;
+  border-top: 1px solid var(--light-border);
+}
+
+.footer-notes {
+  background-image: linear-gradient(
+    90deg,
+    var(--gradient-color),
+    var(--gradient-neutral)
+  );
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.footer-socials {
+  display: flex;
+}
+
+.icon-imagebox {
+  width: 25px;
+  height: 25px;
+  margin: 5px;
+  background-color: transparent;
+}
+.icon-imagebox:hover {
+  cursor: pointer;
+}
+
+.facebook {
+  -webkit-mask-image: url(/icons/facebook.png);
+  mask-image: url(/icons/facebook.png);
+  align-self: center;
+  width: 100%;
+  height: 100%;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background-color: var(--dark-border);
+}
+.facebook:hover {
+  transition: 300ms;
+  opacity: 60%;
+}
+
+.instagram {
+  -webkit-mask-image: url(/icons/instagram.png);
+  mask-image: url(/icons/instagram.png);
+  align-self: center;
+  width: 100%;
+  height: 100%;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background-color: var(--dark-border);
+}
+.instagram:hover {
+  transition: 300ms;
+  opacity: 60%;
+}
+
+.twitter {
+  -webkit-mask-image: url(/icons/twitter.png);
+  mask-image: url(/icons/twitter.png);
+  align-self: center;
+  width: 100%;
+  height: 100%;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  background-color: var(--dark-border);
+}
+.twitter:hover {
+  transition: 300ms;
+  opacity: 60%;
+}
+
+.copyright-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 576px) {
+  .copyright-links {
+    font-size: 0.7rem;
+  }
+}
+
+.privacy-terms {
+  margin-right: 5px;
+}
+
+.privacy-terms a {
+  color: var(--link-color);
+}
+
+.privacy-terms a:hover {
+  opacity: 0.6;
+}
