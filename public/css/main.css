@@ -134,8 +134,6 @@ h5 {
   text-align: center;
   position: relative;
   height: 300px;
-  /* border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px; */
 }
 
 @media (max-width: 768px) {
@@ -156,8 +154,6 @@ h5 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px; */
 }
 
 .underline-form {

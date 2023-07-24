@@ -16,3 +16,9 @@
 .quantity-btn {
   font-family: 'Verdana';
 }
+
+@media (max-width: 768px) {
+  .cart-delete {
+    display: none;
+  }
+}

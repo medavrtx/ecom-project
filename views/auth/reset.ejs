@@ -1,6 +1,6 @@
 <%- include('../partials/head.ejs') %>
 </head>
-
+<% if (isAuthenticated) {oldInput.email = user.email}%>
 <body>
   <%- include('../partials/navbar')%>
 
