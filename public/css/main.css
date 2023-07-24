@@ -55,7 +55,6 @@ h5 {
 
 .center-title {
   text-align: center;
-  font-size: 36px;
 }
 
 .image-wrapper {
@@ -336,54 +335,6 @@ h5 {
 
 .testimonial-card p {
   margin-bottom: 0;
-}
-
-/* CART */
-
-.cart-product-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 110px;
-  height: 110px;
-  overflow: hidden;
-  border-radius: 5px;
-}
-
-.cart-product-image img {
-  width: 100%;
-}
-
-.cart-product-price {
-  font-size: 0.9rem;
-}
-
-.cart-product-qty {
-  text-align: center;
-  width: 40px;
-}
-
-.cart-product-update {
-  display: flex;
-  flex-direction: row;
-}
-
-.cart-product-delete:hover {
-  opacity: 50%;
-  cursor: pointer;
-}
-
-.quantity-btn {
-  font-family: 'Verdana';
-}
-
-@media (max-width: 575px) {
-  .col-lg-3 {
-    order: 2;
-  }
-  .col-lg-2 {
-    order: 1;
-  }
 }
 
 /* ACCOUNT */
