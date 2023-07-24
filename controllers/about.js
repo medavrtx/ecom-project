@@ -131,6 +131,7 @@ exports.postNewsletter = (req, res, next) => {
     const email = req.body.email.trim();
     const message = `Thank you ${email} from joining our newsletter!`;
     if (email.length > 0) {
+      req.flash('success', 'Subscription successful!');
       res.render('about/thank-you', {
         pageTitle: 'Thank You',
         path: '/thank-you',
@@ -140,7 +141,8 @@ exports.postNewsletter = (req, res, next) => {
         isAdmin: req.session.isAdmin
       });
     } else {
-      res.redirect('/');
+      req.flash('error', 'Invalid email address');
+      res.redirect('/error');
     }
   } catch (err) {
     next(err);

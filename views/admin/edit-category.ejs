@@ -61,7 +61,7 @@
                   <a
                     href="/admin/products/<%= product.productId._id %>?edit=true"
                   >
-                    <div class="product-img">
+                    <div class="overflow-hide">
                       <img
                         class="img-fluid d-block mx-auto img-hover"
                         src="/<%= product.productId.image %>"
@@ -70,7 +70,7 @@
                     </div>
                   </a>
                   <p
-                    class="d-block text-dark text-decoration-none py-2 my-0 product-name"
+                    class="d-block text-dark text-decoration-none py-2 my-0 overflow-hide"
                   >
                     <%= product.productId.title %>
                   </p>

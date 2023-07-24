@@ -1,5 +1,5 @@
 <% if (success !== undefined && success.length) {%>
-<div class="alert alert-success alert-dismissible fade show" role="alert">
+<div class="alert alert-success alert-dismissible fade show z-index-4" role="alert">
   <%= success %>
   <button
     type="button"
@@ -9,7 +9,7 @@
   ></button>
 </div>
 <% } %> <% if (error && error.length) {%>
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
+<div class="alert alert-danger alert-dismissible fade show z-index-4" role="alert">
   <%= error %>
   <button
     type="button"

@@ -1,0 +1,23 @@
+.detail-products-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 350px;
+  height: 500px;
+  overflow: hidden;
+}
+.detail-products-image img {
+  width: 100%;
+}
+
+.detail-products-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 300px;
+  width: 400px;
+  justify-content: space-evenly;
+}
+.detail-products-info .products-title {
+  font-size: 36px;
+}

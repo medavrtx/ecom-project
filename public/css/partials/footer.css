@@ -11,16 +11,6 @@
   );
 }
 
-.footer-brand {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.footer-socials {
-  display: flex;
-}
-
 .icon-imagebox {
   width: 25px;
   height: 25px;
@@ -89,10 +79,6 @@
 }
 
 .copyright-links {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
   font-size: 0.9rem;
 }
 

@@ -1,31 +1,33 @@
 <%- include('../partials/head.ejs') %>
-  <link rel="stylesheet" href="/css/shop/index.css" />
-  <link rel="stylesheet" href="/vendor/owl.carousel.css" />
-  <link rel="stylesheet" href="/vendor/owl.theme.default.css" />
+  <link rel="stylesheet" href="/css/shop/shop.css" />
 </head>
 
 <body>
   <%- include('../partials/navbar')%>
-  <main>
+
+  <div class="my-5">
+    <h1 class="center-title"><%= pageTitle %></h1>
+  </div>
+  <div class="category-links collapse-menu">
+    <a href="/shop-all">All</a>
+    <a href="/shop/best-sellers">Best Sellers</a>
+    <% if (categories) { %> <% for( let category of categories ) { %>
+    <a href="/shop/<%=category.title.toLowerCase() %>"><%=category.title%></a>
+    <% } %> <% } %>
+    <button
+      class="category-links-toggle collapse-menu-toggle"
+      onclick="toggleLinks()"
+    >
+      Show
+    </button>
+  </div>
+
+  <main class="main-container">
 
     <%- include('../partials/flash') %>
 
-    <div class="my-5">
-      <h1 class="center-title"><%= pageTitle %></h1>
-    </div>
-    <div class="category-links collapse-menu">
-      <a href="/shop-all">All</a>
-      <a href="/shop/best-sellers">Best Sellers</a>
-      <% if (categories) { %> <% for( let category of categories ) { %>
-      <a href="/shop/<%=category.title.toLowerCase() %>"><%=category.title%></a>
-      <% } %> <% } %>
-      <button
-        class="category-links-toggle collapse-menu-toggle"
-        onclick="toggleLinks()"
-      >
-        Show
-      </button>
-    </div>
+
+
     <div class="container-lg">
       <div class="row mx-5">
         <!-- Products List -->
@@ -34,9 +36,9 @@
           <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 align-items-start">
             <% for( let product of products ) { %>
             <div class="col mb-4">
-              <div class="card">
+              <div class="card outline-dark">
                 <a href="/shop-all/<%= product._id %>">
-                  <div class="product-img">
+                  <div class="overflow-hide">
                     <img
                       class="img-fluid d-block mx-auto img-hover"
                       src="/<%= product.image %>"
@@ -46,7 +48,7 @@
                 </a>
                 <p
                   href="#"
-                  class="d-block text-dark text-decoration-none py-2 my-0 product-name"
+                  class="d-block text-dark text-decoration-none py-2 my-0 overflow-hide"
                 >
                   <%= product.title %>
                 </p>
@@ -64,9 +66,8 @@
       hasNextPage: hasNextPage, hasPreviousPage: hasPreviousPage, nextPage:
       nextPage, previousPage: previousPage, lastPage: lastPage, path: path, }) %>
     </div>
-    
 
-    <script src="/vendor/owl.carousel.js"></script>
+    <script src="/js/collapse-menu.js"></script>
 <%- include('../partials/end')%>
 
 

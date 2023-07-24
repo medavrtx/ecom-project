@@ -15,7 +15,7 @@ exports.getHome = async (req, res, next) => {
       .sort({ order: 1 });
 
     res.render('shop/home', {
-      pageTitle: 'Luminae Skincare',
+      pageTitle: null,
       path: '/',
       bestSellers,
       user: req.user,
@@ -46,7 +46,7 @@ exports.getProducts = async (req, res, next) => {
     }
 
     res.render('shop/shop', {
-      pageTitle: 'Shop All Products',
+      pageTitle: 'Shop All',
       path: '/shop-all',
       products,
       categories,

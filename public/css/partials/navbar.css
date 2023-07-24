@@ -19,26 +19,13 @@
 }
 
 @media (min-width: 1200px) {
-  /* Styles for expanded (not collapsed) navbar */
   .navbar-expand-lg .navbar-nav {
     align-items: center;
   }
 }
 
 @media (max-width: 1200px) {
-  /* Styles for collapsed navbar */
   .navbar-collapse .navbar-nav {
     align-items: flex-start;
   }
-}
-
-.imagebox {
-  width: 22px;
-  height: 22px;
-  border-radius: 10px;
-  background-color: transparent;
-}
-
-.imagebox:hover {
-  cursor: pointer;
 }
