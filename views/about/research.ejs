@@ -1,103 +1,111 @@
-<% layout('layouts/boilerplate')%>
-<div class="container">
-  <div class="row custom-banner research-banner">
-    <div class="custom-overlay">
-      <h1 class="brand mb-5 my-5">Discover the Science Behind Luminae</h1>
-      <p>Explore our groundbreaking research and studies.</p>
-    </div>
-  </div>
+<%- include('../partials/head.ejs') %>
+  <link rel="stylesheet" href="/css/about/research.css" />
+</head>
 
-  <!-- INTRO -->
+<body>
+  <%- include('../partials/navbar')%>
 
-  <div class="intro-section">
-    <div class="mx-5">
-      <p class="intro-text">
-        We are committed to delivering skincare products that are backed by
-        scientific research and proven efficacy. Our dedication to
-        evidence-based formulations ensures that you can trust the quality and
-        effectiveness of our products.
-      </p>
-      <p>
-        At Luminae, we believe in the power of continuous research and
-        innovation. We collaborate with renowned experts in the field of
-        skincare to stay at the forefront of scientific advancements. Our
-        research team explores the latest studies, ingredients, and technologies
-        to develop products that deliver visible results.
-      </p>
-      <p>
-        We conduct rigorous testing and clinical trials to validate the
-        performance and safety of our formulations. Our products are subjected
-        to comprehensive testing protocols to ensure they meet the highest
-        standards of quality and efficacy. We believe in transparency, and we
-        proudly share the results of these studies with our customers.
-      </p>
-      <p>
-        Our commitment to research goes beyond our own formulations. We actively
-        engage with scientific literature and studies conducted by independent
-        researchers and institutions. We stay informed about breakthrough
-        discoveries and industry trends, allowing us to incorporate the latest
-        findings into our product development process.
-      </p>
-      <p>
-        We understand that skincare is a deeply personal and evolving journey.
-        Our research and studies page serves as a resource for our customers,
-        providing valuable information about the science behind skincare. We aim
-        to empower you with knowledge and insights that can help you make
-        informed decisions about your skincare routine.
-      </p>
-      <p>
-        Explore our research and studies page to learn more about the
-        ingredients we use, the technologies we embrace, and the scientific
-        principles that guide our product development. We are dedicated to
-        providing you with the utmost transparency and ensuring that every
-        Luminae product you use is backed by sound research and proven results.
-      </p>
-      <p>
-        Thank you for choosing Luminae Skincare, where science meets beauty.
-        Together, let's unlock the potential of your skin through the power of
-        research and innovation.
-      </p>
-    </div>
-  </div>
-
-  <!-- STUDIES -->
-
-  <div class="studies-section mx-5">
-    <div class="row studies-title">
-      <h1>Studies</h1>
-    </div>
-    <div class="row studies-row">
-      <div class="col-lg-6">
-        <div class="research-card">
-          <h3>UV Studies on Skin</h3>
-          <p>
-            Our comprehensive UV studies on skin explore the effects of various
-            UV radiation wavelengths on the skin. We investigate the role of UV
-            exposure in skin aging, pigmentation, and the development of skin
-            cancers. Our findings contribute to the development of effective sun
-            protection measures and innovative skincare products.
-          </p>
-          <a href="/research/uv" class="btn btn-outline-dark btn-cart"
-            >Read More</a
-          >
-        </div>
-      </div>
-      <div class="col-lg-6">
-        <div class="research-card">
-          <h3>Organic Ingredients for Skincare</h3>
-          <p>
-            We delve into the benefits of organic ingredients for skincare and
-            their potential in promoting healthy and nourished skin. Our
-            research focuses on the efficacy of natural extracts, oils, and
-            botanicals in enhancing skin hydration, reducing inflammation, and
-            improving overall skin appearance. Discover the power of nature in
-            our organic skincare formulations.
-          </p>
-          <a href="/research/organic" class="btn btn-outline-dark btn-cart"
-            >Read More</a
-          >
-        </div>
+  <main class="container">
+    <div class="row custom-banner research-banner">
+      <div class="custom-overlay">
+        <h1 class="brand mb-5 my-5">Discover the Science Behind Luminae</h1>
+        <p>Explore our groundbreaking research and studies.</p>
       </div>
     </div>
-  </div>
-</div>
+  
+    <!-- INTRO -->
+  
+    <div class="container-lg pt-5">
+        <p class="mb-5">
+          We are committed to delivering skincare products that are backed by
+          scientific research and proven efficacy. Our dedication to
+          evidence-based formulations ensures that you can trust the quality and
+          effectiveness of our products.
+        </p>
+        <p>
+          At Luminae, we believe in the power of continuous research and
+          innovation. We collaborate with renowned experts in the field of
+          skincare to stay at the forefront of scientific advancements. Our
+          research team explores the latest studies, ingredients, and technologies
+          to develop products that deliver visible results.
+        </p>
+        <p>
+          We conduct rigorous testing and clinical trials to validate the
+          performance and safety of our formulations. Our products are subjected
+          to comprehensive testing protocols to ensure they meet the highest
+          standards of quality and efficacy. We believe in transparency, and we
+          proudly share the results of these studies with our customers.
+        </p>
+        <p>
+          Our commitment to research goes beyond our own formulations. We actively
+          engage with scientific literature and studies conducted by independent
+          researchers and institutions. We stay informed about breakthrough
+          discoveries and industry trends, allowing us to incorporate the latest
+          findings into our product development process.
+        </p>
+        <p>
+          We understand that skincare is a deeply personal and evolving journey.
+          Our research and studies page serves as a resource for our customers,
+          providing valuable information about the science behind skincare. We aim
+          to empower you with knowledge and insights that can help you make
+          informed decisions about your skincare routine.
+        </p>
+        <p>
+          Explore our research and studies page to learn more about the
+          ingredients we use, the technologies we embrace, and the scientific
+          principles that guide our product development. We are dedicated to
+          providing you with the utmost transparency and ensuring that every
+          Luminae product you use is backed by sound research and proven results.
+        </p>
+        <p>
+          Thank you for choosing Luminae Skincare, where science meets beauty.
+          Together, let's unlock the potential of your skin through the power of
+          research and innovation.
+        </p>
+    </div>
+  
+    <!-- STUDIES -->
+  
+    <div class="container-lg py-5">
+      <div class="row py-3">
+        <h1>Studies</h1>
+      </div>
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-6">
+          <div class="research-card">
+            <h3>UV Studies on Skin</h3>
+            <p>
+              Our comprehensive UV studies on skin explore the effects of various
+              UV radiation wavelengths on the skin. We investigate the role of UV
+              exposure in skin aging, pigmentation, and the development of skin
+              cancers. Our findings contribute to the development of effective sun
+              protection measures and innovative skincare products.
+            </p>
+            <a href="/research/uv" class="btn btn-outline-dark btn-cart"
+              >Read More</a
+            >
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="research-card">
+            <h3>Organic Ingredients for Skincare</h3>
+            <p>
+              We delve into the benefits of organic ingredients for skincare and
+              their potential in promoting healthy and nourished skin. Our
+              research focuses on the efficacy of natural extracts, oils, and
+              botanicals in enhancing skin hydration, reducing inflammation, and
+              improving overall skin appearance. Discover the power of nature in
+              our organic skincare formulations.
+            </p>
+            <a href="/research/organic" class="btn btn-outline-dark btn-cart"
+              >Read More</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+<%- include('../partials/end')%>
+
+

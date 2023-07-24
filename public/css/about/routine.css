@@ -1,0 +1,17 @@
+.routine-banner {
+  background-image: url('/images/routine/routine1.jpg');
+}
+
+.routine-card {
+  outline: 1px solid rgb(199, 199, 199);
+  border-radius: 20px;
+  margin-bottom: 30px;
+}
+
+.routine-card p {
+  font-size: 1.2rem;
+}
+
+.routine-img {
+  max-height: 400px;
+}

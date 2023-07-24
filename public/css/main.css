@@ -166,15 +166,6 @@ h5 {
   margin-bottom: 100px;
 }
 
-.img-hover {
-  transition: all 0.5s;
-}
-
-.img-hover:hover {
-  transform: scale(1.03);
-  cursor: pointer;
-}
-
 .brand {
   font-family: 'Crimson Text';
 }
@@ -251,87 +242,6 @@ h5 {
 
 .z-index-4 {
   z-index: 4;
-}
-
-/* ROUTINE */
-
-.routine-banner {
-  background-image: url('/images/routine/routine1.jpg');
-}
-
-.routine-card {
-  outline: 1px solid rgb(199, 199, 199);
-  border-radius: 20px;
-  margin-bottom: 30px;
-}
-
-.routine-card p {
-  font-size: 1.2rem;
-}
-
-.routine-img {
-  max-height: 400px;
-}
-
-/* RESEARCH */
-
-.research-banner {
-  background-image: url('/images/research/research2.jpg');
-}
-
-.intro-section {
-  padding-top: 50px;
-  font-size: 1.2rem;
-}
-
-.intro-text {
-  margin-bottom: 30px;
-}
-
-.studies-section {
-  padding: 50px 0;
-}
-
-.studies-title {
-  padding: 30px 0;
-}
-
-.studies-row {
-  display: flex;
-  justify-content: center;
-}
-
-.research-card {
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  margin-bottom: 30px;
-}
-
-.research-card h3 {
-  color: #273d40;
-  border-bottom: 1px solid rgb(199, 199, 199);
-  margin-top: 0;
-  padding: 15px;
-  max-height: 50px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.research-card p {
-  margin-top: 15px;
-  padding: 0 15px;
-  max-height: 320px;
-  font-size: 1.2rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.article-img {
-  max-height: 360px;
-  align-items: center;
 }
 
 /* SUCCESS */

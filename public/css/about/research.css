@@ -1,0 +1,35 @@
+.research-banner {
+  background-image: url('/images/research/research2.jpg');
+}
+
+.research-card {
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  margin-bottom: 30px;
+  padding: 15px;
+}
+
+.research-card h3 {
+  color: #273d40;
+  border-bottom: 1px solid rgb(199, 199, 199);
+  margin-top: 0;
+  max-height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.research-card p {
+  margin-top: 15px;
+  max-height: 320px;
+  font-size: 1.2rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.article-img {
+  max-height: 360px;
+  align-items: center;
+}

@@ -1,86 +1,104 @@
-<% layout('layouts/boilerplate')%>
-<div class="container font-sz-lg-font">
-  <div class="row custom-banner routine-banner">
-    <div class="custom-overlay">
-      <h1 class="brand mb-5 my-5">Discover Your Perfect Skincare Routine</h1>
-      <p>Follow these 3 simple steps for healthy, glowing skin.</p>
-    </div>
-  </div>
+<%- include('../partials/head.ejs') %>
+  <link rel="stylesheet" href="/css/about/routine.css" />
+</head>
 
-  <div class="container mt-5">
-    <div class="row mx-3">
+<body>
+  <%- include('../partials/navbar')%>
+
+  <main class="container">
+    <div class="row custom-banner routine-banner">
+      <div class="custom-overlay">
+        <h1 class="brand mb-5 my-5">Discover Your Perfect Skincare Routine</h1>
+        <p>Follow these 3 simple steps for healthy, glowing skin.</p>
+      </div>
+    </div>
+  
+    <div class="container mt-5">
+      <div class="row mx-3">
+        <p>
+          Our carefully curated 3-step routine is designed to provide you with a
+          streamlined and transformative skincare experience.
+        </p>
+      </div>
+      <div class="row my-5">
+        <div class="col-xl-4 routine-card">
+          <div class="image-wrapper routine-img">
+            <img
+              src="/images/routine/routine2.jpg"
+              class="img-fluid"
+              alt="Step 1"
+            />
+          </div>
+          <h3>Step 1: Cleanse</h3>
+          <p>
+            Begin your skincare journey with our Purity Cleanser. This gentle yet
+            effective cleanser deeply purifies your skin, removing impurities and
+            excess oil without stripping away essential moisture. It sets the
+            foundation for healthy and radiant skin, preparing it for the next
+            steps of your routine.
+          </p>
+        </div>
+        <div class="col-xl-4 routine-card">
+          <div class="image-wrapper routine-img">
+            <img
+              src="/images/routine/routine3.jpg"
+              class="img-fluid"
+              alt="Step 2"
+            />
+          </div>
+          <h3>Step 2: Treat</h3>
+          <p>
+            Next, indulge in our Chemical Exfoliator. This powerful treatment
+            promotes cellular turnover, gently removing dead skin cells to reveal
+            a smoother and more refined complexion. With regular use, it helps to
+            diminish the appearance of fine lines, uneven texture, and
+            hyperpigmentation, leaving your skin revitalized and rejuvenated.
+          </p>
+        </div>
+        <div class="col-xl-4 routine-card">
+          <div class="image-wrapper routine-img">
+            <img
+              src="/images/routine/routine4.jpg"
+              class="img-fluid"
+              alt="Step 3"
+            />
+          </div>
+          <h3>Step 3: Hydrate</h3>
+          <p>
+            Complete your routine with our Luxury Lotion. Enriched with luxurious
+            ingredients, this hydrating lotion provides intense moisture,
+            nourishing your skin and restoring its natural balance. Its
+            lightweight and fast-absorbing formula leave your skin feeling velvety
+            smooth, supple, and luminous.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row mx-3 my-5">
       <p>
-        Our carefully curated 3-step routine is designed to provide you with a
-        streamlined and transformative skincare experience.
+        Together, these three essential steps create a harmonious skincare ritual
+        that addresses your skin's specific needs. Our products are carefully
+        formulated with high-quality ingredients to deliver visible results,
+        empowering you to embrace your natural beauty.
+      </p>
+      <p>
+        At Luminae Skincare, we believe that a simple yet effective routine is the
+        key to unlocking your skin's true potential. Explore our 3-step routine
+        and embark on a journey towards healthier, glowing skin. Elevate your
+        skincare experience with Luminae and experience the transformative power
+        of simplicity.
       </p>
     </div>
-    <div class="row my-5">
-      <div class="col-xl-4 routine-card">
-        <div class="image-wrapper routine-img">
-          <img
-            src="/images/routine/routine2.jpg"
-            class="img-fluid"
-            alt="Step 1"
-          />
-        </div>
-        <h3>Step 1: Cleanse</h3>
-        <p>
-          Begin your skincare journey with our Purity Cleanser. This gentle yet
-          effective cleanser deeply purifies your skin, removing impurities and
-          excess oil without stripping away essential moisture. It sets the
-          foundation for healthy and radiant skin, preparing it for the next
-          steps of your routine.
-        </p>
-      </div>
-      <div class="col-xl-4 routine-card">
-        <div class="image-wrapper routine-img">
-          <img
-            src="/images/routine/routine3.jpg"
-            class="img-fluid"
-            alt="Step 2"
-          />
-        </div>
-        <h3>Step 2: Treat</h3>
-        <p>
-          Next, indulge in our Chemical Exfoliator. This powerful treatment
-          promotes cellular turnover, gently removing dead skin cells to reveal
-          a smoother and more refined complexion. With regular use, it helps to
-          diminish the appearance of fine lines, uneven texture, and
-          hyperpigmentation, leaving your skin revitalized and rejuvenated.
-        </p>
-      </div>
-      <div class="col-xl-4 routine-card">
-        <div class="image-wrapper routine-img">
-          <img
-            src="/images/routine/routine4.jpg"
-            class="img-fluid"
-            alt="Step 3"
-          />
-        </div>
-        <h3>Step 3: Hydrate</h3>
-        <p>
-          Complete your routine with our Luxury Lotion. Enriched with luxurious
-          ingredients, this hydrating lotion provides intense moisture,
-          nourishing your skin and restoring its natural balance. Its
-          lightweight and fast-absorbing formula leave your skin feeling velvety
-          smooth, supple, and luminous.
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="row mx-3 my-5">
-    <p>
-      Together, these three essential steps create a harmonious skincare ritual
-      that addresses your skin's specific needs. Our products are carefully
-      formulated with high-quality ingredients to deliver visible results,
-      empowering you to embrace your natural beauty.
-    </p>
-    <p>
-      At Luminae Skincare, we believe that a simple yet effective routine is the
-      key to unlocking your skin's true potential. Explore our 3-step routine
-      and embark on a journey towards healthier, glowing skin. Elevate your
-      skincare experience with Luminae and experience the transformative power
-      of simplicity.
-    </p>
-  </div>
-</div>
+  
+
+  
+
+<%- include('../partials/end')%>
+
+
+
+
+
+
+
+
