@@ -1,0 +1,29 @@
+.order-card {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+
+.order-product-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  border-radius: 5px;
+  margin: 5px;
+}
+.order-product-image img {
+  height: 100%;
+}
+
+.order-card-title {
+  font-weight: 700;
+}
+
+.order-nothing {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}

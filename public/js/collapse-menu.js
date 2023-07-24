@@ -13,7 +13,7 @@ function toggleLinks() {
       : 'none';
   });
 
-  toggleButton.textContent = isActive ? 'Hide' : 'Show';
+  toggleButton.textContent = isActive ? 'Hide' : 'Show More';
 }
 
 function checkWindowSize() {
@@ -32,7 +32,7 @@ function checkWindowSize() {
     links.forEach((link) => {
       link.style.display = 'block';
     });
-    toggleButton.textContent = 'Show';
+    toggleButton.textContent = 'Show More';
     toggleButton.style.display = 'none';
     document.querySelector('.collapse-menu').classList.remove('active');
   }

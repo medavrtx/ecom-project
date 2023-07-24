@@ -163,6 +163,9 @@ exports.postReset = async (req, res, next) => {
         pageTitle: 'Reset Password',
         path: '/reset',
         errorMessage: errors.array()[0].msg,
+        user: req.user,
+        isAuthenticated: req.session.isLoggedIn,
+        isAdmin: req.session.isAdmin,
         oldInput: {
           email
         },
@@ -177,6 +180,9 @@ exports.postReset = async (req, res, next) => {
         pageTitle: 'Reset Password',
         path: '/reset',
         errorMessage: 'Invalid email or password',
+        user: req.user,
+        isAuthenticated: req.session.isLoggedIn,
+        isAdmin: req.session.isAdmin,
         oldInput: {
           email
         },

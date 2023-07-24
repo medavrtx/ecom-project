@@ -134,8 +134,8 @@ h5 {
   text-align: center;
   position: relative;
   height: 300px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  /* border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px; */
 }
 
 @media (max-width: 768px) {
@@ -156,8 +156,8 @@ h5 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  /* border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px; */
 }
 
 .underline-form {
@@ -209,6 +209,14 @@ h5 {
 .input-price {
   border-left: none;
   padding-left: 0;
+}
+
+.btn-large {
+  width: 150px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* OTHER */
@@ -272,48 +280,6 @@ h5 {
 
 .z-index-4 {
   z-index: 4;
-}
-
-/* ACCOUNT */
-
-.btn-large {
-  width: 150px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* ORDERS */
-
-.order-card {
-  display: flex;
-  flex-direction: row;
-  margin-top: 10px;
-}
-
-.order-product-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 60px;
-  height: 60px;
-  overflow: hidden;
-  border-radius: 5px;
-  margin: 5px;
-}
-.order-product-image img {
-  height: 100%;
-}
-
-.order-card-title {
-  font-weight: 700;
-}
-
-.order-nothing {
-  display: flex;
-  justify-content: center;
-  margin-top: 15px;
 }
 
 /* ADMIN */
