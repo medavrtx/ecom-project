@@ -3,7 +3,6 @@ const router = express.Router();
 
 const aboutController = require('../controllers/about');
 
-// => GET
 router.get('/brand', aboutController.getBrand);
 
 router.get('/routine', aboutController.getRoutine);
@@ -20,9 +19,10 @@ router.get('/success', aboutController.getSuccess);
 
 router.get('/faqs', aboutController.getFaqs);
 
-router.get('/contact', aboutController.getContact);
-
-router.post('/contact', aboutController.postContact);
+router
+  .route('/contact')
+  .get(aboutController.getContact)
+  .post(aboutController.postContact);
 
 router.get('/careers', aboutController.getCareers);
 

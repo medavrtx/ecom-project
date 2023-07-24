@@ -8,66 +8,51 @@ const isAdmin = require('../middleware/is-admin');
 // Middleware to protect admin routes
 router.use(isAdmin);
 
-// /admin => GET
+// /admin
 router.get('/', adminController.getAdmin);
 
 // /admin/products
-
-// /admin/products => GET
 router.get('/products', adminController.getProducts);
 
-// /admin/add-product => GET
-router.get('/products/add', adminController.getAddProduct);
+// /admin/add-product
+router
+  .route('/products/add')
+  .get(adminController.getAddProduct)
+  .post(
+    [
+      body('title').isString().isLength({ min: 1 }).trim(),
+      body('price').isFloat(),
+      body('description').isLength({ min: 1, max: 400 }).trim()
+    ],
+    adminController.postAddProduct
+  );
 
-// /admin/products/add => POST
-router.post(
-  '/products/add',
-  [
-    body('title').isString().isLength({ min: 1 }).trim(),
-    body('price').isFloat(),
-    body('description').isLength({ min: 1, max: 400 }).trim()
-  ],
-  adminController.postAddProduct
-);
-
-// /admin/products/:productId => GET
-router.get('/products/:productId', adminController.getEditProduct);
-
-// /admin/products/:productId => POST
-router.post(
-  '/products/edit',
-  [
-    body('title').isString().isLength({ min: 1 }).trim(),
-    body('price').isFloat(),
-    body('description').isLength({ min: 1, max: 400 }).trim()
-  ],
-
-  adminController.postEditProduct
-);
-
-// /admin/products/:productId/delete => DELETE
-router.delete(
-  '/products/:productId/delete',
-
-  adminController.deleteProduct
-);
+// /admin/products/:productId
+router
+  .route('/products/:productId')
+  .get(adminController.getEditProduct)
+  .post(
+    [
+      body('title').isString().isLength({ min: 1 }).trim(),
+      body('price').isFloat(),
+      body('description').isLength({ min: 1, max: 400 }).trim()
+    ],
+    adminController.postEditProduct
+  )
+  .delete(adminController.deleteProduct);
 
 // /admin/categories
+router
+  .route('/categories')
+  .get(adminController.getCategories)
+  .post(adminController.postAddCategory);
 
-// /admin/categories => GET
-router.get('/categories', adminController.getCategories);
-
-// /admin/categories/add => POST
-router.post('/categories/add', adminController.postAddCategory);
-
-// /admin/categories/:categoryId/delete => DELETE
-router.delete('/categories/:categoryId/delete', adminController.deleteCategory);
-
-// /admin/categories/:categoryId => GET
-router.get('/categories/:categoryId', adminController.getEditCategory);
-
-// /admin/categories/:categoryId => POST
-router.post('/categories/:categoryId', adminController.postEditCategory);
+// /admin/categories/:categoryId
+router
+  .route('/categories/:categoryId')
+  .get(adminController.getEditCategory)
+  .post(adminController.postEditCategory)
+  .delete(adminController.deleteCategory);
 
 // /admin/categories/:categoryId/add-product => POST
 router.post(
@@ -81,16 +66,16 @@ router.delete(
   adminController.deleteProductFromCategory
 );
 
-// /admin/best-sellers => GET
-router.get('/best-sellers', adminController.getBestSellers);
-
-// /admin/best-sellers => POST
-router.post('/best-sellers/add', adminController.postAddBestSeller);
+// /admin/best-sellers
+router
+  .route('/best-sellers')
+  .get(adminController.getBestSellers)
+  .post(adminController.postBestSeller);
 
 // /admin/best-sellers => DELETE
-router.delete('/best-sellers/:productId', adminController.deleteBestSeller);
-
-// /admin/best-sellers => PUT
-router.put('/best-sellers/:productId', adminController.updateBestSellerOrder);
+router
+  .route('/best-sellers/:productId')
+  .put(adminController.updateBestSeller)
+  .delete(adminController.deleteBestSeller);
 
 module.exports = router;

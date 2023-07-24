@@ -15,25 +15,22 @@ router.get('/shop-all/:productId', shopController.getProduct);
 // => GET
 router.get('/shop/:categoryTitle', shopController.getCategory);
 
-// /cart => GET
-router.get('/cart', shopController.getCart);
+// /cart
+router.route('/cart').get(shopController.getCart).post(shopController.postCart);
 
-// /cart => POST
-router.post('/cart', shopController.postCart);
-
-// /cart => POST
+// /cart-delete-item => POST
 router.post('/cart-delete-item', shopController.postCartDeleteProduct);
 
-// /cart => POST
+// /cart-update-item => POST
 router.post('/cart-update-item', shopController.postCartUpdateProduct);
 
 // /checkout => GET
 router.get('/checkout', shopController.getCheckout);
 
-// /checkout => GET
+// /checkout/success => GET
 router.get('/checkout/success', shopController.getCheckoutSuccess);
 
-// /checkout => GET
+// /checkout/cancel => GET
 router.get('/checkout/cancel', shopController.getCheckoutCancel);
 
 module.exports = router;

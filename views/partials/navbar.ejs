@@ -98,7 +98,7 @@
               <a class="dropdown-item" href="/user/<%= user._id %>">Account</a>
             </li>
             <li>
-              <form action="/logoutuser" method="POST">
+              <form action="/logout" method="POST">
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                 <button class="dropdown-item nav-logout" type="submit">
                   Logout

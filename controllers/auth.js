@@ -12,8 +12,6 @@ exports.getLogIn = (req, res, next) => {
   res.render('auth/login', {
     pageTitle: 'Sign In',
     path: '/user/login',
-    isAuthenticated: req.session.isLoggedIn,
-    isAdmin: req.session.isAdmin,
     errorMessage,
     oldInput: {
       email: '',
@@ -62,6 +60,7 @@ exports.postLogIn = async (req, res, next) => {
       req.session.user = user;
       await req.session.save();
 
+      req.flash('success', `Welcome ${user.firstName}!`);
       if (user.isAdmin) {
         return res.redirect('/admin');
       } else {
@@ -79,8 +78,9 @@ exports.postLogIn = async (req, res, next) => {
       },
       validationErrors: []
     });
-  } catch (err) {
-    next(err);
+  } catch (e) {
+    req.flash('error', e.message);
+    res.redirect('/login');
   }
 };
 
@@ -89,8 +89,6 @@ exports.getRegistration = (req, res, next) => {
   res.render('auth/registration', {
     pageTitle: 'Register',
     path: '/registration',
-    isAuthenticated: req.session.isLoggedIn,
-    isAdmin: req.session.isAdmin,
     errorMessage,
     oldInput: {
       email: '',
@@ -121,36 +119,6 @@ exports.postRegistration = async (req, res, next) => {
       });
     }
 
-    if (!agreement) {
-      return res.status(422).render('auth/registration', {
-        path: '/registration',
-        pageTitle: 'Register',
-        errorMessage:
-          'Please agree to the terms by checking the agreement checkbox before submitting the form',
-        oldInput: {
-          email: email,
-          password: password,
-          firstName: firstName,
-          lastName: lastName
-        }
-      });
-    }
-
-    if (password !== confirmPassword) {
-      return res.status(422).render('auth/registration', {
-        path: '/registration',
-        pageTitle: 'Register',
-        errorMessage: 'Passwords do not match',
-        oldInput: {
-          email,
-          password,
-          firstName,
-          lastName,
-          confirmPassword: ''
-        }
-      });
-    }
-
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const user = new User({
@@ -175,6 +143,9 @@ exports.getReset = (req, res, next) => {
   res.render('auth/reset', {
     pageTitle: 'Reset Password',
     path: '/reset',
+    oldInput: {
+      email: null
+    },
     user: req.user,
     isAuthenticated: req.session.isLoggedIn,
     isAdmin: req.session.isAdmin,
@@ -184,28 +155,33 @@ exports.getReset = (req, res, next) => {
 
 exports.postReset = async (req, res, next) => {
   try {
-    const { email, currentPassword, newPassword, confirmPassword } = req.body;
+    const { email, currentPassword, newPassword } = req.body;
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      req.flash('error', 'Invalid email or password');
-      return res.redirect('/login');
-    }
-
-    if (newPassword !== confirmPassword) {
-      req.flash('error', 'Passwords do not match');
-      return res.redirect('/login');
+      return res.status(422).render('auth/reset', {
+        pageTitle: 'Reset Password',
+        path: '/reset',
+        errorMessage: errors.array()[0].msg,
+        oldInput: {
+          email
+        },
+        validationErrors: errors.array()
+      });
     }
 
     const user = await User.findOne({ email });
 
-    if (
-      !user ||
-      !(await bcrypt.compare(currentPassword, user.password)) ||
-      newPassword !== confirmPassword
-    ) {
-      req.flash('error', 'Invalid email or password');
-      return res.redirect('/login');
+    if (!(await bcrypt.compare(currentPassword, user.password))) {
+      return res.status(422).render('auth/reset', {
+        pageTitle: 'Reset Password',
+        path: '/reset',
+        errorMessage: 'Invalid email or password',
+        oldInput: {
+          email
+        },
+        validationErrors: []
+      });
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, 12);
@@ -225,7 +201,7 @@ exports.postReset = async (req, res, next) => {
 };
 
 exports.postLogOut = (req, res, next) => {
-  req.session.destroy((err) => console.log(err));
+  req.session.destroy();
   res.redirect('/');
 };
 
@@ -417,7 +393,6 @@ exports.postSettings = async (req, res, next) => {
       req.flash('success', 'Successfully updated!');
       return res.redirect(`/user/${user._id}`);
     } else {
-      console.log('lol');
       return res.status(422).render('auth/settings', {
         pageTitle: 'Settings',
         path: '/settings',

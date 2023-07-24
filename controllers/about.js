@@ -86,8 +86,8 @@ exports.postContact = (req, res, next) => {
     res.render('about/thank-you', {
       pageTitle: 'Thank You',
       path: '/thank-you',
-      user: req.user,
       message,
+      user: req.user,
       isAuthenticated: req.session.isLoggedIn,
       isAdmin: req.session.isAdmin
     });
@@ -134,8 +134,8 @@ exports.postNewsletter = (req, res, next) => {
       res.render('about/thank-you', {
         pageTitle: 'Thank You',
         path: '/thank-you',
-        user: req.user,
         message,
+        user: req.user,
         isAuthenticated: req.session.isLoggedIn,
         isAdmin: req.session.isAdmin
       });

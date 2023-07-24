@@ -9,7 +9,7 @@ const deleteProduct = async (btn) => {
   }
 
   try {
-    const response = await fetch(`/admin/products/${prodId}/delete`, {
+    const response = await fetch(`/admin/products/${prodId}`, {
       method: 'DELETE',
       headers: {
         'csrf-token': csrf
@@ -35,7 +35,7 @@ const deleteCategory = async (btn) => {
   }
 
   try {
-    const response = await fetch(`/admin/categories/${categoryId}/delete`, {
+    const response = await fetch(`/admin/categories/${categoryId}`, {
       method: 'DELETE',
       headers: {
         'csrf-token': csrf

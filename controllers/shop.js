@@ -15,13 +15,12 @@ exports.getHome = async (req, res, next) => {
       .sort({ order: 1 });
 
     res.render('shop/home', {
-      bestSellers,
       pageTitle: 'Luminae Skincare',
       path: '/',
+      bestSellers,
       user: req.user,
       isAuthenticated: req.session.isLoggedIn,
-      isAdmin: req.session.isAdmin,
-      csrfToken: req.csrfToken()
+      isAdmin: req.session.isAdmin
     });
   } catch (err) {
     next(err);
@@ -47,14 +46,13 @@ exports.getProducts = async (req, res, next) => {
     }
 
     res.render('shop/shop', {
+      pageTitle: 'Shop All Products',
+      path: '/shop-all',
       products,
       categories,
-      pageTitle: 'Shop All Products',
-      path: '/',
       user: req.user,
       isAuthenticated: req.session.isLoggedIn,
       isAdmin: req.session.isAdmin,
-      totalProducts: totalItems,
       currentPage: page,
       hasNextPage: ITEMS_PER_PAGE * page < totalItems,
       hasPreviousPage: page > 1,
@@ -72,9 +70,9 @@ exports.getProduct = (req, res, next) => {
   Product.findById(prodId)
     .then((product) => {
       res.render('shop/product-detail', {
-        product: product,
         pageTitle: product.title,
         path: '/shop/' + prodId,
+        product: product,
         user: req.user,
         isAuthenticated: req.session.isLoggedIn,
         isAdmin: req.session.isAdmin
@@ -120,6 +118,7 @@ exports.getCategory = async (req, res, next) => {
         .populate('products.productId')
         .skip((page - 1) * ITEMS_PER_PAGE)
         .limit(ITEMS_PER_PAGE);
+
       products = categoryProducts.products.map((product) => {
         return product.productId;
       });
@@ -130,10 +129,10 @@ exports.getCategory = async (req, res, next) => {
     }
 
     res.render('shop/shop', {
-      products,
-      categories,
       pageTitle: capitalizeEveryWord(catTitle),
       path: '/shop/category/' + catTitle,
+      products,
+      categories,
       user: req.user,
       isAuthenticated: req.session.isLoggedIn,
       isAdmin: req.session.isAdmin,
@@ -198,10 +197,10 @@ exports.postCart = async (req, res, next) => {
     const prodId = req.body.productId;
     const product = await Product.findById(prodId);
 
-    // If it's an authenticated user
     if (req.user instanceof User) {
       await req.user.addToCart(product);
     } else {
+      // Guest User postCart
       if (!req.session.temporaryCart) {
         req.session.temporaryCart = { items: [] };
       }
@@ -234,6 +233,7 @@ exports.postCartDeleteProduct = async (req, res, next) => {
     if (req.user instanceof User) {
       await req.user.removeFromCart(prodId);
     } else {
+      // Guest User deleteProduct
       req.session.temporaryCart.items = req.session.temporaryCart.items.filter(
         (item) => item.productId !== prodId
       );
@@ -263,6 +263,7 @@ exports.postCartUpdateProduct = async (req, res, next) => {
     if (req.user instanceof User) {
       await req.user.updateCart(prodId, qty);
     } else {
+      // Guest User updateProduct
       const temporaryCart = req.session.temporaryCart || { items: [] };
       const existingItem = temporaryCart.items.find(
         (item) => item.productId === prodId
@@ -280,9 +281,7 @@ exports.postCartUpdateProduct = async (req, res, next) => {
     console.log('Updated quantity!');
     res.redirect('/cart');
   } catch (err) {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    return next(error);
+    next(err);
   }
 };
 
@@ -297,6 +296,7 @@ exports.getCheckout = async (req, res, next) => {
       user = await req.user.populate('cart.items.productId');
       products = user.cart.items;
     } else {
+      // Guest User Checkout
       const cartItems = req.session.temporaryCart.items;
       const prodIds = cartItems.map((item) => item.productId);
 
@@ -375,11 +375,11 @@ exports.getCheckout = async (req, res, next) => {
       products: products,
       totalPrice: total,
       totalQty: totalQty,
+      stripe: req.stripePk,
+      sessionId: session.id,
       user: req.user || null,
       isAuthenticated: req.session.isLoggedIn || true,
-      isAdmin: req.session.isAdmin || false,
-      stripe: req.stripePk,
-      sessionId: session.id
+      isAdmin: req.session.isAdmin || false
     });
   } catch (err) {
     next(err);

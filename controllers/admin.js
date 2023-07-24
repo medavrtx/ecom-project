@@ -539,7 +539,7 @@ exports.getBestSellers = async (req, res, next) => {
 
 // BEST SELLERS - POST
 
-exports.postAddBestSeller = async (req, res, next) => {
+exports.postBestSeller = async (req, res, next) => {
   const prodId = req.body.productId;
 
   try {
@@ -617,7 +617,7 @@ exports.deleteBestSeller = async (req, res, next) => {
 
 // BEST SELLERS - PUT
 
-exports.updateBestSellerOrder = async (req, res, next) => {
+exports.updateBestSeller = async (req, res, next) => {
   const productId = req.params.productId;
   const newOrder = req.body.order;
 
