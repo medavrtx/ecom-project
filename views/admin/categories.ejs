@@ -1,96 +1,108 @@
-<% layout('layouts/boilerplate')%>
+<%- include('../partials/head.ejs') %>
+<link rel="stylesheet" href="/css/partials/sidebar.css" />
+</head>
 
-<div class="container-fluid">
-  <div class="row">
-    <%- include('../partials/sidebar')%>
-
-    <div class="col-lg-10 content">
-      <div class="my-5">
-        <h1 class="center-title"><%= pageTitle %></h1>
-      </div>
-
-      <!-- Add New Category Section -->
-      <div class="container-lg mt-4">
-        <div class="row mx-5">
-          <div class="col-lg-4">
-            <h2>Add New Category</h2>
-            <form action="/admin/categories" method="POST">
-              <div class="form-group">
-                <label for="title"></label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="title"
-                  name="title"
-                  placeholder="Category name"
-                  required
-                />
-              </div>
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-              <button type="submit" class="btn btn-outline-dark mt-3">
-                Add Category
-              </button>
-            </form>
+<body>
+  <%- include('../partials/navbar')%>
+  
+  <main class="w-100">
+    <div class="container-fluid px-0">
+      <div class="row g-0">
+        <%- include('../partials/sidebar')%>
+        <div class="col-md-9 col-lg-10 my-5">
+          <%- include('../partials/flash') %>
+          <div class="mb-3">
+            <h1 class="center-title"><%= pageTitle %></h1>
           </div>
-        </div>
-      </div>
+    
+          <div class="container px-3">
 
-      <!-- Edit Categories Section -->
-      <div class="container-lg my-5">
-        <div class="row mx-5">
-          <div class="col-12">
-            <% if (categories) { %>
-            <div class="row align-items-start">
-              <% for (let category of categories) { %>
-              <article class="col-lg-4 mb-4">
-                <div class="card">
-                  <p
-                    class="d-block text-dark text-decoration-none py-2 my-0 category-name"
-                  >
-                    <%= category.title %>
-                  </p>
-                  <!-- List all products in this category -->
-                  <ul class="list-group">
-                    <% for (let product of category.products) { %>
-                    <li class="list-group-item">
-                      <%= product.productId.title %>
-                    </li>
-                    <% } %>
-                  </ul>
-                  <div class="btn-row my-2">
-                    <a href="/admin/categories/<%= category._id %>/">
-                      <button type="button" class="btn btn-outline-dark">
-                        Edit Category
-                      </button>
-                    </a>
+            <!-- Add New Category -->
+            <div class="row pt-3">
+              <div class="col-lg-6">
+                <h4 class="mb-3">Add New Category</h4>
+                <form action="/admin/categories" method="POST">
+                  <div class="form-group">
+                    <label for="title" class="d-none"></label>
                     <input
-                      type="hidden"
-                      name="categoryId"
-                      value="<%= category._id %>"
+                      type="text"
+                      class="form-control"
+                      id="title"
+                      name="title"
+                      placeholder="Category name"
+                      required
                     />
-                    <input
-                      type="hidden"
-                      name="_csrf"
-                      value="<%= csrfToken %>"
-                    />
-                    <button
-                      class="btn btn-outline-danger"
-                      type="button"
-                      onclick="deleteCategory(this)"
-                    >
-                      Delete Category
-                    </button>
                   </div>
-                </div>
-              </article>
-              <% } %>
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                  <button type="submit" class="btn btn-outline-dark mt-3">
+                    Add Category
+                  </button>
+                </form>
+              </div>
             </div>
-            <% } else { %>
-            <p>No categories found.</p>
-            <% } %>
+      
+            <!-- Edit Categories Section -->
+            <div class="row my-5">
+              <div class="col-lg-12">
+                <h4 class="mb-3">Categories</h4>
+                <% if (categories) { %>
+                <div class="row align-items-start">
+                  <% for (let category of categories) { %>
+                  <article class="col-lg-4 mb-4">
+                    <div class="card">
+                      <p
+                        class="d-block text-dark text-decoration-none py-2 my-0 category-name"
+                      >
+                        <%= category.title %>
+                      </p>
+                      <!-- List all products in this category -->
+                      <ul class="list-group">
+                        <% for (let product of category.products) { %>
+                        <li class="list-group-item">
+                          <%= product.productId.title %>
+                        </li>
+                        <% } %>
+                      </ul>
+                      <div class="btn-row my-2">
+                        <a href="/admin/categories/<%= category._id %>/">
+                          <button type="button" class="btn btn-outline-dark">
+                            Edit Category
+                          </button>
+                        </a>
+                        <input
+                          type="hidden"
+                          name="categoryId"
+                          value="<%= category._id %>"
+                        />
+                        <input
+                          type="hidden"
+                          name="_csrf"
+                          value="<%= csrfToken %>"
+                        />
+                        <button
+                          class="btn btn-outline-danger"
+                          type="button"
+                          onclick="deleteCategory(this)"
+                        >
+                          Delete Category
+                        </button>
+                      </div>
+                    </div>
+                  </article>
+                  <% } %>
+                </div>
+                <% } else { %>
+                <p>No categories found.</p>
+                <% } %>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+ 
+
+  
+  <script src="/js/collapse-menu.js"></script>
+  <script src="/js/admin.js"></script>
+<%- include('../partials/end')%>
