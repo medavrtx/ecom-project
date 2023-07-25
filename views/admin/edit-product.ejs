@@ -31,7 +31,8 @@
               action="/admin/products/<% if (editing) {%>edit<%} else {%>add<%} %>"
               method="POST"
               enctype="multipart/form-data"
-              class="w-100"
+              class="w-100 needs-validation"
+              novalidate
             >
               <div class="row border mx-xs-5 mx-3 rounded-3">
 
@@ -110,6 +111,7 @@
                         id="title"
                         placeholder="Enter product name"
                         value="<% if (editing || hasError) {%><%=product.title%><%} else {%><%} %>"
+                        required
                       />
                     </div>
                   </div>
@@ -127,6 +129,7 @@
                           oninput="formatPriceInput(this)"
                           placeholder="Price"
                           value="<% if (editing || hasError) {%><%=product.price%><%} else {%><%} %>"
+                          required
                         />
                       </div>
                     </div>
@@ -142,6 +145,7 @@
                         name="description"
                         id="description"
                         placeholder="Enter description"
+                        required
                       ><% if (editing || hasError) {%><%=product.description%><%} %></textarea>
                     </div>
                   </div>
@@ -212,7 +216,7 @@
     </div>
  
 
-  
+
   <script src="/js/collapse-menu.js"></script>
   <script src="/js/format-price.js"></script>
   <script src="/js/file-upload.js"></script>

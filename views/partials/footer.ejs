@@ -1,3 +1,4 @@
+
 <footer class="footer bg-light pt-3 mt-auto text-dark">
     <!-- Newsletter  -->
     <div class="newsletter row mx-auto my-5 container">
@@ -7,19 +8,19 @@
           Be the first to learn about our latest news, products and exclusive
           offers.
         </p>
-        <form action="/newsletter" method="POST">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <form action="/newsletter" method="POST" class="needs-validation" novalidate>
           <div class="input-group mb-3 underline-form">
             <label for="email"></label>
             <input
-              class="form-control"
-              type="email"
-              name="email"
-              placeholder="Email address"
-              required
+            class="form-control"
+            type="email"
+            name="email"
+            placeholder="Email address"
+            required
             />
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
             <div class="input-group-append">
-              <button class="btn btn-outline-dark" type="submit">SUBSCRIBE</button>
+              <button type="submit" class="btn btn-outline-dark" type="submit">SUBSCRIBE</button>
             </div>
           </div>
         </form>
@@ -111,3 +112,4 @@
       information on this website are not real.
     </div>
   </footer>
+  <script src="/js/bootstrap-validation.js"></script>

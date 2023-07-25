@@ -21,7 +21,7 @@
             <div class="row pt-3">
               <div class="col-lg-6">
                 <h4 class="mb-3">Category Name</h4>
-                <form action="/admin/categories/<%= category._id %>" method="POST">
+                <form action="/admin/categories/<%= category._id %>" method="POST" class="needs-validation" novalidate>
                   <div class="form-group">
                     <label for="title" class="d-none"></label>
                     <input
@@ -129,6 +129,8 @@
                   <form
                     action="/admin/categories/<%= category._id %>/add-product"
                     method="POST"
+                    class="needs-validation" 
+                    novalidate
                   >
                     <div class="form-group">
                       <label for="product" class="d-none"></label>
