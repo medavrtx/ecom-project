@@ -7,62 +7,34 @@ const { check, body } = require('express-validator');
 
 const authController = require('../controllers/auth');
 const isAuth = require('../middleware/is-auth');
+const {
+  validateLogin,
+  validateRegister,
+  validateSettings,
+  validateReset
+} = require('../middleware/validate');
 
 // /login
 router
   .route('/login')
   .get(authController.getLogIn)
-  .post(
-    [
-      check('email').isEmail().withMessage('Please enter a valid email'),
-      body('password', 'Please enter a password with at least 5 characters')
-        .isLength({ min: 5 })
-        .trim()
-    ],
-    authController.postLogIn
-  );
+  .post(validateLogin, authController.postLogIn);
 
 // /register
 router
   .route('/registration')
   .get(check('email').isEmail(), authController.getRegistration)
   .post(
+    validateRegister,
     [
-      check('email')
-        .isEmail()
-        .withMessage('Please enter a valid email.')
-        .custom(async (value, { req }) => {
-          const userDoc = await User.findOne({ email: value });
-          if (userDoc) {
-            return Promise.reject(
-              'Email exists already, please pick a different one.'
-            );
-          }
-        }),
-      body('firstName', 'Please enter a first name.')
-        .isLength({ min: 1 })
-        .trim(),
-      body('lastName', 'Please enter a last name.').isLength({ min: 1 }).trim(),
-      body('password', 'Please enter a password with at least 5 characters.')
-        .isLength({ min: 5 })
-        .trim(),
-      check('agreement')
-        .not()
-        .isEmpty()
-        .withMessage(
-          'Please agree to the terms by checking the agreement checkbox before submitting the form.'
-        )
-        .toBoolean()
-        .isBoolean()
-        .withMessage('Invalid value for agreement. Please check the checkbox.'),
-      body('confirmPassword')
-        .trim()
-        .custom((value, { req }) => {
-          if (value !== req.body.password) {
-            throw new Error('Passwords have to match');
-          }
-          return true;
-        })
+      check('email').custom(async (value, { req }) => {
+        const userDoc = await User.findOne({ email: value });
+        if (userDoc) {
+          return Promise.reject(
+            'Email exists already, please pick a different one.'
+          );
+        }
+      })
     ],
     authController.postRegistration
   );
@@ -72,11 +44,8 @@ router
   .route('/reset')
   .get(authController.getReset)
   .post(
+    validateReset,
     [
-      check('email').isEmail().withMessage('Please enter a valid email.'),
-      body('newPassword', 'Please enter a password with at least 5 characters.')
-        .trim()
-        .isLength({ min: 5 }),
       body('confirmPassword')
         .trim()
         .custom((value, { req }) => {
@@ -105,16 +74,6 @@ router.get('/user/:userId/orders/:orderId', isAuth, authController.getInvoice);
 router
   .route('/user/:userId/settings')
   .get(isAuth, authController.getSettings)
-  .post(
-    [
-      check('email').isEmail().withMessage('Please enter a valid email.'),
-      body('firstName', 'Please enter a valid name.')
-        .isLength({ min: 1 })
-        .trim(),
-      body('lastName', 'Please enter a valid name.').isLength({ min: 1 }).trim()
-    ],
-    isAuth,
-    authController.postSettings
-  );
+  .post(isAuth, validateSettings, authController.postSettings);
 
 module.exports = router;

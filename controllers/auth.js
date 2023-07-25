@@ -101,15 +101,14 @@ exports.getRegistration = (req, res, next) => {
 
 exports.postRegistration = async (req, res, next) => {
   try {
-    const { email, password, firstName, lastName, confirmPassword, agreement } =
-      req.body;
+    const { email, password, firstName, lastName } = req.body;
     const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
+    if (!errors.isEmpty() || req.errorMessage) {
+      const errorMsg = errors.array()[0]?.msg || req.errorMessage;
       return res.status(422).render('auth/registration', {
         path: '/registration',
         pageTitle: 'Register',
-        errorMessage: errors.array()[0].msg,
+        errorMessage: errorMsg,
         oldInput: {
           email,
           password,
@@ -364,11 +363,12 @@ exports.postSettings = async (req, res, next) => {
     const errors = validationResult(req);
     const user = await User.findById(userId);
 
-    if (!errors.isEmpty() || !user) {
+    if (!errors.isEmpty() || req.errorMessage) {
+      const errorMsg = errors.array()[0]?.msg || req.errorMessage;
       return res.status(422).render('auth/settings', {
         pageTitle: 'Settings',
         path: '/settings',
-        errorMessage: errors.array()[0].msg,
+        errorMessage: errorMsg,
         isAuthenticated: req.session.isLoggedIn,
         isAdmin: req.session.isAdmin,
         user: req.user
@@ -391,9 +391,9 @@ exports.postSettings = async (req, res, next) => {
 
     const doMatch = await bcrypt.compare(password, user.toObject().password);
     if (doMatch) {
-      user.email = email;
-      user.firstName = firstName;
-      user.lastName = lastName;
+      user.email = email.trim();
+      user.firstName = firstName.trim();
+      user.lastName = lastName.trim();
       await user.save();
 
       req.flash('success', 'Successfully updated!');

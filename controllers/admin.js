@@ -312,8 +312,7 @@ exports.getCategories = async (req, res, next) => {
       user: req.user,
       categories,
       isAuthenticated: req.session.isLoggedIn,
-      isAdmin: req.session.isAdmin,
-      csrfToken: req.csrfToken()
+      isAdmin: req.session.isAdmin
     });
   } catch (err) {
     next(err);
@@ -381,9 +380,7 @@ exports.getEditCategory = async (req, res, next) => {
       products: products,
       user: req.user,
       isAuthenticated: req.session.isLoggedIn,
-      isAdmin: req.session.isAdmin,
-      csrfToken: req.csrfToken(),
-      successMessage: null
+      isAdmin: req.session.isAdmin
     });
   } catch (err) {
     next(err);

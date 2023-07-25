@@ -38,6 +38,7 @@
                 class="form-control"
                 placeholder="Email"
                 value="<%=oldInput.email%>"
+                pattern=".*\S+.*"
                 required
                 <% if (isAuthenticated) {%> disabled <%}  %>
               />
@@ -50,6 +51,7 @@
                 id="currentPassword"
                 class="form-control"
                 placeholder="Password"
+                pattern=".*\S+.*"
                 required
               />
             </div>
@@ -61,6 +63,7 @@
                 id="newPassword"
                 class="form-control"
                 placeholder="New password"
+                pattern=".*\S+.*"
                 required
               />
             </div>
@@ -72,6 +75,7 @@
                 id="confirmPassword"
                 class="form-control"
                 placeholder="Confirm new password"
+                pattern=".*\S+.*"
                 required
               />
             </div>

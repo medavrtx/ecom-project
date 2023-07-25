@@ -111,6 +111,7 @@
                         id="title"
                         placeholder="Enter product name"
                         value="<% if (editing || hasError) {%><%=product.title%><%} else {%><%} %>"
+                        pattern=".*\S+.*"
                         required
                       />
                     </div>
@@ -145,6 +146,7 @@
                         name="description"
                         id="description"
                         placeholder="Enter description"
+                        pattern=".*\S+.*"
                         required
                       ><% if (editing || hasError) {%><%=product.description%><%} %></textarea>
                     </div>
