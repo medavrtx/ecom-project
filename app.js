@@ -65,7 +65,7 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 const sessionConfig = {
   secret: secret,
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   store: store
 };
 app.use(session(sessionConfig));
@@ -136,7 +136,7 @@ mongoose.connection.on('error', (err) => {
 });
 
 mongoose
-  .connect(dbUrl, { maxPoolSize: 5 })
+  .connect(dbUrl)
   .then(() => {
     console.log('Connected to MongoDB');
     app.listen(process.env.PORT || 3000);
