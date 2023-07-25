@@ -229,7 +229,6 @@ h5 {
   font-size: 1.5rem;
 }
 
-/* OTHER */
 .btn-row {
   display: flex;
   flex-direction: row;
@@ -243,16 +242,7 @@ h5 {
   height: 100%;
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 15px;
-  margin-bottom: 100px;
-}
-
-.link-list {
+.custom-list {
   display: flex;
   flex-direction: column;
   list-style-type: none;
@@ -260,20 +250,15 @@ h5 {
   margin-top: 15px;
 }
 
-.link-list a {
+.custom-list a {
   color: var(--link-color);
   text-decoration: none;
   font-size: 1rem;
 }
 
-.link-list a:hover {
+.custom-list a:hover {
   opacity: 0.6;
   text-decoration: underline;
-}
-
-.btn-container {
-  display: flex;
-  align-items: center;
 }
 
 .cursor-grab {
@@ -290,8 +275,4 @@ h5 {
 
 .hover-opacity:hover {
   opacity: 0.7;
-}
-
-.z-index-4 {
-  z-index: 4;
 }
