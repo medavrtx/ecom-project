@@ -1,8 +1,8 @@
-# ECOM App
+# Luminae Skincare
 
 ![ECOMApp](/public/images/screenshot.png)
 
-A ecommerce project built with Node.js and Express. Uses mongoose+mongodb for the database, but also includes tags where MySQL and Sequelize are used. Uses Sass (scss) for styling. The app allows admin to add/edit/delete products. Includes session middleware using express-session, csrf token using csurf, form validation using express-validator, password encryption using bcrypt, image uploading using multer, pdf creating/downloading using pdfkit and payment using stripe. Allows users to create accounts and purchase as well.
+Luminae Skincare is a mock up ecommerce project built with Node.js (Express). Uses mongodb for the database, bootstrap for styling. Demonstrates the use of express-session, csrf token, form validation, password encryption (bcrypt), image uploading (multer), pdf creating/downloading (pdfkit), payment (stripe), and cropping images (cropperjs).
 
 ## Setup
 

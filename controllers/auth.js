@@ -173,6 +173,7 @@ exports.postReset = async (req, res, next) => {
     }
 
     const user = await User.findOne({ email });
+    console.log(email);
 
     if (!(await bcrypt.compare(currentPassword, user.password))) {
       return res.status(422).render('auth/reset', {
