@@ -10,7 +10,6 @@
       <div class="row g-0">
         <%- include('../partials/sidebar')%>
         <div class="col-md-9 col-lg-10 my-5">
-          <%- include('../partials/flash') %>
           <div class="mb-3">
             <h1 class="center-title"><%= pageTitle %></h1>
           </div>
@@ -20,6 +19,7 @@
             <!-- Add New Category -->
             <div class="row pt-3">
               <div class="col-lg-6">
+                <%- include('../partials/flash') %>
                 <h4 class="mb-3">Add New Category</h4>
                 <form action="/admin/categories" method="POST" class="needs-validation" novalidate>
                   <div class="form-group">

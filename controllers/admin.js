@@ -78,9 +78,7 @@ exports.getProducts = async (req, res, next) => {
       lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
     });
   } catch (err) {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    return next(error);
+    next(err);
   }
 };
 
@@ -155,6 +153,7 @@ exports.postAddProduct = async (req, res, next) => {
     });
 
     await product.save();
+    req.flash('success', 'Successfully added product!');
     console.log('Created product');
     res.redirect('/admin/products');
   } catch (err) {
@@ -253,6 +252,7 @@ exports.postEditProduct = async (req, res, next) => {
       product.image = image.path;
     }
     await product.save();
+    req.flash('success', 'Successfully updated product!');
     console.log('Updated Product!');
     res.redirect('/admin/products');
   } catch (err) {
@@ -323,28 +323,14 @@ exports.getCategories = async (req, res, next) => {
 // ADD CATEGORY
 exports.postAddCategory = async (req, res, next) => {
   const title = req.body.title;
-  const errors = validationResult(req);
 
   try {
-    if (!errors.isEmpty()) {
-      const categories = await ProductCategory.find();
-      return res.render('admin/categories', {
-        pageTitle: 'Categories',
-        path: '/admin/categories',
-        categories: categories,
-        user: req.user,
-        isAuthenticated: req.session.isLoggedIn,
-        isAdmin: req.session.isAdmin,
-        csrfToken: req.csrfToken(),
-        errorMessage: errors.array()[0].msg
-      });
-    }
-
     const productCategory = new ProductCategory({
       title
     });
 
     await productCategory.save();
+    req.flash('success', 'Successfully added category!');
     console.log('Created category');
     res.redirect('/admin/categories');
   } catch (err) {
@@ -420,10 +406,10 @@ exports.postEditCategory = async (req, res, next) => {
     }
 
     category.title = updatedTitle;
-    await category.save();
 
+    await category.save();
     console.log('Updated Category!');
-    req.flash('success', 'Updated category!');
+    req.flash('success', 'Successfully updated category!');
     res.redirect(`/admin/categories/${catId}`);
   } catch (err) {
     next(err);
@@ -450,8 +436,14 @@ exports.postProductToCategory = async (req, res, next) => {
       throw error;
     }
 
-    await category.addToCategory(product);
-    res.redirect('/admin/categories/' + catId);
+    const data = await category.addToCategory(product);
+    if (data) {
+      req.flash('success', 'Successfully added product to category!');
+      res.redirect('/admin/categories/' + catId);
+    } else {
+      req.flash('error', 'Product already exists in category!');
+      res.redirect('/admin/categories/' + catId);
+    }
   } catch (err) {
     next(err);
   }
@@ -481,43 +473,29 @@ exports.deleteProductFromCategory = async (req, res, next) => {
 
 // BEST SELLERS - GET
 exports.getBestSellers = async (req, res, next) => {
-  const page = +req.query.page || 1;
-  const ITEMS_PER_PAGE = 10;
-
   try {
     const bestSellers = await BestSeller.find()
       .populate('productId')
       .sort({ order: 1 });
 
-    const totalItems = await Product.find({
-      userId: req.user._id
-    }).countDocuments();
+    const products = await Product.find();
 
-    const products = await Product.find()
-      .skip((page - 1) * ITEMS_PER_PAGE)
-      .limit(ITEMS_PER_PAGE);
+    const bestSellerProductIds = bestSellers.map((bestSeller) =>
+      bestSeller.productId._id.toString()
+    );
 
-    if (ITEMS_PER_PAGE * (page - 1) > totalItems) {
-      return res.redirect('/admin/products');
-    }
+    const nonBestSellers = products.filter(
+      (product) => !bestSellerProductIds.includes(product._id.toString())
+    );
 
     res.render('admin/best-sellers', {
       pageTitle: 'Best Sellers',
       path: '/admin/best-sellers',
-      products: products,
+      products: nonBestSellers,
       bestSellers,
       user: req.user,
       isAuthenticated: req.session.isLoggedIn,
-      isAdmin: req.session.isAdmin,
-      hasError: false,
-      csrfToken: req.csrfToken(),
-      totalProducts: totalItems,
-      currentPage: page,
-      hasNextPage: ITEMS_PER_PAGE * page < totalItems,
-      hasPreviousPage: page > 1,
-      nextPage: page + 1,
-      previousPage: page - 1,
-      lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
+      isAdmin: req.session.isAdmin
     });
   } catch (err) {
     const error = new Error(err);
@@ -535,39 +513,10 @@ exports.postBestSeller = async (req, res, next) => {
     const existingProduct = await BestSeller.findOne({ productId: prodId });
 
     if (existingProduct) {
-      const errorMessage = 'Product already exists in the best sellers list';
-
-      const page = +req.query.page || 1;
-      const ITEMS_PER_PAGE = 10;
-      const totalItems = await Product.find({
-        userId: req.user._id
-      }).countDocuments();
-      const products = await Product.find()
-        .skip((page - 1) * ITEMS_PER_PAGE)
-        .limit(ITEMS_PER_PAGE);
-
-      const bestSellers = await BestSeller.find().populate('productId');
-
-      return res.status(409).render('admin/best-sellers', {
-        pageTitle: 'Best Sellers',
-        path: '/admin/best-sellers',
-        products: products,
-        bestSellers,
-        user: req.user,
-        isAuthenticated: req.session.isLoggedIn,
-        isAdmin: req.session.isAdmin,
-        hasError: true,
-        errorMessage,
-        csrfToken: req.csrfToken(),
-        totalProducts: totalItems,
-        currentPage: page,
-        hasNextPage: ITEMS_PER_PAGE * page < totalItems,
-        hasPreviousPage: page > 1,
-        nextPage: page + 1,
-        previousPage: page - 1,
-        lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE)
-      });
+      req.flash('error', 'Product already exists in the best sellers list.');
+      return res.redirect('/admin/best-sellers');
     }
+
     const totalItems = await BestSeller.countDocuments();
 
     const bestSeller = new BestSeller({
@@ -576,6 +525,7 @@ exports.postBestSeller = async (req, res, next) => {
     });
 
     await bestSeller.save();
+    req.flash('success', 'Successfully added product to Best Sellers!');
     console.log('Added to Best Seller!');
     res.redirect('/admin/best-sellers');
   } catch (err) {
@@ -620,7 +570,6 @@ exports.updateBestSeller = async (req, res, next) => {
     bestSeller.order = newOrder;
     await bestSeller.save();
 
-    console.log('Best seller order updated successfully');
     res.status(200).json({ message: 'Best seller order updated successfully' });
   } catch (err) {
     res.status(500).json({ message: 'Failed to update best seller order' });

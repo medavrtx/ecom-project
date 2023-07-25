@@ -4,6 +4,7 @@ const { body } = require('express-validator');
 
 const adminController = require('../controllers/admin');
 const isAdmin = require('../middleware/is-admin');
+const { validateProduct, validateCategory } = require('../middleware/validate');
 
 // Middleware to protect admin routes
 router.use(isAdmin);
@@ -18,34 +19,20 @@ router.get('/products', adminController.getProducts);
 router
   .route('/products/add')
   .get(adminController.getAddProduct)
-  .post(
-    [
-      body('title').isString().isLength({ min: 1 }).trim(),
-      body('price').isFloat(),
-      body('description').isLength({ min: 1, max: 400 }).trim()
-    ],
-    adminController.postAddProduct
-  );
+  .post(validateProduct, adminController.postAddProduct);
 
 // /admin/products/:productId
 router
   .route('/products/:productId')
   .get(adminController.getEditProduct)
-  .post(
-    [
-      body('title').isString().isLength({ min: 1 }).trim(),
-      body('price').isFloat(),
-      body('description').isLength({ min: 1, max: 400 }).trim()
-    ],
-    adminController.postEditProduct
-  )
+  .post(validateProduct, adminController.postEditProduct)
   .delete(adminController.deleteProduct);
 
 // /admin/categories
 router
   .route('/categories')
   .get(adminController.getCategories)
-  .post(adminController.postAddCategory);
+  .post(validateCategory, adminController.postAddCategory);
 
 // /admin/categories/:categoryId
 router

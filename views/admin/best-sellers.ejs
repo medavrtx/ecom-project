@@ -10,7 +10,6 @@
       <div class="row g-0">
         <%- include('../partials/sidebar')%>
         <div class="col-md-9 col-lg-10 my-5">
-          <%- include('../partials/flash') %>
           <div class="mb-3">
             <h1 class="center-title"><%= pageTitle %></h1>
           </div>
@@ -20,6 +19,7 @@
             <!-- Best Sellers List Section -->
             <div class="row pt-3">
               <div class="col-lg-6 mb-3">
+                <%- include('../partials/flash') %>
                 <h4 class="mb-3">Best Sellers List</h4>
                 <% if (bestSellers && bestSellers.length > 0) { %>
                 <ol id="sortable-list" class="list-group cursor-grab">
