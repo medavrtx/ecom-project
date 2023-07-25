@@ -24,7 +24,7 @@
 
       <div class="row w-100">
         <div class="col-md-6 offset-md-3">
-          <form action="/user/<%=user._id %>/settings" method="POST">
+          <form action="/user/<%=user._id %>/settings" method="POST" class="needs-validation" novalidate>
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
               <input
@@ -33,6 +33,7 @@
                 id="email"
                 name="email"
                 value="<%= user.email %>"
+                required
               />
             </div>
             <div class="mb-3">
@@ -43,6 +44,7 @@
                 id="firstName"
                 name="firstName"
                 value="<%= user.firstName %>"
+                required
               />
             </div>
             <div class="mb-3">
@@ -53,6 +55,7 @@
                 id="lastName"
                 name="lastName"
                 value="<%= user.lastName %>"
+                required
               />
             </div>
             <div class="mb-3">
@@ -62,6 +65,7 @@
                 name="password"
                 id="password"
                 class="form-control box-form-input"
+                required
               />
             </div>
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
@@ -77,5 +81,5 @@
     
 
   
-
+    <script src="/js/bootstrap-validation.js"></script>
 <%- include('../partials/end')%>
