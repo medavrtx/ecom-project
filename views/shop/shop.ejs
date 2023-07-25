@@ -50,7 +50,7 @@
                   <%= product.title %>
                 </p>
                 <span class="product-price">$<%= product.price %></span>
-                <%- include('../includes/add-to-cart.ejs', {product: product}) %>
+                <%- include('../partials/add-to-cart.ejs', {product: product}) %>
               </div>
             </div>
             <% } %>
@@ -59,7 +59,7 @@
         </div>
       </div>
     
-      <%- include('../includes/pagination.ejs', { currentPage: currentPage,
+      <%- include('../partials/pagination.ejs', { currentPage: currentPage,
       hasNextPage: hasNextPage, hasPreviousPage: hasPreviousPage, nextPage:
       nextPage, previousPage: previousPage, lastPage: lastPage, path: path, }) %>
     </div>
