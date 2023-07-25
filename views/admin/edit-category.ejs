@@ -1,163 +1,171 @@
-<% layout('layouts/boilerplate') %>
+<%- include('../partials/head.ejs') %>
+<link rel="stylesheet" href="/css/partials/sidebar.css" />
+</head>
 
-<div class="container-fluid">
-  <div class="row">
-    <%- include('../partials/sidebar')%>
-
-    <div class="col-lg-10">
-      <div class="my-5">
-        <h1 class="center-title"><%= pageTitle %></h1>
-      </div>
-
-      <div class="container-lg mt-4">
-        <!-- CATEGORY NAME -->
-        <div class="row mx-5">
-          <div class="col-lg-4">
-            <h2>Category Name</h2>
-            <% if (successMessage) {%>
-            <p class="text-success m-0 p-0"><%= successMessage %></p>
-            <%} else {%>
-            <div class="my-4"></div>
-            <%} %>
-            <form action="/admin/categories/<%= category._id %>" method="POST">
-              <div class="form-group">
-                <label for="title" class="d-none"></label>
-                <input
-                  type="text"
-                  class="form-control my-0"
-                  id="title"
-                  name="title"
-                  placeholder="Category name"
-                  value="<%= category.title %>"
-                  required
-                />
-              </div>
-              <input
-                type="hidden"
-                value="<%= category._id %>"
-                name="categoryId"
-              />
-              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-              <button type="submit" class="btn btn-outline-dark mt-3">
-                Update Name
-              </button>
-            </form>
+<body>
+  <%- include('../partials/navbar')%>
+  
+  <main class="w-100">
+    <div class="container-fluid px-0">
+      <div class="row g-0">
+        <%- include('../partials/sidebar')%>
+        <div class="col-md-9 col-lg-10 my-5">
+          <%- include('../partials/flash') %>
+          <div class="mb-3">
+            <h1 class="center-title"><%= pageTitle %></h1>
           </div>
-        </div>
+    
+          <div class="container px-3">
 
-        <!-- PRODUCTS IN CATEGORY -->
-
-        <div class="row mx-5 my-5">
-          <div class="col-lg-12">
-            <h2>Products in Category</h2>
-            <div class="row">
-              <% if (category.products.length === 0) { %>
-              <div class="col-12">
-                <p>No products found in this category.</p>
-              </div>
-              <% } else { %> <% category.products.forEach((product) => { %>
-              <article class="col-lg-4 mb-4">
-                <div class="card">
-                  <a
-                    href="/admin/products/<%= product.productId._id %>?edit=true"
-                  >
-                    <div class="overflow-hide">
-                      <img
-                        class="img-fluid d-block mx-auto hover-scale"
-                        src="/<%= product.productId.image %>"
-                        alt="<%= product.productId.title %>"
-                      />
-                    </div>
-                  </a>
-                  <p
-                    class="d-block text-dark text-decoration-none py-2 my-0 overflow-hide"
-                  >
-                    <%= product.productId.title %>
-                  </p>
-                  <span class="product-price">
-                    $<%= product.productId.price %>
-                  </span>
-                  <div class="btn-row my-2">
-                    <a
-                      class="btn btn-outline-dark"
-                      href="/admin/products/<%= product.productId._id %>?edit=true"
-                    >
-                      Edit Product
-                    </a>
-                    <form action="">
-                      <input
-                        type="hidden"
-                        value="<%= category._id %>"
-                        name="categoryId"
-                      />
-                      <input
-                        type="hidden"
-                        value="<%= product.productId._id %>"
-                        name="productId"
-                      />
-                      <input
-                        type="hidden"
-                        name="_csrf"
-                        value="<%= csrfToken %>"
-                      />
-                      <button
-                        class="btn btn-outline-danger"
-                        type="button"
-                        onclick="removeFromCategory(this)"
-                      >
-                        Remove from Category
-                      </button>
-                    </form>
+            <!-- CATEGORY NAME -->
+            <div class="row pt-3">
+              <div class="col-lg-6">
+                <h4 class="mb-3">Category Name</h4>
+                <form action="/admin/categories/<%= category._id %>" method="POST">
+                  <div class="form-group">
+                    <label for="title" class="d-none"></label>
+                    <input
+                      type="text"
+                      class="form-control my-0"
+                      id="title"
+                      name="title"
+                      placeholder="Category name"
+                      value="<%= category.title %>"
+                      required
+                    />
                   </div>
-                </div>
-              </article>
-              <% }) %> <% } %>
+                  <input
+                    type="hidden"
+                    value="<%= category._id %>"
+                    name="categoryId"
+                  />
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                  <button type="submit" class="btn btn-outline-dark mt-3">
+                    Update Name
+                  </button>
+                </form>
+              </div>
             </div>
-          </div>
-        </div>
-
-        <!-- ADD PRODUCTS TO CATEGORY -->
-
-        <div class="row mx-5 my-5">
-          <div class="col-lg-6">
-            <h2>Add Products to Category</h2>
-          </div>
-          <div class="row">
-            <div class="col-lg-6">
-              <form
-                action="/admin/categories/<%= category._id %>/add-product"
-                method="POST"
-              >
-                <div class="form-group">
-                  <label for="product"></label>
-                  <select
-                    class="form-select"
-                    id="product"
-                    name="productId"
-                    required
-                  >
-                    <option value="" selected disabled>Select a product</option>
-                    <% products.forEach((product) => { %>
-                    <option value="<%= product._id %>">
-                      <%= product.title %>
-                    </option>
-                    <% }) %>
-                  </select>
+    
+            <!-- PRODUCTS IN CATEGORY -->
+    
+            <div class="row my-5">
+              <div class="col-lg-12">
+                <h4 class="mb-3">Products in Category</h4>
+                <div class="row">
+                  <% if (category.products.length === 0) { %>
+                  <div class="col-12">
+                    <p>No products found in this category.</p>
+                  </div>
+                  <% } else { %> <% category.products.forEach((product) => { %>
+                  <article class="col-lg-4 mb-4">
+                    <div class="card">
+                      <a
+                        href="/admin/products/<%= product.productId._id %>?edit=true"
+                      >
+                        <div class="overflow-hide">
+                          <img
+                            class="img-fluid d-block mx-auto hover-scale"
+                            src="/<%= product.productId.image %>"
+                            alt="<%= product.productId.title %>"
+                          />
+                        </div>
+                      </a>
+                      <p
+                        class="d-block text-dark text-decoration-none py-2 my-0 overflow-hide"
+                      >
+                        <%= product.productId.title %>
+                      </p>
+                      <span class="product-price">
+                        $<%= product.productId.price %>
+                      </span>
+                      <div class="btn-row my-2">
+                        <a
+                          class="btn btn-outline-dark"
+                          href="/admin/products/<%= product.productId._id %>?edit=true"
+                        >
+                          Edit Product
+                        </a>
+                        <form action="">
+                          <input
+                            type="hidden"
+                            value="<%= category._id %>"
+                            name="categoryId"
+                          />
+                          <input
+                            type="hidden"
+                            value="<%= product.productId._id %>"
+                            name="productId"
+                          />
+                          <input
+                            type="hidden"
+                            name="_csrf"
+                            value="<%= csrfToken %>"
+                          />
+                          <button
+                            class="btn btn-outline-danger"
+                            type="button"
+                            onclick="removeFromCategory(this)"
+                          >
+                            Remove from Category
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                  </article>
+                  <% }) %> <% } %>
                 </div>
-                <input
-                  type="hidden"
-                  name="categoryId"
-                  value="<%= category._id %>"
-                />
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-                <button type="submit" class="btn btn-outline-dark mt-3">
-                  Add Product to Category
-                </button>
-              </form>
+              </div>
+            </div>
+    
+            <!-- ADD PRODUCTS TO CATEGORY -->
+    
+            <div class="row my-5">
+              <div class="col-6">
+                <h4 class="mb-3">Add Products to Category</h4>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <form
+                    action="/admin/categories/<%= category._id %>/add-product"
+                    method="POST"
+                  >
+                    <div class="form-group">
+                      <label for="product" class="d-none"></label>
+                      <select
+                        class="form-select"
+                        id="product"
+                        name="productId"
+                        required
+                      >
+                        <option value="" selected disabled>Select a product</option>
+                        <% products.forEach((product) => { %>
+                        <option value="<%= product._id %>">
+                          <%= product.title %>
+                        </option>
+                        <% }) %>
+                      </select>
+                    </div>
+                    <input
+                      type="hidden"
+                      name="categoryId"
+                      value="<%= category._id %>"
+                    />
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                    <button type="submit" class="btn btn-outline-dark mt-3">
+                      Add Product to Category
+                    </button>
+                  </form>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+ 
+
+  
+  <script src="/js/collapse-menu.js"></script>
+<%- include('../partials/end')%>
+

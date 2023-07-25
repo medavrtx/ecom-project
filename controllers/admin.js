@@ -422,20 +422,9 @@ exports.postEditCategory = async (req, res, next) => {
     category.title = updatedTitle;
     await category.save();
 
-    const products = await Product.find();
-
     console.log('Updated Category!');
-    res.render('admin/edit-category', {
-      pageTitle: 'Edit Category',
-      path: '/admin/categories/' + catId,
-      category: category,
-      products: products,
-      user: req.user,
-      isAuthenticated: req.session.isLoggedIn,
-      isAdmin: req.session.isAdmin,
-      csrfToken: req.csrfToken(),
-      successMessage: 'Successfully updated'
-    });
+    req.flash('success', 'Updated category!');
+    res.redirect(`/admin/categories/${catId}`);
   } catch (err) {
     next(err);
   }
