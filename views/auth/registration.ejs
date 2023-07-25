@@ -15,7 +15,7 @@
 
       <div class="row w-100">
         <div class="col-md-6 offset-md-3">
-          <form action="/registration" method="POST">
+          <form action="/registration" method="POST" class="needs-validation" novalidate>
             <div class="form-group underline-form">
               <label for="email"></label>
               <input
@@ -25,6 +25,7 @@
                 id="email"
                 placeholder="Email"
                 value="<%=oldInput.email%>"
+                required
               />
             </div>
             <div class="form-group underline-form">
@@ -36,6 +37,7 @@
                 id="firstName"
                 placeholder="First name"
                 value="<%= oldInput.firstName%>"
+                required
               />
             </div>
             <div class="form-group underline-form">
@@ -47,6 +49,7 @@
                 id="lastName"
                 placeholder="Last name"
                 value="<%= oldInput.lastName%>"
+                required
               />
             </div>
             <div class="form-group underline-form">
@@ -58,6 +61,7 @@
                 id="password"
                 placeholder="Password"
                 value="<%= oldInput.password%>"
+                required
               />
             </div>
             <div class="form-group underline-form">
@@ -68,6 +72,7 @@
                 class="form-control"
                 id="confirmPassword"
                 placeholder="Confirm password"
+                required
               />
             </div>
             <div class="form-group form-check my-4">
@@ -76,6 +81,7 @@
                 name="agreement"
                 class="form-check-input small"
                 id="agreement"
+                required
               />
               <label class="form-check-label small" for="agreement">
                 By providing my information, I agree to LUMINAE's
@@ -96,7 +102,7 @@
     </div>
 
   
-
+    <script src="/js/bootstrap-validation.js"></script>
 <%- include('../partials/end')%>
 
 

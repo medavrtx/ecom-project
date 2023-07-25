@@ -19,6 +19,7 @@ const aboutRoutes = require('./routes/about');
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
+const ExpressError = require('./utils/ExpressError');
 
 const dbUrl = process.env.MONGO_URI;
 const secret = process.env.SESSION_SECRET || 'thisshouldbeasecret';
@@ -112,13 +113,16 @@ app.use(shopRoutes);
 app.use(authRoutes);
 app.use(aboutRoutes);
 
-app.get('/500', errorController.get500);
-app.use(errorController.get404);
+app.all('*', (req, res, next) => {
+  next(new ExpressError('Page Not Found', 404));
+});
 
-app.use((error, req, res, next) => {
-  res.status(500).render('500', {
+app.use((err, req, res, next) => {
+  const { statusCode = 500 } = err;
+  if (!err.message) err.message = 'Oh No, Something Went Wrong';
+  res.status(statusCode).render('error', {
+    err,
     pageTitle: 'Error',
-    path: '/500',
     isAuthenticated: req.session.isLoggedIn,
     isAdmin: req.session.isAdmin,
     user: req.user

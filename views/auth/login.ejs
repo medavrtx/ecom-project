@@ -10,12 +10,14 @@
 
 
       <% if (errorMessage) {%>
-      <div class="text-danger center-text"><%= errorMessage %></div>
+        <div class="row mx-1">
+          <div class="text-danger center-text"><%= errorMessage %></div>
+        </div>
       <% } %>
       
       <div class="row mx-1">
         <div class="col-md-6 mb-3">
-          <form action="/login" method="POST">
+          <form action="/login" method="POST" class="needs-validation" novalidate>
             <!-- EMAIL -->
             <div class="form-group underline-form">
               <label for="email"></label>
@@ -26,6 +28,7 @@
                 id="email"
                 placeholder="Email"
                 value="<%=oldInput.email%>"
+                required
               />
             </div>
     
@@ -36,8 +39,9 @@
                 class="form-control"
                 type="password"
                 name="password"
-                id=""
+                id="password"
                 placeholder="Password"
+                required
               />
             </div>
             <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
@@ -70,6 +74,6 @@
     </div>
 
   
-
+    <script src="/js/bootstrap-validation.js"></script>
 <%- include('../partials/end')%>
 

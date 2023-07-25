@@ -35,7 +35,7 @@ router
           const userDoc = await User.findOne({ email: value });
           if (userDoc) {
             return Promise.reject(
-              'E-Mail exists already, please pick a different one.'
+              'Email exists already, please pick a different one.'
             );
           }
         }),

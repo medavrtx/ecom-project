@@ -1,19 +1,12 @@
-exports.get404 = (req, res, next) => {
-  res.status(404).render('404', {
-    pageTitle: 'Page Not Found',
-    path: '/404',
-    user: req.user,
-    isAuthenticated: req.session.isLoggedIn,
-    isAdmin: req.session.isAdmin,
-  });
+const ExpressError = require('../utils/ExpressError');
+
+exports.get404 = (err, req, res, next) => {
+  const { statusCode = 404 } = err;
+  if (!err.message) err.message = 'Oh No, Something Went Wrong';
+  res.status(statusCode).render('error', { err });
 };
 
-exports.get500 = (req, res, next) => {
-  res.status(500).render('500', {
-    pageTitle: 'Error!',
-    path: '/500',
-    user: req.user,
-    isAuthenticated: req.session.isLoggedIn,
-    isAdmin: req.session.isAdmin,
-  });
+exports.get500 = (err, req, res, next) => {
+  const { statusCode = 500, message = 'Something went wrong' } = err;
+  res.status(statusCode).render('error');
 };
