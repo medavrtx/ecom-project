@@ -5,14 +5,11 @@
   <%- include('./partials/navbar')%>
   
   <div class="center-container">
-    <main class="main-container">
-      <div class="row">
-        <div class="col-6 offset-3">
+    <main class="main-container full-height">
+      <div class="row mx-3">
+        <div class="col-md-6 offset-md-3">
           <div class="alert alert-danger my-5" role="alert">
-            <h4 class="alert-heading"><%= err.message %></h4>
-            <p class="overflow-auto">
-              <%= err.stack %>
-            </p>
+            <h4 class="alert-heading overflow-auto"><%= err.message %></h4>
           </div>
         </div>
       </div>

@@ -7,11 +7,53 @@
   text-align: center;
 }
 
+.promo-text-space {
+  height: 2rem;
+}
+
 .carousel-item > img {
   object-fit: cover;
   object-position: center;
   width: 100%;
   max-height: 650px;
+}
+
+.carousel-caption {
+  position: absolute;
+}
+
+.caption-top {
+  top: 1rem;
+}
+
+.carousel-caption h3 {
+  font-weight: 600;
+}
+
+.carousel-caption a {
+  color: var(--light-color);
+  font-size: 24px;
+  transition: all 0.3s ease;
+}
+
+.carousel-caption a:hover {
+  opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .carousel-item img {
+    object-fit: cover;
+    object-position: center;
+    min-height: 350px;
+  }
+
+  .carousel-caption {
+    padding: 0;
+  }
+
+  .carousel-caption a {
+    font-size: 20px;
+  }
 }
 
 .image-text {

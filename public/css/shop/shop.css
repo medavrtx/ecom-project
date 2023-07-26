@@ -56,7 +56,6 @@
     background-color: var(--bg-light-color);
     padding: 5px;
     border-top: 1px solid var(--light-border);
-    opacity: 0.5;
     transition: all 0.3s ease;
   }
 

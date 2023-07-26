@@ -2,9 +2,11 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const mongoose = require('mongoose');
+const mongoSanitize = require('express-mongo-sanitize');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const flash = require('connect-flash');
 const csrf = require('csurf');
+const helmet = require('helmet');
 require('dotenv').config({ path: './.env.local' });
 
 const ejsMate = require('ejs-mate');
@@ -17,7 +19,6 @@ const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 const aboutRoutes = require('./routes/about');
 
-const errorController = require('./controllers/error');
 const User = require('./models/user');
 const ExpressError = require('./utils/ExpressError');
 
@@ -60,6 +61,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use(mongoSanitize());
 
 // Session
 const sessionConfig = {
@@ -112,6 +114,8 @@ app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
 app.use(aboutRoutes);
+
+app.use(helmet());
 
 app.all('*', (req, res, next) => {
   next(new ExpressError('Page Not Found', 404));
