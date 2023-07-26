@@ -5,25 +5,35 @@
 
 <body>
   <%- include('../partials/navbar')%>
-  
-  <main class="w-100">
-    <div class="container-fluid px-0">
-      <div class="row g-0">
+  <div class="center-container">
+    <main class="main-container">
+      <div class="d-flex admin-responsive">
         <%- include('../partials/sidebar')%>
-        <div class="col-md-9 col-lg-10 my-5 full-height">
-          <%- include('../partials/flash') %>
-          <div class="mb-5">
+        <div class="full-height py-5 w-100">
+
+
+          <div class="mb-3">
             <h1 class="center-title"><%= pageTitle %></h1>
           </div>
+
+          <%- include('../partials/flash') %>
     
           <div class="container d-flex justify-content-center">
             <div class="row admin-card w-75">
               <div class="text-center col-md-4 my-3">
-                <div class="admin-number"><%= numOrders %></div>
+                <div class="admin-number">
+                  <a href="/admin/orders" class="link">
+                    <%= numOrders %>
+                  </a>
+                </div>
                 <div class="admin-label">Orders</div>
               </div>
               <div class="text-center col-md-4 my-3">
-                <div class="admin-number"><%= numListed %></div>
+                <div class="admin-number">
+                  <a href="/admin/products" class="link">
+                    <%= numListed %>
+                  </a>
+                </div>
                 <div class="admin-label">Listed</div>
               </div>
               <div class="text-center col-md-4 my-3">
@@ -36,7 +46,7 @@
           </div>
         </div>
       </div>
-    </div>
+
  
 
   

@@ -13,11 +13,11 @@
 <body>
   <%- include('../partials/navbar')%>
   
-  <main class="w-100">
-    <div class="container-fluid px-0">
-      <div class="row g-0">
+  <div class="center-container">
+    <main class="main-container">
+      <div class="d-flex admin-responsive">
         <%- include('../partials/sidebar')%>
-        <div class="col-md-9 col-lg-10 my-5">
+        <div class="full-height py-5 w-100">
 
           <div class="mb-3">
             <h1 class="center-title"><%= pageTitle %></h1>
@@ -34,16 +34,14 @@
               class="w-100 needs-validation"
               novalidate
             >
-              <div class="row border mx-xs-5 mx-3 rounded-3">
-
-
-                
+              <div class="row border mx-xs-5 mx-3 rounded-3 bg-light">
+            
                 <!-- IMAGE -->
                 <div
-                  class="col-sm-6 d-flex flex-column align-items-center justify-content-center p-4"
+                  class="col-lg-6 d-flex flex-column align-items-center justify-content-center p-4"
                 >
                   <!-- IMAGE UPLOAD -->
-                  <div class="image-upload bg-light">
+                  <div class="image-upload">
                     <div id="form-image-area" class="image-area">
                       <div class="upload-icon">
                         <i class="fas fa-image"></i>
@@ -99,7 +97,7 @@
 
 
                 <!-- DETAILS -->
-                <div class="col-sm-6 p-4 d-flex flex-column justify-content-between">
+                <div class="col-lg-6 p-4 d-flex flex-column justify-content-between">
                   <!-- PRODUCT NAME -->
                   <div class="row mb-3">
                     <div class="col-md-12">
@@ -210,13 +208,10 @@
                 </div>
               </div>
             </form>
-
-
-
+          </div>
         </div>
-      </div>
-    </div>
- 
+
+  
 
 
   <script src="/js/collapse-menu.js"></script>

@@ -5,17 +5,18 @@
 <body>
   <%- include('../partials/navbar')%>
   
-  <main class="w-100">
-    <div class="container-fluid px-0">
-      <div class="row g-0">
+  <div class="center-container">
+    <main class="main-container">
+      <div class="d-flex admin-responsive">
         <%- include('../partials/sidebar')%>
-        <div class="col-md-9 col-lg-10 my-5">
+
+        <div class="full-height py-5 w-100">
           <div class="mb-3">
             <h1 class="center-title"><%= pageTitle %></h1>
           </div>
     
+          
           <div class="container px-3">
-
             <!-- Add New Category -->
             <div class="row pt-3">
               <div class="col-lg-6">

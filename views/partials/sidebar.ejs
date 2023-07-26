@@ -1,10 +1,13 @@
-<div class="col-md-3 col-lg-2 bg-light sidebar" >
+<div class="sidebar" >
   <div class="collapse-menu sidebar-menu">
-    <a class="nav-link link" href="/admin">Admin Dashboard</a>
-    <a class="nav-link link" href="/admin/products/add">Add Product</a>
-    <a class="nav-link link" href="/admin/products">Edit Products</a>
-    <a class="nav-link link" href="/admin/categories">Edit Categories</a>
-    <a class="nav-link link" href="/admin/best-sellers">Best Sellers</a>
+    <div class="sidebar-links">
+      <a class="nav-link link no-wrap sidebar-link" href="/admin"><i class="fas fa-tachometer-alt"></i> Admin Dashboard</a>
+      <a class="nav-link link no-wrap sidebar-link" href="/admin/products/add"><i class="fas fa-plus-circle"></i> Add Product</a>
+      <a class="nav-link link no-wrap sidebar-link" href="/admin/products"><i class="far fa-edit"></i> Edit Products</a>
+      <a class="nav-link link no-wrap sidebar-link" href="/admin/categories"><i class="fas fa-folder-open"></i> Edit Categories</a>
+      <a class="nav-link link no-wrap sidebar-link" href="/admin/best-sellers"><i class="fas fa-star"></i> Best Sellers</a>
+      <a class="nav-link link no-wrap sidebar-link" href="/admin/orders"><i class="fas fa-list-alt"></i> View All Orders</a>
+    </div>
     <button
       class="collapse-menu-toggle sidebar-menu-toggle bg-light"
       onclick="toggleLinks()"

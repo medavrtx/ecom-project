@@ -19,5 +19,11 @@
   justify-content: space-evenly;
 }
 .detail-products-info .products-title {
-  font-size: 36px;
+  font-size: 32px;
+}
+
+@media (max-width: 576px) {
+  .detail-products-info .products-title {
+    font-size: 28px;
+  }
 }

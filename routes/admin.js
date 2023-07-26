@@ -65,4 +65,10 @@ router
   .put(adminController.updateBestSeller)
   .delete(adminController.deleteBestSeller);
 
+// /admin/orders
+router.route('/orders').get(adminController.getOrders);
+
+// /user/orders/invoice => GET
+router.route('/orders/:orderId').get(adminController.getInvoice);
+
 module.exports = router;

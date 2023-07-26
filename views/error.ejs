@@ -4,16 +4,17 @@
 <body>
   <%- include('./partials/navbar')%>
   
-  <main class="main-container">
-    <div class="row">
-      <div class="col-6 offset-3">
-        <div class="alert alert-danger my-5" role="alert">
-          <h4 class="alert-heading"><%= err.message %></h4>
-          <p class="overflow-auto">
-            <%= err.stack %>
-          </p>
+  <div class="center-container">
+    <main class="main-container">
+      <div class="row">
+        <div class="col-6 offset-3">
+          <div class="alert alert-danger my-5" role="alert">
+            <h4 class="alert-heading"><%= err.message %></h4>
+            <p class="overflow-auto">
+              <%= err.stack %>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
 
 <%- include('./partials/end')%>

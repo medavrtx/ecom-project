@@ -4,75 +4,76 @@
 <body>
   <%- include('../partials/navbar')%>
 
-  <main class="main-container">
-    <div class="mt-5 d-flex flex-column align-items-center">
-      <h1 class="center-title">Sign In</h1>
+  <div class="center-container">
+    <main class="main-container">
+      <div class="mt-5 d-flex flex-column align-items-center full-height">
+        <h1 class="center-title">Sign In</h1>
 
 
-      <% if (errorMessage) {%>
+        <% if (errorMessage) {%>
+          <div class="row mx-1">
+            <div class="text-danger center-text"><%= errorMessage %></div>
+          </div>
+        <% } %>
+        
         <div class="row mx-1">
-          <div class="text-danger center-text"><%= errorMessage %></div>
-        </div>
-      <% } %>
+          <div class="col-md-6 mb-3">
+            <form action="/login" method="POST" class="needs-validation" novalidate>
+              <!-- EMAIL -->
+              <div class="form-group underline-form">
+                <label for="email"></label>
+                <input
+                  type="email"
+                  name="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="Email"
+                  value="<%=oldInput.email%>"
+                  required
+                />
+              </div>
       
-      <div class="row mx-1">
-        <div class="col-md-6 mb-3">
-          <form action="/login" method="POST" class="needs-validation" novalidate>
-            <!-- EMAIL -->
-            <div class="form-group underline-form">
-              <label for="email"></label>
-              <input
-                type="email"
-                name="email"
-                class="form-control"
-                id="email"
-                placeholder="Email"
-                value="<%=oldInput.email%>"
-                required
-              />
-            </div>
-    
-            <!-- PASSWORD -->
-            <div class="form-group underline-form">
-              <label for="password"></label>
-              <input
-                class="form-control"
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Password"
-                pattern=".*\S+.*"
-                required
-              />
-            </div>
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-    
-            <!-- BUTTON -->
-            <button type="submit" class="btn btn-outline-dark my-3 w-100">
-              Sign In
-            </button>
-    
-            <!-- RESET -->
-            <p class="mt-3">
-              <a class="link" href="/reset">Reset Password</a>
-            </p>
-          </form>
-        </div>
-    
-        <!-- REGISTER -->
-        <div class="col-md-6 mt-3">
-          <div class="card">
-            <div class="card-body align-self-start">
-              <h5 class="card-title">Register</h5>
-              <p class="card-text">Check out faster by creating an account.</p>
-              <a href="/registration" class="btn btn-outline-dark">
-                Create Account
-              </a>
+              <!-- PASSWORD -->
+              <div class="form-group underline-form">
+                <label for="password"></label>
+                <input
+                  class="form-control"
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Password"
+                  pattern=".*\S+.*"
+                  required
+                />
+              </div>
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+      
+              <!-- BUTTON -->
+              <button type="submit" class="btn btn-outline-dark my-3 w-100">
+                Sign In
+              </button>
+      
+              <!-- RESET -->
+              <p class="mt-3">
+                <a class="link" href="/reset">Reset Password</a>
+              </p>
+            </form>
+          </div>
+      
+          <!-- REGISTER -->
+          <div class="col-md-6 mt-3">
+            <div class="card">
+              <div class="card-body align-self-start">
+                <h5 class="card-title">Register</h5>
+                <p class="card-text">Check out faster by creating an account.</p>
+                <a href="/registration" class="btn btn-outline-dark">
+                  Create Account
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
   
   

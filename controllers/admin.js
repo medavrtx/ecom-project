@@ -1,9 +1,13 @@
 const { validationResult } = require('express-validator');
+const fs = require('fs');
+const path = require('path');
+const PDFDocument = require('pdfkit');
 
 const Product = require('../models/product');
 const Order = require('../models/order');
 const ProductCategory = require('../models/product-category');
 const BestSeller = require('../models/best-seller');
+const User = require('../models/user');
 
 const fileHelper = require('../utils/File');
 
@@ -570,5 +574,137 @@ exports.updateBestSeller = async (req, res, next) => {
     res.status(200).json({ message: 'Best seller order updated successfully' });
   } catch (err) {
     res.status(500).json({ message: 'Failed to update best seller order' });
+  }
+};
+
+// ORDERS
+
+exports.getOrders = async (req, res, next) => {
+  try {
+    const orders = await Order.find().sort({
+      createdAt: -1
+    });
+
+    res.render('admin/orders', {
+      path: '/admin/orders',
+      pageTitle: 'Orders',
+      orders,
+      user: req.user,
+      isAuthenticated: req.session.isLoggedIn,
+      isAdmin: req.session.isAdmin
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// INVOICE
+
+exports.getInvoice = async (req, res, next) => {
+  try {
+    const orderId = req.params.orderId;
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      throw new Error('No order found.');
+    }
+
+    let user = await User.findById(order.user.userId);
+
+    if (!user) {
+      user = {
+        email: 'Guest Email',
+        firstName: 'Guest User',
+        lastName: ''
+      };
+    }
+
+    const invoiceName = `invoice-${orderId}.pdf`;
+    const invoicePath = path.join('data', 'invoices', invoiceName);
+
+    const pdfDoc = new PDFDocument();
+    pdfDoc.pipe(fs.createWriteStream(invoicePath));
+    pdfDoc.pipe(res);
+
+    pdfDoc
+      .font('Helvetica-Bold')
+      .fontSize(20)
+      .text('INVOICE', { align: 'right' })
+      .moveDown(0.5);
+
+    pdfDoc
+      .font('Helvetica')
+      .fontSize(14)
+      .text(`Invoice Number: ${orderId}`, { align: 'right' })
+      .moveDown(0.5)
+      .text(`Date: ${new Date(order.createdAt).toLocaleDateString()}`, {
+        align: 'right'
+      })
+      .moveDown(0.5);
+
+    pdfDoc
+      .fontSize(14)
+      .text('Bill To:')
+      .font('Helvetica-Bold')
+      .text(`${user.firstName} ${user.lastName}`)
+      .font('Helvetica')
+      .text(user.email)
+      .moveDown(1.5);
+
+    // Order Details
+    pdfDoc
+      .fontSize(16)
+      .font('Helvetica-Bold')
+      .text('Order Details')
+      .moveDown(0.5);
+
+    order.products.forEach((prod) => {
+      const itemTotal = prod.quantity * prod.product.price;
+
+      pdfDoc
+        .font('Helvetica')
+        .fontSize(12)
+        .text(
+          `${prod.product.title} x ${prod.quantity} - $${prod.product.price} each`
+        )
+        .text(`Total: $${itemTotal.toFixed(2)}`)
+        .moveDown(0.5);
+    });
+
+    // Total Price
+    pdfDoc
+      .fontSize(14)
+      .font('Helvetica-Bold')
+      .text('Total Details', {
+        align: 'right'
+      })
+      .font('Helvetica')
+      .text(`Subtotal: $${order.totalDetails.subtotal.toFixed(2)}`, {
+        align: 'right'
+      })
+      .text(`Tax: $${order.totalDetails.tax.toFixed(2)}`, {
+        align: 'right'
+      })
+      .text(`Shipping: $${order.totalDetails.shipping.toFixed(2)}`, {
+        align: 'right'
+      })
+      .moveDown(1)
+      .fontSize(16)
+      .font('Helvetica-Bold')
+      .text(`Total: $${order.totalDetails.total.toFixed(2)}`, {
+        align: 'right'
+      })
+      .moveDown(1);
+
+    // Thank You Message
+    pdfDoc
+      .font('Helvetica')
+      .fontSize(14)
+      .text('Thank you for your purchase!', { align: 'center' })
+      .moveDown(1);
+
+    pdfDoc.end();
+  } catch (err) {
+    next(err);
   }
 };

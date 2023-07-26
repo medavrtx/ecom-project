@@ -4,85 +4,90 @@
 <body>
   <%- include('../partials/navbar')%>
 
-  <main class="main-container">
-    <nav aria-label="breadcrumb ">
-      <ol class="breadcrumb ms-3 mt-2 font-sz-sm">
-        <li class="breadcrumb-item">
-          <a href="/user/<%=user._id %>" class="link font-sz-sm">Your Account</a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page"><%= pageTitle %></li>
-      </ol>
-    </nav>
-    <div class="my-5 d-flex flex-column align-items-center">
-      <h1 class="center-title"><%= pageTitle %></h1>
+  <div class="center-container">
+    <main class="main-container">
+      <nav aria-label="breadcrumb ">
+        <ol class="breadcrumb ms-3 mt-2 font-sz-sm">
+          <li class="breadcrumb-item">
+            <a href="/user/<%=user._id %>" class="link font-sz-sm">Your Account</a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page"><%= pageTitle %></li>
+        </ol>
+      </nav>
+      <div class="my-5 d-flex flex-column align-items-center">
+        <h1 class="center-title"><%= pageTitle %></h1>
 
-      <% if (errorMessage) {%>
-        <div class="row w-100">
-          <div class="text-danger col-md-6 offset-md-3 text-center"><%= errorMessage %></div>
-        </div>
-      <% } %>
+        <% if (errorMessage) {%>
+          <div class="row w-100">
+            <div class="text-danger col-md-6 offset-md-3 text-center"><%= errorMessage %></div>
+          </div>
+        <% } %>
 
-      <div class="row w-100 full-height">
-        <div class="col-md-6 offset-md-3">
-          <form action="/user/<%=user._id %>/settings" method="POST" class="needs-validation" novalidate>
-            <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
-              <input
-                type="email"
-                class="form-control box-form-input"
-                id="email"
-                name="email"
-                value="<%= user.email %>"
-                pattern=".*\S+.*"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="firstName" class="form-label">First Name</label>
-              <input
-                type="text"
-                class="form-control box-form-input"
-                id="firstName"
-                name="firstName"
-                value="<%= user.firstName %>"
-                pattern=".*\S+.*"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="lastName" class="form-label">Last Name</label>
-              <input
-                type="text"
-                class="form-control box-form-input"
-                id="lastName"
-                name="lastName"
-                value="<%= user.lastName %>"
-                pattern=".*\S+.*"
-                required
-              />
-            </div>
-            <div class="mb-3">
-              <label for="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                class="form-control box-form-input"
-                pattern=".*\S+.*"
-                required
-              />
-            </div>
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
-            <button type="submit" class="btn btn-outline-dark">Save Changes</button>
-          </form>
-          <p class="mt-3">
-            <a class="link" href="/reset">Change Password</a>
-          </p>
+        <div class="row w-100 full-height">
+          <div class="col-md-6 offset-md-3">
+            <form action="/user/<%=user._id %>/settings" method="POST" class="needs-validation" novalidate>
+              <div class="card-w-100 bg-light">
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input
+                    type="email"
+                    class="form-control box-form-input"
+                    id="email"
+                    name="email"
+                    value="<%= user.email %>"
+                    pattern=".*\S+.*"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="firstName" class="form-label">First Name</label>
+                  <input
+                    type="text"
+                    class="form-control box-form-input"
+                    id="firstName"
+                    name="firstName"
+                    value="<%= user.firstName %>"
+                    pattern=".*\S+.*"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="lastName" class="form-label">Last Name</label>
+                  <input
+                    type="text"
+                    class="form-control box-form-input"
+                    id="lastName"
+                    name="lastName"
+                    value="<%= user.lastName %>"
+                    pattern=".*\S+.*"
+                    required
+                  />
+                </div>
+              </div>
+
+
+              <div class="m-3">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  class="form-control box-form-input"
+                  pattern=".*\S+.*"
+                  required
+                />
+              </div>
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+              <button type="submit" class="btn btn-outline-dark">Save Changes</button>
+            </form>
+            <p class="mt-3">
+              <a class="link" href="/reset">Change Password</a>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  
     
+      
 
   
   

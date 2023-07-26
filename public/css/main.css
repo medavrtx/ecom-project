@@ -1,6 +1,7 @@
 :root {
   --light-color: #f8f9fa;
-  --light-border: rgb(236, 236, 236);
+  --light-border: #dee2e6;
+  --lighter-border: rgb(236, 236, 236);
   --bg-light-color: #fcfcfa;
   --dark-color: #343a40;
   --dark-border: #1e1e1e;
@@ -27,22 +28,21 @@ h5 {
   margin: 0;
 }
 
-.main-container {
-  width: 100%;
-  overflow: hidden;
-  min-height: 50vh;
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@media (min-width: 1500px) {
-  .main-container {
-    padding: 0 10%;
-  }
+.main-container {
+  width: 100%;
+  max-width: 1600px;
+  overflow: hidden;
 }
 
 .link {
   color: var(--link-color);
   text-decoration: none;
-  font-size: 1rem;
 }
 
 .link:hover {
@@ -138,7 +138,7 @@ h5 {
 
 @media (max-width: 768px) {
   .custom-banner {
-    height: 200px;
+    height: 250px;
   }
 }
 
@@ -227,6 +227,13 @@ h5 {
 
 .brand-mark {
   font-size: 1.5rem;
+  color: var(--dark-color);
+  text-decoration: none;
+}
+
+.brand-mark:hover {
+  user-select: none;
+  color: var(--dark-color);
 }
 
 .btn-row {
@@ -278,5 +285,11 @@ h5 {
 }
 
 .full-height {
-  min-height: 60vh;
+  min-height: 65vh;
+}
+
+.card-w-100 {
+  border: 1px solid var(--light-border);
+  padding: 15px;
+  border-radius: 20px;
 }
