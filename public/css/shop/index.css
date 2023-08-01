@@ -5,6 +5,7 @@
   z-index: 4;
   background-color: var(--promo-color);
   text-align: center;
+  overflow: hidden;
 }
 
 .promo-text-space {

@@ -9,6 +9,7 @@ Luminae Skincare is a mockup ecommerce site designed to showcase a skincare bran
 ## Table of Contents
 
 - [Features](#features)
+- [Demo](#demo)
 - [Technologies Used](#technologies-used)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -33,9 +34,9 @@ Luminae Skincare is a mockup ecommerce site designed to showcase a skincare bran
 
 ## Demo
 
+**Note:** The demo might take a minute to start up.
 [Live Demo](https://luminae-ecom.onrender.com/)
 ![Screenshot](/public/images/screenshot.png)
-**Note:** The demo might take a minute to start up.
 
 ## Technologies Used
 
