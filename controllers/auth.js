@@ -8,6 +8,9 @@ const User = require('../models/user');
 const Order = require('../models/order');
 
 exports.getLogIn = (req, res, next) => {
+  if (req.session.isAdmin) {
+    return res.redirect('/admin');
+  }
   const errorMessage = req.flash('error')[0] || null;
   res.render('auth/login', {
     pageTitle: 'Sign In',
