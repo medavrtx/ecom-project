@@ -4,7 +4,7 @@
 
 ## Description
 
-Luminae Skincare is a mockup ecommerce site designed to showcase a skincare brand's products and provide a seamless shopping experience for customers. The goal of this project is to create an aesthetically pleasing and user-friendly website to attract potential customers and promote the brand's skincare products.
+Luminae Skincare is a mockup ecommerce platform crafted to elegantly display a skincare brand's offerings. The project aimed to provide a seamless and aesthetically pleasing experience for users, ensuring both customers and administrators found it intuitive and user-friendly.
 
 ## Table of Contents
 
