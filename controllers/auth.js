@@ -11,6 +11,9 @@ exports.getLogIn = (req, res, next) => {
   if (req.session.isAdmin) {
     return res.redirect('/admin');
   }
+  if (req.session.isLoggedIn) {
+    return res.redirect(`/user/${req.session.user._id}`);
+  }
   const errorMessage = req.flash('error')[0] || null;
   res.render('auth/login', {
     pageTitle: 'Sign In',
