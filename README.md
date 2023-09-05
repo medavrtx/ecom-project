@@ -2,7 +2,7 @@
 
 ![Luminae Skincare Logo](/public/images/logo.png)
 
-## Description
+## Introduction
 
 Luminae Skincare is a mockup ecommerce platform crafted to elegantly display a skincare brand's offerings. The project aimed to provide a seamless and aesthetically pleasing experience for users, ensuring both customers and administrators found it intuitive and user-friendly.
 
@@ -11,52 +11,52 @@ Luminae Skincare is a mockup ecommerce platform crafted to elegantly display a s
 - [Features](#features)
 - [Demo](#demo)
 - [Technologies Used](#technologies-used)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Routes](#routes)
-- [Contributing](#contributing)
-- [License](#license)
+- [Getting Started](#getting-started)
 
 ## Features
 
-- **Product Showcase**: Display a wide range of skincare products with detailed descriptions, images, and pricing.
-- **Categories**: Organize products into different categories for easy navigation.
-- **Admin**: Easily manage the store with the following features:
-  - Add Products: Admin can add new skincare products to the store, including product details and images.
-  - Edit Products: Admin can edit existing product information, such as descriptions and prices.
-  - Delete Products: Admin has the ability to remove products from the store as needed.
-  - Product Categories: Admin can create and manage product categories to keep the store organized.
-  - Best Sellers List: Create a curated list of best-selling products to highlight popular items.
-- **User Registration and Login**: Allow users to create accounts and log in to access their profiles and order history.
-- **Shopping Cart**: Enable users to add products to their cart, update quantities, and proceed to checkout.
-- **Checkout Process**: Provide a secure and straightforward checkout process for users to complete their purchases.
-- **Responsive Design**: Ensure the website is fully responsive and works seamlessly on various devices, including desktops, tablets, and mobile phones.
+- **Product Showcase**: A pristine display of skincare products, complete with detailed descriptions, images, and pricing.
+- **Categories**: Products are systematically organized into various categories for effortless navigation.
+- **Admin Dashboard**: Administrators are equipped with a robust set of tools:
+  - **Add, Edit, & Delete Products**: Manage product listings with ease.
+  - **Product Categories**: Curate and oversee product categories.
+  - **Best Sellers Highlight**: Accentuate popular items with a dedicated list.
+- **User Interactivity**:
+  - **Registration & Login**: A seamless integration for users to create accounts and revisit their profiles and transactional history.
+  - **Shopping Cart & Checkout**: From adding products to secure payment processing, the transactional flow is intuitive.
+- **Responsive Design**: Ensuring coherence across devices, be it desktops, tablets, or mobiles.
 
 ## Demo
 
-**Note:** The demo might take a minute to start up.
-[Live Demo](https://luminae-ecom.onrender.com/)
+**Note:** Server initialization might take a brief moment.
+<br>
+Experience the live demo here: [luminae-ecom.onrender.com](https://luminae-ecom.onrender.com/)
+<br>
 ![Screenshot](/public/images/screenshot.png)
 
 ## Technologies Used
 
-- **Node.js**: A JavaScript runtime used for server-side development.
-- **Express.js**: A web application framework for Node.js used to build the backend server.
-- **MongoDB**: A NoSQL database for storing product and user data.
-- **Mongoose**: An object data modeling library for Node.js and MongoDB.
-- **Multer**: A middleware for handling file uploads, used to store product images.
-- **EJS**: A templating engine to render dynamic HTML templates.
-- **Express-Session**: A session middleware for managing user sessions.
-- **Connect-MongoDB-Session**: A MongoDB session store for Express.js.
-- **Bcrypt.js**: A library for hashing passwords securely.
-- **CSRF**: A middleware for protecting against Cross-Site Request Forgery attacks.
-- **Stripe**: A payment processing platform for handling secure online payments.
-- **Helmet**: A middleware for setting HTTP headers to enhance security.
-- **Ejs-Mate**: A layout engine for EJS, used for reusable template components.
-- **Cropper.js**: A JavaScript image cropping library for handling image cropping functionality.
-- **Bootstrap**: A popular CSS framework for building responsive and mobile-first websites.
+- **[Node.js](https://nodejs.org/)** & **[Express.js](https://expressjs.com/)**: Crafting the server-side functionality.
+- **[MongoDB](https://www.mongodb.com/)** & **[Mongoose](https://mongoosejs.com/)**: Database storage and structured data modeling.
+- **[Multer](https://www.npmjs.com/package/multer)**: Handling image uploads.
+- **[Express-Session](https://www.npmjs.com/package/express-session)** & **[Connect-MongoDB-Session](https://www.npmjs.com/package/connect-mongodb-session)**: User session management.
+- **[Bcrypt.js](https://www.npmjs.com/package/bcrypt)**: Secure password hashing.
+- **[CSRF](https://www.npmjs.com/package/csurf)**: Protection against Cross-Site Request Forgery.
+- **[Stripe](https://stripe.com/)**: Online payment processing.
+- **[Helmet](https://helmetjs.github.io/)**: Setting HTTP headers for enhanced security.
+- **[EJS](https://www.npmjs.com/package/ejs)** & **[Ejs-Mate](https://www.npmjs.com/package/ejs-mate)**: Dynamic HTML rendering and layout management.
+- **[Bootstrap](https://getbootstrap.com/)**: Styling and responsive design.
+- **[Cropper.js](https://fengyuanchen.github.io/cropperjs/)**: Image cropping utility.
 
-## Installation
+## Getting Started
+
+### Prerequisites
+
+- Node.js
+- Yarn or npm
+- A local or remote instance of MongoDB
+
+### Installation
 
 1. Clone the repository:
 
@@ -76,14 +76,13 @@ Luminae Skincare is a mockup ecommerce platform crafted to elegantly display a s
 - Create a .env.local file in the root directory.
 - Add the required environment variables, such as MONGO_URI, SESSION_SECRET, and STRIPEPK for database connection, session secret, and Stripe integration, respectively.
 
-## Usage
+4. Customize the content
 
-1. Customize the content
-
-2. Start the server:
+5. Start the server:
 
    ```
    npm run dev
    ```
 
-3. Access the site on your browser at http://localhost:3000 to see the Luminae Skincare mockup ecommerce site.
+6. Access the App:
+   Open your browser and visit [http://localhost:3000](http://localhost:3000) to see the Luminae Skincare mockup ecommerce site.
